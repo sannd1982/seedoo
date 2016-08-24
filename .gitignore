@@ -35,6 +35,7 @@ pip-log.txt
 
 #buildout
 anybox.recipe.openerp
+a.r.odoo
 downloads
 etc
 upgrade.*

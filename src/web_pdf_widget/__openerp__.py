@@ -18,6 +18,7 @@ This module works with OpenERP 7.0.
         'web',
         ],
     'python': ['magic'],
+    'data': ['base_data.xml'],
     'js': ['static/src/js/web_pdf_widget.js'],
     'qweb': ['static/src/xml/web_pdf_widget.xml'],
     'installable': True,

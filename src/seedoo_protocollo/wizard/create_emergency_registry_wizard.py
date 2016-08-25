@@ -4,7 +4,7 @@
 
 import logging
 from openerp.osv import fields, osv
-from tools.translate import _
+from openerp.tools.translate import _
 import datetime
 
 

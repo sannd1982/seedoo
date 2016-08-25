@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-# This file is part of Seedoo.  The COPYRIGHT file at the top level of
-# this module contains the full copyright notices and license terms.
-
 from openerp.osv import fields, osv
 from openerp.osv.orm import except_orm
 from openerp.tools.translate import _
@@ -11,6 +7,8 @@ from openerp import SUPERUSER_ID
 import logging
 import os
 import re
+import hashlib
+
 _logger = logging.getLogger(__name__)
 
 
@@ -40,7 +38,7 @@ class ir_attachment(osv.Model):
         locations = {}
         for model_location in res:
             if model_location['res_model'] == 'protocollo.protocollo':
-                # TODO insert here new path for fake document
+                #TODO insert here new path for fake document
                 # if the protocol is reserved and state not draft
                 location_def = location + '/protocollazioni'
             elif model_location['res_model'] == 'protocollo.protocollo.imp':
@@ -61,11 +59,11 @@ class ir_attachment(osv.Model):
         for attach in self.browse(cr, uid, ids, context=context):
             if location and attach.store_fname:
                 result[attach.id] = self._file_read(
-                    cr,
-                    uid,
-                    locations[attach.id],
-                    attach.store_fname,
-                    bin_size)
+                                                    cr,
+                                                    uid,
+                                                    locations[attach.id],
+                                                    attach.store_fname,
+                                                    bin_size)
             else:
                 result[attach.id] = attach.db_datas
         return result
@@ -102,11 +100,11 @@ class ir_attachment(osv.Model):
         'is_protocol': fields.boolean('Doc Protocollo'),
         'reserved': fields.boolean('Doc Riservato'),
         'datas': fields.function(
-            _data_get,
-            fnct_inv=_data_set,
-            string='File Content',
-            type="binary",
-            nodrop=True),
+                         _data_get,
+                         fnct_inv=_data_set,
+                         string='File Content',
+                         type="binary",
+                         nodrop=True),
     }
 
     def check(self, cr, uid, ids, mode, context=None, values=None):
@@ -124,7 +122,8 @@ class ir_attachment(osv.Model):
                     WHERE id in %s', (tuple(ids),))
                 res = cr.fetchall()
             elif values:
-                res.append([values['res_model'], values['res_id']])
+                if values.get('res_model') and values.get('res_id'):
+                    res.append([values['res_model'], values['res_id']])
             else:
                 pass
             for res_model, res_id in res:
@@ -137,18 +136,74 @@ class ir_attachment(osv.Model):
                                          'Si sta cercando di modificare un \
                                          protocollo registrato')
 
+    def _file_read(self, cr, uid, location, fname, bin_size=False):
+        full_path = self._full_path(cr, uid, location, fname)
+        r = ''
+        try:
+            if bin_size:
+                r = os.path.getsize(full_path)
+            else:
+                r = open(full_path,'rb').read().encode('base64')
+        except IOError:
+            _logger.exception("_read_file reading %s", full_path)
+        return r
+
+
+    def _file_write(self, cr, uid, location, value):
+        bin_value = value.decode('base64')
+        fname, full_path = self._get_path(cr, uid, location, bin_value)
+        if not os.path.exists(full_path):
+            try:
+                with open(full_path, 'wb') as fp:
+                    fp.write(bin_value)
+            except IOError:
+                _logger.exception("_file_write writing %s", full_path)
+        return fname
+
+    def _get_path(self, cr, uid, location, bin_data):
+        sha = hashlib.sha1(bin_data).hexdigest()
+
+        # retro compatibility
+        fname = sha[:3] + '/' + sha
+        full_path = self._full_path(cr, uid, location, fname)
+        if os.path.isfile(full_path):
+            return fname, full_path        # keep existing path
+
+        # scatter files across 256 dirs
+        # we use '/' in the db (even on windows)
+        fname = sha[:2] + '/' + sha
+        full_path = self._full_path(cr, uid, location, fname)
+        dirname = os.path.dirname(full_path)
+        if not os.path.isdir(dirname):
+            os.makedirs(dirname)
+        return fname, full_path
+
+
+
+
+    def _file_delete(self, cr, uid, location, fname):
+        # using SQL to include files hidden through unlink or due to record rules
+        cr.execute("SELECT COUNT(*) FROM ir_attachment WHERE store_fname = %s", (fname,))
+        count = cr.fetchone()[0]
+        full_path = self._full_path(cr, uid, location, fname)
+        if not count and os.path.exists(full_path):
+            try:
+                os.unlink(full_path)
+            except OSError:
+                _logger.exception("_file_delete could not unlink %s", full_path)
+            except IOError:
+                # Harmless and needed for race conditions
+                _logger.exception("_file_delete could not unlink %s", full_path)
+
     def unlink(self, cr, uid, ids, context=None):
         if isinstance(ids, (int, long)):
             ids = [ids]
         self.check(cr, uid, ids, 'unlink', context=context)
-        location = self.pool.get('ir.config_parameter').get_param(
-            cr, uid, 'ir_attachment.location')
+        location = self.pool.get('ir.config_parameter').get_param(cr, uid, 'ir_attachment.location')
         if location:
             for attach in self.browse(cr, uid, ids, context=context):
-                location = self._get_full_path(
-                    cr, uid, [attach.id], location
-                    )[attach.id]
+                location = self._get_full_path(cr, uid, [attach.id], location)[attach.id]
                 if attach.store_fname:
+                    #TODO check meaning for location and attach_store_fname
                     self._file_delete(cr, uid, location, attach.store_fname)
         return super(ir_att, self).unlink(cr, uid, ids, context)
-

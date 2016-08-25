@@ -10,7 +10,7 @@ from openerp.osv import fields
 import shutil
 import os
 import glob
-import netsvc
+from openerp import netsvc
 import threading
 from openerp.osv.orm import except_orm
 

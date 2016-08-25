@@ -3,7 +3,7 @@
 # this module contains the full copyright notices and license terms.
 
 from openerp.osv import fields, osv
-from tools.translate import _
+from openerp.tools.translate import _
 
 
 class protocollo_classification(osv.Model):

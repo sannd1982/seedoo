@@ -7,7 +7,7 @@ import magic
 import base64
 import os
 
-from web import http
+from openerp.addons.web import http
 openerpweb = http
 
 

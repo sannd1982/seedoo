@@ -6,7 +6,7 @@ from openerp.osv import orm
 from openerp import netsvc
 import logging
 
-from osv import *
+from openerp.osv import *
 
 _logger = logging.getLogger(__name__)
 

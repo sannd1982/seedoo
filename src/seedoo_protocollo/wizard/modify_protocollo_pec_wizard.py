@@ -5,7 +5,7 @@
 import logging
 from openerp.osv import fields, osv
 from openerp import netsvc
-from tools.translate import _
+from openerp.tools.translate import _
 
 _logger = logging.getLogger(__name__)
 

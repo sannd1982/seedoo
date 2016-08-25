@@ -28,7 +28,7 @@
   top: -116px;
 }
 
-.openerp .oe_topbar {
+.navbar {
   background-color: #366732;
   background-image: none;
       font-size: 15px;
@@ -48,10 +48,19 @@
   color: white;
 }
 
+.navbar .navbar-collapse .oe_menu_text, .oe_topbar_name, .dropdown-toggle{
+  color: white;
+}
+
+
 .openerp .oe_topbar .oe_dropdown_menu li a {
   color: white;
 }
 
 .openerp .oe_secondary_menu_section {
 color: #366732;
+}
+
+.openerp .oe_form_sheet{
+  max-width: 90%!important;
 }

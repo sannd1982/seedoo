@@ -3,7 +3,7 @@
 # this module contains the full copyright notices and license terms.
 
 from openerp import addons
-import netsvc
+from openerp import netsvc
 import datetime
 from openerp.osv.orm import except_orm
 from openerp.addons.seedoo_protocollo_zip.tests.test_protocollo_zip_base \

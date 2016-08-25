@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
+
+        <template id="seedoo_theme" name="Seedoo Theme" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/seedoo_theme/static/src/css/seedoo.css"/>
+            </xpath>
+        </template>
+
     <record id="base.main_partner" model="res.partner">
             <field name="image">iVBORw0KGgoAAAANSUhEUgAAALQAAAAtCAYAAAAHpEG5AAAoqElEQVR4nO18d3hXRfb+OzO3fFo6
 RcG1rnUX169iQUFAimgAG6KCCCxYMFKSkJAChCQkIYWAKGJZRRA7SA1IExZwUVQs61pWLNgoCSmf

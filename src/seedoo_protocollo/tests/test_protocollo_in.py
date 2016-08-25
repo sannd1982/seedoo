@@ -3,14 +3,14 @@
 # this module contains the full copyright notices and license terms.
 
 from openerp import addons, SUPERUSER_ID
-import netsvc
+from openerp import netsvc
 from openerp.osv import fields
 from openerp.osv.orm import except_orm
 from openerp.addons.seedoo_protocollo.tests.test_protocollo_base \
     import TestProtocolloBase
 from openerp.tools.translate import _
 
-from osv import orm
+from openerp.osv import orm
 import datetime
 from lxml import etree
 import os

@@ -5,7 +5,7 @@
 import logging
 from openerp.osv import fields, osv
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT as DSDF
-from tools.translate import _
+from openerp.tools.translate import _
 import time
 
 

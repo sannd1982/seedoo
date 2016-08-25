@@ -41,11 +41,7 @@ This module is compatible with OpenERP 7.0.
     'website': 'https://www.innoviu.com',
     'license': 'AGPL-3',
     'depends': ['web'],
-    'js': [
-        'static/lib/jquery.ztree.core-3.5.min.js',
-        'static/lib/jquery.ztree.excheck-3.5.min.js',
-        'static/src/js/m2o_tree_widget.js',
-    ],
+    'data': ['base_data.xml'],
     'css': [
         'static/src/css/zTreeStyle.css',
     ],

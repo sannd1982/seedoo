@@ -49,7 +49,7 @@ class ResPartner(orm.Model):
         'parent_pa_type': fields.related(
             'parent_pa_id',
             'pa_type',
-            type='selection',
+            type='char',
             readonly=True,
             string='Tipologia amministrazione padre'),
 

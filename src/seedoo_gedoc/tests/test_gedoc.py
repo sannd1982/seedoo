@@ -3,7 +3,7 @@
 # this module contains the full copyright notices and license terms.
 
 from openerp import addons
-import netsvc
+import openerp.netsvc
 import datetime
 from openerp.osv import fields
 from openerp.osv.orm import except_orm

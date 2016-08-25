@@ -3,6 +3,7 @@
 # this module contains the full copyright notices and license terms.
 
 from . import model
+from . import gedoc
 from . import wizard
 from . import report
 from . import tests

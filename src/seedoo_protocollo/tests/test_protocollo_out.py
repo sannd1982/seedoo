@@ -7,6 +7,9 @@ import netsvc
 from openerp.osv.orm import except_orm
 from openerp.addons.seedoo_protocollo.tests.test_protocollo_base \
     import TestProtocolloBase
+from lxml import etree
+import os
+from openerp import tools
 
 
 class TestProtocolloOut(TestProtocolloBase):
@@ -74,7 +77,7 @@ class TestProtocolloOut(TestProtocolloBase):
         cr, uid = self.cr, self.uid
         partner_id = self.getIdDemoObj('base', 'main_partner')
         racc_id = self.getIdDemoObj('', 'protocollo_typology_rac')
-        com_varie_id = self.getIdDemoObj('', 'protocollo_classification_6')
+        com_varie_id = self.getIdDemoObj('seedoo_gedoc', 'protocollo_classification_6')
         send_rec_id = self.modelProtSendRec.create(
             cr, uid,
             {
@@ -108,6 +111,14 @@ class TestProtocolloOut(TestProtocolloBase):
         self.assertEqual(prot_obj.doc_id.name, prot_name)
         sha1 = self.sha1OfFile(prot_obj.doc_id.id)
         self.assertEqual(prot_obj.fingerprint, sha1)
+        self.assertTrue(prot_obj.xml_signature)
+        path = addons.get_module_resource('seedoo_protocollo',
+                                          'data', "segnatura.dtd")
+        dtdPath = os.path.dirname(path)+ "/segnatura.dtd"
+        dtdfile = open(dtdPath, 'r')
+        dtd = etree.DTD(dtdfile)
+        signature_xml = etree.XML(prot_obj.xml_signature)
+        self.assertTrue(dtd.validate(signature_xml))
 
     def test_1_prot_assigne_out(self):
         """Testing assignee for sent protocol"""
@@ -153,7 +164,7 @@ class TestProtocolloOut(TestProtocolloBase):
     def test_3_delete_prot_pdf_out(self):
         cr, uid = self.cr, self.uid
         racc_id = self.getIdDemoObj('', 'protocollo_typology_rac')
-        com_varie_id = self.getIdDemoObj('', 'protocollo_classification_6')
+        com_varie_id = self.getIdDemoObj('seedoo_gedoc', 'protocollo_classification_6')
         send_rec_id = self.modelProtSendRec.search(
             cr, uid, [('name', '=', 'test_partner')])[0]
         prot_id = self.modelProtocollo.create(
@@ -183,7 +194,7 @@ class TestProtocolloOut(TestProtocolloBase):
         cr, uid = self.cr, self.uid
         partner_id = self.getIdDemoObj('base', 'main_partner')
         pec_id = self.getIdDemoObj('', 'protocollo_typology_pec')
-        com_varie_id = self.getIdDemoObj('', 'protocollo_classification_6')
+        com_varie_id = self.getIdDemoObj('seedoo_gedoc', 'protocollo_classification_6')
         send_rec_id = self.modelProtSendRec.create(
             cr, uid,
             {

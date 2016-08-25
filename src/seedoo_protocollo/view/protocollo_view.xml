@@ -62,9 +62,15 @@ this module contains the full copyright notices and license terms. -->
             <field name="model">protocollo.classification</field>
             <field name="arch" type="xml">
                 <form string="Titolario">
+                    <field name="class_type" />
+                    <newline/>
                     <field name="name" />
+                    <field name="code" />
+                	<field name="complete_name" />
                     <field name="parent_id" />
                     <field name="description" colspan="4"/>
+                    <field name="assigne" colspan="4"/>
+                    <field name="dossier_ids" colspan="4"/>
                 </form>
             </field>
         </record>
@@ -209,12 +215,95 @@ this module contains the full copyright notices and license terms. -->
             <field name="name">protocollo.dossier.form</field>
             <field name="model">protocollo.dossier</field>
             <field name="arch" type="xml">
-                <form string="Fascicolo">
-                    <field name="name" />
-                    <field name="office_id" />
-                    <field name="classification_id" />
-                    <field name="year" />
-                    <field name="user_id" />
+                <form string="Fascicolo" version="7.0">
+                   <header>
+                    	<div>
+		                    <button name="open" states="draft" string="Apri Fascicolo" />
+		                    <button name="close" states="open" string="Chiudi Fascicolo" />
+	                    </div>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,open,closed" statusbar_colors='{"open":"blue","closed":"green"}'/>
+                	</header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" class="oe_inline" />
+                            </h1>
+                            <label for="description" class="oe_edit_only"/>
+                            <h1>
+                                <field name="description" class="oe_inline" />
+                            </h1>
+                            <label for="date_open" class="oe_edit_only"/>
+                            <h2>
+                                <field name="date_open" />
+                            </h2>
+                            <label for="date_close" class="oe_edit_only"/>
+                            <h2>
+                                <field name="date_close" />
+                            </h2>
+                            <label for="classification_id" class="oe_edit_only"/>
+                            <h2>
+                                <field name="classification_id" on_change="on_change_dossier_type_classification(dossier_type, classification_id, parent_id)" />
+                            </h2>
+                            <label for="dossier_type" class="oe_edit_only"/>
+                            <h2>
+                            <field name="dossier_type" on_change="on_change_dossier_type_classification(dossier_type, classification_id, parent_id)" />
+                            </h2>
+                            <label for="dossier_typology" class="oe_edit_only"/>
+                            <h2>
+                            <field name="dossier_typology"/>
+                            </h2>
+                        </div>
+                        <group col="4" string="Informazioni Generali">
+                    		<field name="paperless" />
+                    		<newline/>
+                    		<field name="year" />
+                    		<newline/>
+                    		<field name="parent_id" on_change="on_change_dossier_type_classification(dossier_type, classification_id, parent_id)" domain ="[('dossier_type', '=', parent_type)]" attrs="{'invisible':[('dossier_type','=','fascicolo')], 'required': [('dossier_type','in',('sottofascicolo', 'inserto'))]}" />
+                    		
+                            <field name="parent_type" invisible="1" />
+                    		<newline/>
+                    		<field name="child_ids" attrs="{'invisible':[('dossier_type','=','inserto')]}" />
+                    		
+                    		<field name="partner_id" attrs="{'invisible':[('dossier_typology','not in ',('fisica', 'giuridica'))]}" />
+	                    </group>
+	                    <notebook>
+	                    	<page string="Documenti">
+                        	<group col="4">
+                    			<field name="document_ids" domain="['|',('user_id','=',uid),('office_comp_ids.group_ids.users.id','in',[uid])]"/>
+                        	</group>
+                    		</page>
+	                    	<page string="Attori Coinvolti">
+                        	<group col="4" attrs="{'invisible':[('dossier_typology','!=','procedimento')]}">
+                    			<field name="user_id" />
+                    			<field name="owner_partner_id" options="{'limit': 10, 'create': false, 'create_edit': false}"/>
+                    			<field name="participant_partner_ids" />
+	                    	</group>
+	                    	</page>
+	                    	<page string="Permessi Fascicolo">
+                        	<group col="4">
+                        	<group col="2">
+                    			<field name="office_comp_ids" />
+                    			<field name="user_comp_ids" />
+                        	</group>
+                        	<group col="2">
+                    			<field name="office_view_ids" />
+                    			<field name="user_view_ids" />
+	                    	</group>
+                    	</group>
+                    	</page>
+	                    	<page string="Posizione Fisica Fascicolo" attrs="{'invisible':[('paperless','=',True)]}">
+                        	<group col="4">
+                    			<field name="address" />
+                    			<field name="building" />
+                    			<field name="floor" />
+                    			<field name="room" />
+	                    	</group>
+                    	</page>
+	                   </notebook>
+                    <label for="notes" />
+                    <field name="notes" />
+                    </sheet>
                 </form>
             </field>
         </record>
@@ -266,6 +355,8 @@ this module contains the full copyright notices and license terms. -->
                 <form string="Mittenti/Destinatari">
                     <field name="save_partner" attrs="{'readonly': ['|',('partner_id','!=',False),('partner_id','is not',None)]}"/>
                     <field name="type" />
+                    <field name="ident_code" />
+                    <field name="ammi_code" />
                     <field name="partner_id" />
                     <field name="name" />
                     <field name="street" />
@@ -291,6 +382,8 @@ this module contains the full copyright notices and license terms. -->
                 <tree string="Mittenti/Destinatari" editable="bottom" >
                     <field name="save_partner" attrs="{'readonly': ['|',('partner_id','!=',False),('partner_id','is not',None)]}"/>
                     <field name="type" />
+                    <field name="ident_code" attrs="{'readonly': [('type','in',('legal', 'individual'))]}"/>
+                    <field name="ammi_code" attrs="{'required': [('type','=','government')], 'readonly': [('type','in',('legal', 'individual'))]}"/>
                     <field name="partner_id" on_change="on_change_partner(partner_id)" attrs="{'readonly': [('save_partner','=',True)]}"/>
                     <field name="name" />
                     <field name="street" />
@@ -314,33 +407,23 @@ this module contains the full copyright notices and license terms. -->
                 <form string="Protocollo" version="7.0">
                    <header>
                     	<div>
-		                   	<button name="register" states="draft" string="Registra Protocollo"/>
+		                   	<button name="register" states="draft" string="Registra Protocollo" class="oe_highlight_positive"/>
 		                    <button name="sent_pec" string="Invio Pec Protocollo" attrs="{'invisible':['|','|',('state','!=','registered'),('type','!=','out'),('pec','!=',True)]}"/>
 		                    <button name="sent" string="Invio Protocollo" attrs="{'invisible':['|','|',('state','!=','registered'),('type','!=','out'),('pec','!=',False)]}"/>
-		                    <button name="%(protocollo_cancel_action)d" type='action' states="registered,notified,sent,waiting,error" string="Annulla Protocollo"/>
+		                    <button name="%(protocollo_cancel_action)d" type='action' states="registered,notified,sent,waiting,error" string="Annulla Protocollo" class="oe_highlight_warning"/>
 		                    <button name="%(protocollo_modify_action)d" type='action' string='Modifica Protocollo' states='registered' groups="seedoo_protocollo.group_protocollo_manager"/>
 		                    <button name="%(protocollo_modify_pec_action)d" type='action' string='Modifica Mail e Reinvio' attrs="{'invisible':['|',('pec','=',False),('state','not in',('registered','waiting','error'))]}" groups="seedoo_protocollo.group_protocollo_manager"/>
 	                    </div>
                         <field name="state" widget="statusbar" statusbar_visible="draft,registered" statusbar_colors='{"draft":"blue","notified":"red"}'/>
                     </header>
                     <sheet>
-                        <div class="oe_title">
-                            <label for="name" class="oe_edit_only"/>
-                            <h1>
-                                <field name="name" class="oe_inline"/>
-                            </h1>
-                            <label for="registration_date" class="oe_edit_only"/>
-                            <h2>
-                                <field name="registration_date" />
-                            </h2>
-                            <label for="registry" class="oe_edit_only"/>
-                            <h2>
-                                <field name="registry" />
-                            </h2>
-                            <label for="type" class="oe_edit_only"/>
-                            <h2>
+                        <div class="gedoc_header">
+                        <group col="4" >
+                            <field name="name" />
+                            <field name="registration_date" />
+                            <field name="registry" />
                             <field name="type"/>
-                            </h2>
+                        </group>
                         </div>
                         <group col="2" colspan="2" string="Informazioni Emergenza" attrs="{'invisible':[('emergency_active','=', False)]}">
                         <field name="emergency_active" invisible="1"/>
@@ -356,9 +439,11 @@ this module contains the full copyright notices and license terms. -->
                         </group>
                         <newline/>
                         <group col="2" >
-                                <field name="subject" />
-                                <newline/>
-                                <field name="sender_protocol" attrs="{'invisible':[('type','!=','in')]}"/>
+                            <field name="subject" />
+                            <newline/>
+                            <field name="sender_protocol" attrs="{'invisible':[('type','!=','in')]}"/>
+                            <newline/>
+                            <field name="reserved"/>
                         </group>
                         <group col="2" >
                                 <field name="typology" on_change="on_change_typology(typology)" colspan="2"/>
@@ -374,35 +459,46 @@ this module contains the full copyright notices and license terms. -->
                                 <field name="body" attrs="{'invisible':[('pec','!=',True)],'readonly':['|',('type','=','in'),('state','!=','draft')]}" colspan="4"/>
                         </group>
                         <group col="4" >
-                            <group col="2" >
                             <field name="doc_id" attrs="{'invisible':[('state','=','draft'),('pec','!=',True)]}"/>
                             <field name="datas_fname" invisible="1"/>
                             <field name="datas" filename="datas_fname" nolabel="1" on_change="on_change_datas(datas)" attrs="{'invisible':['|',('reserved','=',True),('state','!=','draft')]}" />
                             <newline/>
                             <field name="mimetype" invisible="1"/>
-                            <field name="preview" nolabel="1" attrs="{'invisible':['|',('reserved','=',True),('mimetype','!=','application/pdf')], 'readonly':True}" widget="pdfviewer" options="{'width': '600', 'height': '700'}" />
-                            </group>
-                            <group col="2" >
-                            <field name="reserved"/>
-                            </group>
 
                         </group>
-                        <separator string="Mittenti" attrs="{'invisible':[('type','!=','in')]}"/>
-                        <separator string="Destinatari" attrs="{'invisible':[('type','!=','out')]}"/>
-                        <group col="4" colspan="4">
-                            <field name="sender_receivers" nolabel="1" >
-                            </field>
-                        </group>
+
+
                         <notebook>
-                            <page string="Classificazioni">
-                              <group col="4">
-                                <field name="user_id" invisible="1"/>
-                                <label for="classification" />
-                                <label for="dossier" />
-                                <field name="classification" nolabel="1" />
-                                <field name="dossier" nolabel="1"/>
-                              </group>
+                            <page string="Mittenti/Destinatari">
+                                <separator string="Mittenti" attrs="{'invisible':[('type','!=','in')]}"/>
+                                <separator string="Destinatari" attrs="{'invisible':[('type','!=','out')]}"/>
+                                <group col="4" colspan="4">
+                                    <field name="sender_receivers" nolabel="1" >
+                                    </field>
+                                </group>
                             </page>
+                            <page string="Preview">
+                                <field name="preview" nolabel="1" attrs="{'invisible':['|',('reserved','=',True),('mimetype','!=','application/pdf')], 'readonly':True}" widget="pdfviewer" options="{'width': '1100', 'height': '800'}" />
+
+                            </page>
+                            <page string="Classificazioni">
+	                    	  <group col="4">
+                                  <group>
+		                    		<label for="dossier_ids" />
+			                    	<field name="dossier_ids" nolabel="1"
+			                    	options="{'limit': 10, 'create': false, 'create_edit': false}"
+			                    	domain="[('state','=','open')]"
+			                    	/>
+		                    	</group>
+                                  <newline/>
+	                    	  	<group>
+		                    		<label for="classification" />
+			                    	<field name="classification" nolabel="1" widget="m2o_tree"
+			                    	options="{'limit': 10, 'create': false, 'create_edit': false}"/>
+		                    	</group>
+
+		                      </group>
+	                    	</page>
                             <page string="Assegnatari">
                                 <field name="assigne" domain="[('parent_id','child_of',[%(protocollo_dept_root)d]),('assignable','=',True)]"/>
                             	<newline/>
@@ -416,7 +512,7 @@ this module contains the full copyright notices and license terms. -->
                                 <field name="mail_pec_ref" context="{'pec_messages': True}"/>
                                 <newline/>
 		                    	<label for="pec_notifications_ids" attrs="{'invisible':['|', ('pec','!=',True), ('type','=','in')]}" />
-	                    		<field name="pec_notifications_ids" context="{'pec_messages': True}" attrs="{'invisible':['|', ('pec','!=',True), ('type','=','in')]}"/>	                    		
+	                    		<field name="pec_notifications_ids" context="{'pec_messages': True}" attrs="{'invisible':['|', ('pec','!=',True), ('type','=','in')]}"/>
                             </page>
                             <page string="Storico Modifiche">
                                 <field name="history_ids">
@@ -435,10 +531,18 @@ this module contains the full copyright notices and license terms. -->
                                     </form>
                                 </field>
                             </page>
+                            <page string="Note">
+                                <label for="notes" />
+                                <field name="notes" colspan="4"/>
+                            </page>
+							<page string="Segnatura XML" groups="base.group_system">
+                                <label for="xml_signature" />
+                                <field name="xml_signature" colspan="4"/>
+                            </page>
                         </notebook>
-                        <label for="notes" />
-                        <field name="notes" colspan="4"/>
+
                     </sheet>
+
                 </form>
             </field>
         </record>
@@ -479,7 +583,7 @@ this module contains the full copyright notices and license terms. -->
                     <field name="registration_date_to" filter_domain="[('registration_date','&lt;=',self)]"/>
                     <field name="classification"/>
                     <field name="typology"/>
-                    <field name="dossier"/>
+                    <field name="dossier_ids"/>
                     <field name="state" />
                </search>
             </field>

@@ -33,6 +33,10 @@ pip-log.txt
 .pydevproject
 .settings/
 
+#Intellij
+*.iml
+.idea
+
 #buildout
 anybox.recipe.openerp
 a.r.odoo
@@ -40,6 +44,7 @@ downloads
 etc
 upgrade.*
 sandbox
+venv
 bootstrap.py
 aro
 a.r.openerp

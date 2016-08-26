@@ -64,3 +64,7 @@ color: #366732;
 .openerp .oe_form_sheet{
   max-width: 90%!important;
 }
+
+.modal-lg{
+  width: 80%!important;
+}

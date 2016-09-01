@@ -1,0 +1,4 @@
+Per impostare le configurazioni di default, è necessario clonare i file .template
+ed eliminare l'estensione .template, lasciando solo l'estensione .xml
+
+Configurare poi i parametri secondo i valori corretti per l'installazione

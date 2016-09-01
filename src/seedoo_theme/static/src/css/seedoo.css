@@ -52,6 +52,10 @@
   color: white;
 }
 
+.graph_header .dropdown-toggle{
+  color: #4c4c4c!important;
+}
+
 
 .openerp .oe_topbar .oe_dropdown_menu li a {
   color: white;

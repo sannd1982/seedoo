@@ -1178,6 +1178,7 @@ class protocollo_journal(orm.Model):
 
     def _create_journal(self, cr, uid, ids=False, context=None):
         journal_obj = self.pool.get('protocollo.journal')
+        journal_id = 0
         last_journal_id = journal_obj.search(
             cr, uid,
             [
@@ -1270,10 +1271,11 @@ class protocollo_journal(orm.Model):
                 return False
         report_service = 'report.protocollo.journal.webkit'
         service = netsvc.LocalService(report_service)
-        service.create(cr, uid,
-                       [journal_id],
-                       {'model': 'protocollo.journal'},
-                       context)
+        if journal_id > 0:
+            service.create(cr, uid,
+                           [journal_id],
+                           {'model': 'protocollo.journal'},
+                           context)
         return True
 
 

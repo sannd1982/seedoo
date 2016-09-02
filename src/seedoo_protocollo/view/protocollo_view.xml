@@ -536,6 +536,7 @@ this module contains the full copyright notices and license terms. -->
                                     <form>
                                         <field name="name"/>
                                         <field name="user_id"/>
+                                        <field name="agent_id" attrs="{'invisible':[('type','!=', 'cancel')]}"/>
                                         <field name="type"/>
                                         <field name="description"/>
                                         <field name="before" attrs="{'invisible':[('type','=', 'cancel')]}"/>

@@ -19,10 +19,12 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, osv
+# from openerp.osv import fields, osv
 import time
 import datetime
 from openerp.tools.translate import _
+
+from parts.odoo.openerp import osv
 
 MAPPING_PRIORITIES = {'1':'Alta','2':'Normale','3':'Bassa'}
 
@@ -144,7 +146,7 @@ class attivita_attivita(osv.Model):
         'referente_id': fields.many2one('res.users', 'Referente', required=True),
         'assegnatario_id': fields.many2one('res.users', 'Assegnatario', domain="[('is_visible','=',True)]"),
         'aggiornamenti_ids': fields.one2many('attivita.aggiornamento','attivita_id', 'Aggiornamenti'),
-        'avanzamento': fields.integer('Avanzamento'),
+        'avanzamento': fields.integer('Avanzamento', group_operator="avg"),
         'motivazione_annullamento': fields.text('Motivazione Annullamento'),
         'motivazione_richiesta_integrazione': fields.text('Motivazione Richiesta Integrazione'),
         'richiesta_integrazione': fields.boolean('Richiesta Integrazione'),

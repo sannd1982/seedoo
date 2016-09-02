@@ -31,6 +31,11 @@ class wizard(osv.TransientModel):
             'Responsabile',
             readonly=True
         ),
+        'agent_id': fields.many2one(
+            'res.users',
+            'Mandante',
+            readonly=False
+        ),
         'date_cancel': fields.datetime(
             'Data Cancellazione',
             required=True,
@@ -40,6 +45,7 @@ class wizard(osv.TransientModel):
 
     _defaults = {
         'user_id': lambda obj, cr, uid, context: uid,
+        'agent_id': lambda obj, cr, uid, context: uid,
         'date_cancel': fields.datetime.now
     }
 
@@ -51,7 +57,8 @@ class wizard(osv.TransientModel):
             historical = {}
             historical['name'] = wizard.date_cancel
             historical['user_id'] = wizard.user_id.id
-            historical['description'] = wizard.name
+            historical['agent_id'] = wizard.agent_id.id
+            historical['description'] = wizard.name + 'Autorizzato da: ' + wizard.agent_id.name
             historical['type'] = 'cancel'
             history_id = historical_obj.create(cr, uid, historical)
             vals = {}

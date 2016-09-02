@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
+        <menuitem name="Attività" id="menu_root_attivita" sequence="110"/>
+        
         <record model='ir.ui.view' id='attivita_categoria_form'>
             <field name="name">attivita.categoria.form</field>
             <field name="model">attivita.categoria</field>
@@ -302,7 +304,6 @@
             <field name="domain">[('state','=','chiuso'),('referente_id','=',uid)]</field>
         </record>
         
-        <menuitem name="Attività" id="menu_root_attivita" sequence="110"/>
 		<menuitem name="Attività" id="menu_attivita" parent="menu_root_attivita" sequence="1"/>
 		<menuitem name="Tutte" id="menu_tutte_attivita" parent="menu_attivita" sequence="1" action="attivita_attivita_action"/>
 		<menuitem name="Assegnate da me" id="menu_attivita_pending" parent="menu_attivita" sequence="2" action="attivita_attivita_pending_action"/>
@@ -434,8 +435,9 @@
                 <graph string="Performance Attivita" type="pivot">
                     <!--field name="name" type="col"/-->
                     <field name="assegnatario_id"  type="row"/>
-                    <field name="tempo_realizzazione" type="measure"/>
+                    <field name="tempo_realizzazione" type="measure" />
                     <field name="tempo_ritardo" type="measure"/>
+                    <field name="avanzamento" type="measure"/>
                 </graph>
             </field>
         </record>

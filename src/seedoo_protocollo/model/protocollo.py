@@ -175,6 +175,8 @@ class protocollo_storico(orm.Model):
             'Dati Successivi', readonly=True),
         'user_id': fields.many2one(
             'res.users', 'Utente', readonly=True),
+        'agent_id': fields.many2one(
+            'res.users', 'Mandante', readonly=True),
         'protocollo_id': fields.many2one(
             'protocollo.protocollo', 'Protocollo', readonly=True,
             ondelete="cascade"),

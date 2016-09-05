@@ -3,3 +3,4 @@
 # this module contains the full copyright notices and license terms.
 
 import richiedi_classificazione_protocollo_wizard
+import richiedi_annullamento_protocollo_wizard

@@ -18,13 +18,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-# from openerp.osv import fields, osv
+from openerp.osv import fields, osv
 import time
 import datetime
 from openerp.tools.translate import _
-
-from parts.odoo.openerp import osv
 
 MAPPING_PRIORITIES = {'1':'Alta','2':'Normale','3':'Bassa'}
 

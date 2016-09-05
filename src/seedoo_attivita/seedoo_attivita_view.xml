@@ -2,18 +2,34 @@
 <openerp>
     <data>
 
-		<record model='ir.ui.view' id='protocollo_protocollo_attivita_form'>
+        <record model='ir.ui.view' id='protocollo_protocollo_attivita_form'>
             <field name="name">protocollo.protocollo.form</field>
             <field name="model">protocollo.protocollo</field>
             <field name="inherit_id" ref="seedoo_protocollo.protocollo_protocollo_form"/>
             <field name="arch" type="xml">
                 <page string="Storico Modifiche" position="after">
-                	<page string="Attivita Correlate">
+                    <page string="Attivita Correlate">
                         <field name="attivita_ids"/>
                     </page>
                 </page>
+                <page string="Segnatura XML" position="after">
+                    <page string="Azioni">
+                        <group col="4">
+                            <group>
+                                <button name="%(protocollo_cancellation_action)d" type='action'
+                                        states="registered,notified,sent,waiting,error"
+                                        string="Annullamento Protocollo"
+                                        class="oe_highlight_positive"/>
+                            </group>
+                            <newline/>
+                        </group>
+                    </page>
+                </page>
+
                 <field name="dossier_ids" position="after">
-                    <button name="%(protocollo_classify_action)d" type='action' states="registered,notified,sent,waiting,error" string="Richiedi Classificazione" class="oe_highlight_positive"/>
+                    <button name="%(protocollo_classify_action)d" type='action'
+                            states="registered,notified,sent,waiting,error" string="Richiedi Classificazione"
+                            class="oe_highlight_positive"/>
                     <newline/>
                 </field>
             </field>
@@ -25,7 +41,7 @@
             <field name="inherit_id" ref="attivita.attivita_attivita_form"/>
             <field name="arch" type="xml">
                 <field name="ultimo_aggiornamento" position="after">
-                	<field name="protocollo_id" attrs="{'invisible': [('categoria','not in', [1,2,3,4])]}"/>
+                    <field name="protocollo_id" attrs="{'invisible': [('categoria','not in', [1,2,3,4])]}"/>
                 </field>
             </field>
         </record>

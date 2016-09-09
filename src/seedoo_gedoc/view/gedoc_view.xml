@@ -20,16 +20,26 @@
             <field name="name">protocollo.classification.form</field>
             <field name="model">protocollo.classification</field>
             <field name="arch" type="xml">
-                <form string="Titolario">
-                    <field name="class_type" />
-                    <newline/>
-                    <field name="name" />
-                    <field name="code" />
-                	<field name="complete_name" />
-                    <field name="parent_id" />
-                    <field name="description" colspan="4"/>
-                    <field name="assigne" colspan="4"/>
-                    <field name="dossier_ids" colspan="4"/>
+                <form string="Titolario" version="7.0">
+                    <sheet>
+                        <group col="4">
+                            <field name="class_type" />
+                            <newline/>
+                            <field name="name" />
+                            <field name="code" />
+                            <field name="complete_name" />
+                            <field name="parent_id" />
+                            <field name="description" colspan="4"/>
+                        </group>
+                        <notebook>
+                            <page string="Uffici di competenza">
+                                <field name="assigne" nolabel="1" colspan="4"/>
+                            </page>
+                            <page string="Fascicoli">
+                                <field name="dossier_ids" nolabel="1" colspan="4"/>
+                            </page>
+                        </notebook>
+                    </sheet>
                 </form>
             </field>
         </record>
@@ -85,10 +95,8 @@
             <field name="arch" type="xml">
                 <form string="Fascicolo" version="7.0">
                    <header>
-                    	<div>
 		                    <button name="open" states="draft" string="Apri Fascicolo" class="oe_highlight_positive"/>
 		                    <button name="close" states="open" string="Chiudi Fascicolo" class="oe_highlight_warning"/>
-	                    </div>
                         <field name="state" widget="statusbar" statusbar_visible="draft,open,closed" statusbar_colors='{"open":"blue","closed":"green"}'/>
                 	</header>
                     <sheet>

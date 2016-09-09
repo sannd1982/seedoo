@@ -5,7 +5,7 @@ this module contains the full copyright notices and license terms. -->
     <data>
         <!-- wizard action on protocollo.protocollo -->
         <act_window id="protocollo_classify_action"
-            name="Annullamento Protocollo"
+            name="Richiesta Classificazione"
             src_model="protocollo.protocollo"
             res_model="protocollo.classify.wizard"
             view_type="form" view_mode="form"

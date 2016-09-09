@@ -74,6 +74,7 @@
                 <form string="Attività" version="7.0">
                     <header>
                     	<button name="%(action_assegna_attivita)d" string="Assegna" groups="attivita.res_groups_referente,attivita.res_groups_attivita_manager,base.group_erp_manager" type="action" states="draft" class="oe_highlight"/>
+                        <button name="%(action_assegna_attivita)d" string="Smista" groups="attivita.res_groups_referente,attivita.res_groups_attivita_manager,base.group_erp_manager" type="action" states="assegnato" class="oe_highlight"/>
                         <button name="prendi_carico" string="Prendi in carico" groups="attivita.res_groups_assegnatario,attivita.res_groups_attivita_manager,base.group_erp_manager" type="object" states="assegnato" class="oe_highlight"/>
                         <button name="concludi" string="Concludi" groups="attivita.res_groups_assegnatario,attivita.res_groups_attivita_manager,base.group_erp_manager" type="object" states="lavorazione" class="oe_highlight"/>
                         <button name="valida" string="Valida e chiudi" groups="attivita.res_groups_referente,attivita.res_groups_attivita_manager,base.group_erp_manager" type="object" states="concluso" class="oe_highlight"/>
@@ -123,7 +124,7 @@
                     			<separator string="Soggetti Coinvolti" colspan="4"/>
                     			<newline/>
 		                    	<field name="referente_id" domain="[('groups_id', 'in', [%(res_groups_referente)d])]"/>
-		                    	<field name="assegnatario_id" domain="[('groups_id', 'in', [%(res_groups_assegnatario)d])]" attrs="{'invisible': [('state','in',['draft','assegnato'])]}" readonly="1"/>
+		                    	<field name="assegnatario_id" domain="[('groups_id', 'in', [%(res_groups_assegnatario)d])]" />
 	                    	</group>
 	                    	<group>
 	                    		<separator string="Date" colspan="4"/>
@@ -244,7 +245,45 @@
             </field>
         </record>
 
-		    <record model="ir.ui.view" id="attivita_attivita_graph">
+                <!-- Project Task Kanban View -->
+        <record model="ir.ui.view" id="attivita_attivita_kanban">
+            <field name="name">attivita.attivita.kanban</field>
+            <field name="model">attivita.attivita</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="state" class="attivita_kanban">
+                    <field name="priorita"/>
+                    <field name="state"/>
+                    <field name="referente_id"/>
+                    <field name="assegnatario_id"/>
+                    <field name="descrizione"/>
+                    <field name="categoria"/>
+                    <field name="data_scadenza"/>
+                    <field name="data_assegnazione"/>
+                    <field name="categoria"/>
+                    <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div><b><field name="name"/></b></div>
+                                <div>
+                                    <field name="priorita" widget="priority"/><br/>
+                                    <field name="categoria"/><br/>
+                                    <strong>Ref: </strong><field name="referente_id"/><br/>
+                                    <strong>Ass: </strong><field name="assegnatario_id"/><br/>
+                                    <strong>Assegnato il: </strong><field name="data_assegnazione" /><br/>
+                                    <strong>Entro: </strong><field name="data_scadenza" /><br/>
+                                </div>
+                            </div>
+                            <div class="oe_clear"></div>
+                        </div>
+                    </t>
+                    </templates>
+                </kanban>
+            </field>
+         </record>
+
+
+        <record model="ir.ui.view" id="attivita_attivita_graph">
         <field name="name">Analisi Attività</field>
         <field name="model">attivita.attivita</field>
         <field name="arch" type="xml">
@@ -267,7 +306,7 @@
             <field name="name">Attività Assegnate da me</field>
             <field name="res_model">attivita.attivita</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree,form,calendar</field>
+            <field name="view_mode">kanban,tree,form,calendar</field>
             <field name="domain">[('state','=','assegnato'),('referente_id','=',uid)]</field>
         </record>
  
@@ -275,7 +314,7 @@
             <field name="name">Attività Assegnate a me</field>
             <field name="res_model">attivita.attivita</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree,form,calendar</field>
+            <field name="view_mode">kanban,tree,form,calendar</field>
             <field name="domain">[('state','=','assegnato'),('assegnatario_id','=',uid)]</field>
         </record>    
 

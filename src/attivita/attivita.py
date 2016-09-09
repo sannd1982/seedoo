@@ -19,6 +19,7 @@
 #
 ##############################################################################
 from openerp.osv import fields, osv
+from openerp import api
 import time
 import datetime
 from openerp.tools.translate import _
@@ -89,7 +90,8 @@ class attivita_attivita(osv.Model):
     _name = 'attivita.attivita'
     _description = 'Attivita'
     _date_name = "date_start"
-    
+    _inherit = ['ir.needaction_mixin']
+
     def _type_selection(self, cr, uid, context=None):
         return [('draft', 'Bozza'), 
                    ('assegnato', 'Assegnato'),
@@ -128,6 +130,14 @@ class attivita_attivita(osv.Model):
         #for id in ids:
         #    res[id] = res.get(id)
         return res
+
+    @api.model
+    def state_groups(self, present_ids, domain, **kwargs):
+        folded = {key: (key in self.FOLDED_STATES) for key, _ in self.STATES}
+        # Need to copy self.STATES list before returning it,
+        # because odoo modifies the list it gets,
+        # emptying it in the process. Bad odoo!
+        return self.STATES[:], folded
         
     _columns = {
         'name': fields.char('Nome', required=True),
@@ -164,6 +174,44 @@ class attivita_attivita(osv.Model):
         'referente_id': lambda s, cr, uid, c: uid,
         'richiesta_integrazione': False,
     }
+
+    _group_by_full = {
+        'state': state_groups
+    }
+
+    STATES = [
+        ('assegnato', 'Assegnato'),
+        ('lavorazione', 'Preso In Carico'),
+        ('concluso', 'Concluso')
+            ]
+
+    FOLDED_STATES = [
+        'concluso'
+    ]
+
+    def _needaction_domain_get(self, cr, uid, context=None):
+        return [('state', '=', 'assegnato'),('assegnatario_id', '=', uid)]
+
+    def _read_group_fill_results(self, cr, uid, domain, groupby,
+                                 remaining_groupbys, aggregated_fields,
+                                 count_field, read_group_result,
+                                 read_group_order=None, context=None):
+        """
+        The method seems to support grouping using m2o fields only,
+        while we want to group by a simple status field.
+        Hence the code below - it replaces simple status values
+        with (value, name) tuples.
+        """
+        if groupby == 'state':
+            STATES_DICT = dict(self.STATES)
+            for result in read_group_result:
+                state = result['state']
+                result['state'] = (state, STATES_DICT.get(state))
+
+        return super(attivita_attivita, self)._read_group_fill_results(
+            cr, uid, domain, groupby, remaining_groupbys, aggregated_fields,
+            count_field, read_group_result, read_group_order, context
+        )
     
     
 
@@ -173,6 +221,26 @@ class attivita_attivita(osv.Model):
 #        return super(attivita_attivita, self).create(cr, uid, data, context=context)
         
     def write(self, cr, uid, ids, data, context=None):
+        if data.has_key('state'):
+            if data['state'] == 'lavorazione':
+                data['assegnatario_id'] = uid
+                data['data_presa_carico'] = time.strftime("%Y-%m-%d")
+                data['richiesta_integrazione'] =  False
+                template_model_data = self.pool.get('ir.model.data').search(cr, uid, [('name', '=', 'template_email_notifica_referente_presa_carico')])
+                if len(template_model_data):
+                    if isinstance(ids, list):
+                        ids = ids[0]
+                    template_id = self.pool.get('ir.model.data').browse(cr, uid, template_model_data[0])
+                    self.pool.get('email.template').generate_email(cr, uid, template_id.res_id, ids, context)
+            elif data['state'] == 'concluso':
+                data['data_conclusione'] = time.strftime("%Y-%m-%d")
+                data['avanzamento'] = 100
+                template_model_data = self.pool.get('ir.model.data').search(cr, uid, [('name', '=', 'template_email_notifica_referente_chiusura')])
+                if len(template_model_data):
+                    if isinstance(ids, list):
+                        ids = ids[0]
+                    template_id = self.pool.get('ir.model.data').browse(cr, uid, template_model_data[0])
+                    self.pool.get('email.template').generate_email(cr, uid, template_id.res_id, ids, context)
         res_id = super(attivita_attivita, self).write(cr, uid, ids, data, context=context)
         storico_obj = self.pool.get('attivita.storico')
         user_obj = self.pool.get('res.users')
@@ -208,24 +276,11 @@ class attivita_attivita(osv.Model):
     
     def prendi_carico(self, cr, uid, ids, context=None):
         self.write(cr, uid, ids, {'assegnatario_id': uid,'state': 'lavorazione','data_presa_carico': time.strftime("%Y-%m-%d"),'richiesta_integrazione': False})
-        # Gestione della notifica
-        template_model_data = self.pool.get('ir.model.data').search(cr, uid, [('name', '=', 'template_email_notifica_referente_presa_carico')])
-        if len(template_model_data):
-            if isinstance(ids, list):
-                ids = ids[0]
-            template_id = self.pool.get('ir.model.data').browse(cr, uid, template_model_data[0])
-            self.pool.get('email.template').generate_email(cr, uid, template_id.res_id, ids, context)
         return True
     
     
     def concludi(self, cr, uid, ids, context=None):
         self.write(cr, uid, ids, {'state': 'concluso','data_conclusione': time.strftime("%Y-%m-%d"),'avanzamento': 100})
-        template_model_data = self.pool.get('ir.model.data').search(cr, uid, [('name', '=', 'template_email_notifica_referente_chiusura')])
-        if len(template_model_data):
-            if isinstance(ids, list):
-                ids = ids[0]
-            template_id = self.pool.get('ir.model.data').browse(cr, uid, template_model_data[0])
-            self.pool.get('email.template').generate_email(cr, uid, template_id.res_id, ids, context)
         return True
     
     def valida(self, cr, uid, ids, context=None):

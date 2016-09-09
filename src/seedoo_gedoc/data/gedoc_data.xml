@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-    
+
+        <template id="gedoc_style" name="Seedoo Style" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/seedoo_gedoc/static/src/css/gedoc.css"/>
+            </xpath>
+        </template>
+
         <!-- Model Typology -->
 
     	<record id="gedoc_document_type1" model="gedoc.model.type">

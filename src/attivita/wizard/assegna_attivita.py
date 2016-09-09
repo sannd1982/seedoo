@@ -52,22 +52,21 @@ class assegna_attivita(osv.osv_memory):
         attivita_id = context and context.get('active_id') or False
         for this in self.browse(cr, uid, ids, context=context):
             context['assegnazione'] = True
+            attivita = attivita_obj.browse(cr,uid,attivita_id)
+            if attivita.state == 'assegnato' and attivita.assegnatario_id.id != uid:
+                raise osv.except_osv(_('Attenzione!'), _("Solo l'assegnatario puo' smistare l'attivita'!"))
             attivita_obj.write(cr,uid,attivita_id,{'state': 'assegnato', 
                                                    'data_assegnazione': time.strftime("%Y-%m-%d"),
                                                    'data_scadenza': this.data_scadenza,
                                                    'assegnatario_id': this.assegnatario_id.id})
             # Gestione della notifica
-            configuration_obj = self.pool.get('brains.configuration')
-            configuration_ids = self.pool.get('brains.configuration').search(cr,uid,[])
-            if len(configuration_ids) == 1:
-                configuration = configuration_obj.browse(cr,uid,configuration_ids[0])
-            if configuration.module_attivita_notifiche and configuration.notifica_assegnatario_assegnazione:
-                template_model_data = self.pool.get('ir.model.data').search(cr, uid, [('name', '=', 'template_email_notifica_assegnatario_assegnazione')])
-                if len(template_model_data):
-                    if isinstance(ids, list):
-                        ids = ids[0]
-                    template_id = self.pool.get('ir.model.data').browse(cr, uid, template_model_data[0])
-                    self.pool.get('email.template').generate_email(cr, uid, template_id.res_id, ids, context)
-            return True
+
+            template_model_data = self.pool.get('ir.model.data').search(cr, uid, [('name', '=', 'template_email_notifica_assegnatario_assegnazione')])
+            if len(template_model_data):
+                if isinstance(ids, list):
+                    ids = ids[0]
+                template_id = self.pool.get('ir.model.data').browse(cr, uid, template_model_data[0])
+                self.pool.get('email.template').generate_email(cr, uid, template_id.res_id, ids, context)
+        return True
     
 

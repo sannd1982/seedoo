@@ -146,7 +146,7 @@ class protocollo_dossier(osv.Model):
             'Codice Fascicolo',
             size=256,
             required=True,
-            readonly=True,
+            readonly=False,
         ),
         'description': fields.text(
             'Oggetto',

@@ -88,7 +88,8 @@ class protocollo_sender_receiver(orm.Model):
         'save_partner': fields.boolean(
             'Salva',
             help='Se spuntato salva i dati in anagrafica.'),
-        'partner_id': fields.many2one('res.partner', 'Anagrafica'),
+        'partner_id': fields.many2one('res.partner', 'Anagrafica',
+                                      domain="[('legal_type', '=', type)]"),
         'name': fields.char('Nome Cognome/Ragione Sociale',
                             size=512,
                             required=True),
@@ -470,7 +471,7 @@ class protocollo_protocollo(orm.Model):
         'fingerprint': fields.char('Impronta Documento', size=256),
         'classification': fields.many2one('protocollo.classification',
                                           'Titolario di Classificazione',
-                                          required=True,
+                                          required=False,
                                           readonly=True,
                                           states={
                                               'draft': [('readonly', False)]

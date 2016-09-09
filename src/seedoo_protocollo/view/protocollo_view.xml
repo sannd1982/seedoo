@@ -512,8 +512,10 @@ this module contains the full copyright notices and license terms. -->
                                 </group>
                             </page>
                             <page string="Preview">
-                                <field name="preview" nolabel="1" attrs="{'invisible':['|',('reserved','=',True),('mimetype','!=','application/pdf')], 'readonly':True}" widget="pdfviewer" options="{'width': '1100', 'height': '800'}" />
-
+                                <field name="preview" 
+                                       nolabel="1" 
+                                       attrs="{'invisible':['|',('reserved','=',True),('mimetype','!=','application/pdf')], 'readonly':True}" 
+                                       widget="pdfviewer"/>
                             </page>
                             <page string="Classificazioni">
 	                    	  <group col="4">

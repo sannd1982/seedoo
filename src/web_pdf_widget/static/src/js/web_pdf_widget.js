@@ -40,8 +40,8 @@ openerp.web_pdf_widget = function(instance)
             }
             var $preview= self.$el.find('.pdfviewer_media');
             var $view = $('<object data="'+url+'" type="application/pdf" width="100%" height="100%"></object>')
-            width_n = "600";
-            height_n = "500";
+            width_n = "100%";
+            height_n = "1200";
             $view.css('width',width_n);
             $view.css('height',height_n);
             $preview.empty();

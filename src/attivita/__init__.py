@@ -21,4 +21,3 @@
 
 import attivita
 import wizard
-import const

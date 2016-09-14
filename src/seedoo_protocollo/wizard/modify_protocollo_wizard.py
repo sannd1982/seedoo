@@ -18,6 +18,8 @@ class wizard(osv.TransientModel):
     _description = 'Modify Protocollo Management'
 
     def set_before(self, before, label, value):
+        if not value:
+            value = ''
         before += label + ': ' + value + '\n'
         return before
 

@@ -26,6 +26,9 @@ this module contains the full copyright notices and license terms. -->
                             <field name="email_from"/>
                             <field name="date"/>
                             <field name="author_id"/>
+                        </group>
+                        </div>
+                        <group col="4">
                             <newline/>
                             <field name="subject" colspan="4"/>
                             <field name="body" colspan="4"/>

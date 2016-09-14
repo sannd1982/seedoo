@@ -18,31 +18,40 @@ _logger = logging.getLogger(__name__)
 class gedoc_document(osv.Model):
     _inherit = 'gedoc.document'
 
+    STATE_SELECTION = [
+        ('draft', 'Compilazione'),
+        ('protocol', 'Da protocollare'),
+    ]
     _columns = {
+        'typology': fields.many2one('protocollo.typology', 'Tipologia', required=True,
+                                    help="Tipologia invio/ricevimento: Raccomandata, Fax, PEC, etc. si possono inserire nuove tipologie dal menu Tipologie."),
         'sender_receiver_ids': fields.one2many('protocollo.sender_receiver', 'gedoc_id', 'Destinatari'),
-        'note_protocollazione': fields.text(
-            'Note Protocollazione',
-            required=True,
-        ),
+        'note_protocollazione': fields.text('Note Protocollazione', required=True),
+        'state': fields.selection(STATE_SELECTION, 'Stato', readonly=True, help="Lo stato del documento.", select=True)
     }
 
-    def richiedi_protocollazione(self, cr, uid, ids, *args):
-        for gedoc in self.browse(cr, uid, ids):
+    _defaults = {
+        'state': 'draft',
+    }
+
+    def richiedi_protocollazione(self, cr, uid, ids, context=None):
+        # gedoc = self.browse(cr, uid, ids[0], context)
+        for gedoc in self.browse(cr, uid, ids[0], context):
             prot = gedoc.sender_receiver_ids.protocollo_id
-            
-            # super(protocollo_protocollo, self).action_register(cr, uid, [prot])
-            # create attività
-            # for prot in self.browse(cr, uid, prot_ids):
-            now = datetime.datetime.now()
-            user_list = []
-            if prot.assigne_users:
-                user_list = user_list + prot.assigne_users.ids
-            if prot.assigne is not False:
-                for d in prot.assigne:
-                    department_manager = self.pool.get("hr.employee").browse(cr,uid,d.manager_id.id)
-                    r = self.pool.get('resource.resource').browse(cr,uid, department_manager.resource_id.id)
-                    if r:
-                        user_list.append(r.user_id.id)
+
+            protocollo_vals = {
+                'subject': gedoc.note_protocollazione,
+                'sender_receivers': [(6, 0, gedoc.sender_receiver_ids.ids)],
+                'typology': gedoc.typology.id,
+                'type': 'out',
+                'doc_id': gedoc.main_doc_id.id,
+                'datas_fname': gedoc.main_doc_id.name,
+                'mimetype': gedoc.main_doc_id.file_type,
+                'datas': gedoc.main_doc_id.datas
+            }
+            self.pool.get("protocollo.protocollo").create(cr, uid, protocollo_vals, context=None)
+            self.write(cr, uid, [gedoc.id], {'state': 'protocol'})
+        return True
 
 
 class sender_receiver(osv.Model):

@@ -21,7 +21,9 @@ Seedoo Theme
         'wizard/richiedi_classificazione_protocollo_wizard_view.xml',
         'wizard/richiedi_annullamento_protocollo_wizard_view.xml',
         'seedoo_attivita_view.xml',
-        'data/seedoo_attivita_data.xml'
+        'data/seedoo_attivita_data.xml',
+        'view/gedoc_view.xml',
+        'security/ir.model.access.csv',
     ],
     'js': [],
     'css': [],

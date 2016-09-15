@@ -4,7 +4,6 @@
 
 import logging
 
-from attivita.const.tempo_esecuzione_attivita import TempoEsecuzioneAttivita
 from openerp.osv import fields, osv
 from openerp.tools import (
     DEFAULT_SERVER_DATETIME_FORMAT as DSDF)
@@ -38,7 +37,8 @@ class wizard(osv.TransientModel):
         protocollo_obj = self.pool.get('protocollo.protocollo')
         prot = protocollo_obj.browse(cr, uid, protocollo_id)
         return prot.user_id
-    
+
+    # _defaults = {'assegnatario': lambda obj, cr, uid, ctx=None: uid,}
     _defaults = {
         'assegnatario': get_default_assegnatario,
     }
@@ -52,7 +52,7 @@ class wizard(osv.TransientModel):
         now = datetime.datetime.now()
         categoria_obj = self.pool.get('attivita.categoria')
         category_ids = categoria_obj.search(cr, uid, [('name', '=', 'Richiesta Annullamento Protocollo')])
-        tempo_esecuzione_attivita = TempoEsecuzioneAttivita.ANNULLAMENTO
+        # tempo_esecuzione_attivita = TempoEsecuzioneAttivita.ANNULLAMENTO
         if len(category_ids) == 1:
             category = categoria_obj.browse(cr, uid, category_ids[0])
             tempo_esecuzione_attivita = category.tempo_standard

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record model='ir.ui.view' id='gedoc_document_tree'>
+            <field name="name">gedoc.document.tree</field>
+            <field name="model">gedoc.document</field>
+            <field name="inherit_id" ref="seedoo_gedoc.gedoc_document_tree"/>
+            <field name="arch" type="xml">
+                <tree string="Documento" position="replace">
+                    <tree string="Documento" version="7.0" colors="blue:state=='draft';green:state=='protocol'">
+                        <field name="state"/>
+                    </tree>
+                </tree>
+            </field>
+        </record>
+
+        <record model='ir.ui.view' id='gedoc_document_form'>
+            <field name="name">gedoc.document.form</field>
+            <field name="model">gedoc.document</field>
+            <field name="inherit_id" ref="seedoo_gedoc.gedoc_document_form"/>
+            <field name="arch" type="xml">
+                <button name="%(seedoo_gedoc.gedoc_upload_doc_wizard_action)d" position="replace">
+                    <button name="%(seedoo_gedoc.gedoc_upload_doc_wizard_action)d"  type='action' string='Carica Documento'
+                            attrs="{'invisible': ['|',('state','!=','draft'),('main_doc_id','!=',False)]}" groups="seedoo_gedoc.group_gedoc_user"/>
+                </button>
+
+                <button name="%(seedoo_gedoc.gedoc_upload_doc_wizard_action)d" position="after">
+                    <button name="richiedi_protocollazione" states="draft" type="object"
+                            string="Richiedi Protocollazione"
+                            class="oe_highlight_positive"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,protocol"
+                           statusbar_colors='{"draft":"blue","notified":"red"}'/>
+
+                </button>
+                <field name="subject" position="after">
+                    <field name="note_protocollazione"/>
+                    <field name="typology"/>
+                </field>
+                <page string="Permessi Documento" position="after">
+                    <page string="Destinatari">
+                        <field name="sender_receiver_ids" nolabel="1">
+                        </field>
+                    </page>
+                </page>
+
+
+            </field>
+        </record>
+
+    </data>
+</openerp>

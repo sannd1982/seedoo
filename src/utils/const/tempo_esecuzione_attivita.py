@@ -2,3 +2,4 @@
 
 class TempoEsecuzioneAttivita(object):
     ANNULLAMENTO = 15
+    RICHIESTA_PROTOCOLLAZIONE = 15

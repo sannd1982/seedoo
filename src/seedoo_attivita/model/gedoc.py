@@ -26,10 +26,13 @@ class gedoc_document(osv.Model):
         ('protocol', 'Da protocollare'),
     ]
     _columns = {
-        'typology': fields.many2one('protocollo.typology', 'Tipologia', required=True,
-                                    help="Tipologia invio/ricevimento: Raccomandata, Fax, PEC, etc. si possono inserire nuove tipologie dal menu Tipologie."),
-        'sender_receiver_ids': fields.one2many('protocollo.sender_receiver', 'gedoc_id', 'Destinatari'),
-        'note_protocollazione': fields.text('Note Protocollazione', required=True),
+        # 'typology': fields.many2one(
+        #     'protocollo.typology', 'Tipologia', required=True,
+        #                             help="Tipologia invio/ricevimento: Raccomandata, Fax, PEC, etc. si possono inserire nuove tipologie dal menu Tipologie."),
+        # 'sender_receiver_ids': fields.one2many(
+        #     'protocollo.sender_receiver', 'gedoc_id', 'Destinatari'),
+        # 'note_protocollazione': fields.text('Note Protocollazione', required=True),
+
         'state': fields.selection(STATE_SELECTION, 'Stato', readonly=True, help="Lo stato del documento.", select=True)
     }
 
@@ -41,10 +44,13 @@ class gedoc_document(osv.Model):
         user_obj = self.pool.get('res.users')
         user_value = user_obj.browse(cr, uid, uid)
         return user_value.login or False
-    
+
+    def generate_msg(self, cr, uid, ids, context=None):
+        raise osv.except_osv(_("Warning!"), _("Inserire un allegato !!."))
+
     def richiedi_protocollazione(self, cr, uid, ids, context=None):
         # gedoc = self.browse(cr, uid, ids[0], context)
-        
+
         for gedoc in self.browse(cr, uid, ids[0], context):
             # prot = gedoc.sender_receiver_ids.protocollo_id
 
@@ -60,7 +66,7 @@ class gedoc_document(osv.Model):
                 'datas': gedoc.main_doc_id.datas
             }
             prot_id = self.pool.get("protocollo.protocollo").create(cr, uid, protocollo_vals, context=None)
-            
+
             # crea attività
             prot = self.pool.get('protocollo.protocollo').browse(cr, uid, prot_id)
             user_value = self.pool.get('res.users').browse(cr, uid, uid)
@@ -73,13 +79,13 @@ class gedoc_document(osv.Model):
                 category = categoria_obj.browse(cr, uid, category_ids[0])
                 tempo_esecuzione_attivita = category.tempo_standard
             data_scadenza = now + datetime.timedelta(days=tempo_esecuzione_attivita)
-            
+
             users_manager = self.pool.get('res.users').get_users_from_group(cr, uid, 'Manager protocollo')
             # remove superuser_id, da aggiungere il controllo delle eccezzioni
             list_ids = list(users_manager.ids)
             list_ids.remove(SUPERUSER_ID)
             assegnatario_id = list_ids[0]
-            
+
             activity_vals = {
                 'name': "Richiesta protocollazione protocollo num %s da %s " % (prot.name, user_value.login),
                 'descrizione': gedoc.subject,
@@ -102,6 +108,6 @@ class gedoc_document(osv.Model):
 class sender_receiver(osv.Model):
     _inherit = 'protocollo.sender_receiver'
 
-    _columns = {
-        'gedoc_id': fields.many2one('gedoc.document', 'Documento'),
-    }
+    # _columns = {
+    #     'gedoc_id': fields.many2one('gedoc.document', 'Documento'),
+    # }

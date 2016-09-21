@@ -398,6 +398,9 @@ this module contains the full copyright notices and license terms. -->
                                 <field name="type"/>
                                 <field name="partner_id" on_change="on_change_partner(partner_id)"
                                        attrs="{'readonly': [('save_partner','=',True)]}"/>
+                                <field name="pa_type" placeholder=""
+                                       attrs="{'invisible': [('type','!=', 'government')]}"
+                                       on_change="on_change_pa_type(pa_type)"/>
                             </group>
                             <group col="4">
                                 <group col="4" colspan="2">

@@ -10,7 +10,7 @@
     'website': "http://www.flosslab.com",
     'summary': 'Attività di gestione del protocollo Seeedoo',
     'description': """
-Seedoo Theme
+Seedoo Gestione attività correlate al protocollo.
 ============
     """,
     'version': "1.0",
@@ -21,6 +21,7 @@ Seedoo Theme
         'wizard/richiedi_classificazione_protocollo_wizard_view.xml',
         'wizard/richiedi_annullamento_protocollo_wizard_view.xml',
         'wizard/richiedi_protocollazione_wizard_view.xml',
+        'wizard/richiedi_fascicolazione_protocollo_wizard_view.xml',
         'view/seedoo_attivita_view.xml',
         'view/gedoc_view.xml',
         'data/seedoo_attivita_data.xml',

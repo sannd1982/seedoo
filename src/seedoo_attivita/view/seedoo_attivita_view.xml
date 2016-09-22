@@ -29,7 +29,7 @@
                             <group>
                                 <button name="%(protocollo_cancellation_action)d" type='action'
                                         states="registered,notified,sent,waiting,error"
-                                        string="Annullamento Protocollo"
+                                        string="Richiesta Annullamento Protocollo"
                                         class="oe_highlight_positive"/>
                             </group>
                             <newline/>
@@ -37,7 +37,14 @@
                     </page>
                 </page>
 
-                <field name="dossier_ids" position="after">
+
+                <field name="dossier_ids" position="before">
+                    <button name="%(protocollo_folder_action)d" type='action'
+                            states="registered,notified,sent,waiting,error" string="Richiedi Fascicolazione"
+                            class="oe_highlight_assertive"/>
+                    <newline/>
+                </field>
+                <field name="classification" position="before">
                     <button name="%(protocollo_classify_action)d" type='action'
                             states="registered,notified,sent,waiting,error" string="Richiedi Classificazione"
                             class="oe_highlight_positive"/>

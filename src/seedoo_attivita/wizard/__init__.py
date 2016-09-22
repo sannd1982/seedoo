@@ -5,4 +5,5 @@
 from . import richiedi_classificazione_protocollo_wizard
 from . import richiedi_annullamento_protocollo_wizard
 from . import richiedi_protocollazione_wizard
+from . import richiedi_fascicolazione_protocollo_wizard
 

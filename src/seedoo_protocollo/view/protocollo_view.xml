@@ -544,19 +544,14 @@ this module contains the full copyright notices and license terms. -->
                             </page>
                             <page string="Classificazioni">
                                 <group col="4">
-                                    <group>
                                         <label for="dossier_ids"/>
                                         <field name="dossier_ids" nolabel="1"
                                                options="{'limit': 10, 'create': false, 'create_edit': false}"
-                                               domain="[('state','=','open')]"
+                                               domain="[('state','=','open')]" colspan="4"
                                         />
-                                    </group>
-                                    <newline/>
-                                    <group>
                                         <label for="classification"/>
-                                        <field name="classification" nolabel="1" widget="m2o_tree"
+                                        <field name="classification" nolabel="1" widget="m2o_tree" colspan="4"
                                                options="{'limit': 10, 'create': false, 'create_edit': false}"/>
-                                    </group>
 
                                 </group>
                             </page>

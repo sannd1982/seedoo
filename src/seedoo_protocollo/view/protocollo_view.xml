@@ -339,26 +339,7 @@ this module contains the full copyright notices and license terms. -->
             </field>
         </record>
 
-        <record model='ir.ui.view' id='protocollo_dossier_tree'>
-            <field name="name">protocollo.dossier.tree</field>
-            <field name="model">protocollo.dossier</field>
-            <field name="arch" type="xml">
-                <tree string="Fascicolo" version="7.0">
-                    <field name="name"/>
-                    <field name="classification_id"/>
-                </tree>
-            </field>
-        </record>
-
-        <record model='ir.ui.view' id='protocollo_dossier_search'>
-            <field name="name">protocollo.dossier.search</field>
-            <field name="model">protocollo.dossier</field>
-            <field name="arch" type="xml">
-                <search string="Fascicolo">
-                    <field name="name"/>
-                </search>
-            </field>
-        </record>
+  
 
         <record model='ir.actions.act_window' id='protocollo_dossier_act'>
             <field name="name">Fascicolo</field>

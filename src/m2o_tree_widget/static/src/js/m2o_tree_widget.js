@@ -99,7 +99,7 @@
         	modelFields.push(pid);
             var zNodes = new instance.web.Model(self.field.relation).query(modelFields)
 	            .filter([])
-	            .limit(300)
+	            .limit(1000)
 	            .all().then(function (res) {
 	            	var zNodes = [];
 	            	for (r in res) {

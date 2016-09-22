@@ -20,19 +20,12 @@ this module contains the full copyright notices and license terms. -->
             <field name="arch" type="xml">
                 <form string="Protocollo" version="7.0">
                     <sheet>
-                        <div class="oe_title">
-                            <label for="name" class="oe_edit_only"/>
-                            <h1>
-                                <field name="name" class="oe_inline"/>
-                            </h1>
-                            <label for="registration_date" class="oe_edit_only"/>
-                            <h2>
-                                <field name="registration_date" />
-                            </h2>
-                            <label for="type" class="oe_edit_only"/>
-                            <h2>
-                            <field name="type"/>
-                            </h2>
+                        <div class="gedoc_header">
+                            <group col="4">
+                                <field name="name"/>
+                                <field name="registration_date"/>
+                                <field name="type"/>
+                            </group>
                         </div>
                         <separator string="Causa della modifica" />
 	                    <field name="cause" colspan="4"/>
@@ -48,21 +41,23 @@ this module contains the full copyright notices and license terms. -->
                         </group>
                         </group>
 	                    <notebook>
-	                    	<page string="Classificazioni">
+	                    	<page string="Titolario">
 	                    	  <group col="4">
-	                    	  	<group>
-		                    		<label for="classification" />
-			                    	<field name="classification" nolabel="1"/>
-		                    	</group>
-		                    	<group>
-		                    		<label for="dossier_ids" />
-			                    	<field name="dossier_ids" nolabel="1" domain="[('state','=','open')]"/>
-		                    	</group>
+			                    	<field name="classification" nolabel="1" widget="m2o_tree"
+                                               options="{'limit': 10, 'create': false, 'create_edit': false}"/>
 		                      </group>
 	                    	</page>
+                            <page string="Fascicoli">
+	                    	  <group col="4">
+			                    	<field name="dossier_ids" nolabel="1" domain="[('state','=','open')]"/>
+                              </group>
+                            </page>
+                            <page string="Note">
+	                    	  <group col="4">
+			                    	<field name="notes" colspan="4" nolabel="1"/>
+                              </group>
+                            </page>
 	                    </notebook>
-                        <label for="notes" />
-	                    <field name="notes" colspan="4"/>
                     </sheet>
                     <footer>
                         <button string="Ok" name="action_save" type="object" class="oe_highlight"/>

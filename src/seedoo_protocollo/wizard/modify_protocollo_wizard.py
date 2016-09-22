@@ -60,7 +60,7 @@ class wizard(osv.TransientModel):
                                required=True,),
         'classification': fields.many2one('protocollo.classification',
                                           'Titolario di Classificazione',
-                                          required=True,),
+                                          required=False,),
         'sender_protocol': fields.char('Protocollo Mittente',
                                        required=False,),
         'dossier_ids': fields.many2many(
@@ -142,7 +142,10 @@ class wizard(osv.TransientModel):
             uid,
             context['active_id']
             )
-        return [(6, 0, protocollo.dossier_ids)]
+        dossier_ids = []
+        for dossier_id in protocollo.dossier_ids:
+            dossier_ids.append(dossier_id.id)
+        return [(6, 0, dossier_ids)]
 
     def _default_notes(self, cr, uid, context):
         protocollo = self.pool.get('protocollo.protocollo').browse(

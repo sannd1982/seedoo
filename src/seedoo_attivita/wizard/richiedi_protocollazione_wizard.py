@@ -16,8 +16,8 @@ from openerp import SUPERUSER_ID
 _logger = logging.getLogger(__name__)
 
 
-class protocollo_sender_receiver_wizard(osv.TransientModel):
-    _name = 'protocollo.sender_receiver.wizard'
+class document_request_sender_receiver_wizard(osv.TransientModel):
+    _name = 'document.request.sender_receiver.wizard'
 
     _columns = {
         # TODO: inserire anche AOO in type?
@@ -119,11 +119,10 @@ class protocollo_sender_receiver_wizard(osv.TransientModel):
                                         help="Tipologia invio/ricevimento: Raccomandata, Fax, PEC, etc. si possono inserire nuove tipologie dal menu Tipologie."),
 
             'sender_receivers': fields.one2many(
-                'protocollo.sender_receiver.wizard',
+                'document.request.sender_receiver.wizard',
                 'wizard_id',
                 'Mittenti/Destinatari',
-                required=True,
-                limit=1),
+                required=True),
 
             'note_protocollazione': fields.text('Note Protocollazione', required=True),
             'state': fields.selection(STATE_SELECTION, 'Stato', readonly=True, help="Lo stato del documento.",

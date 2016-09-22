@@ -9,6 +9,9 @@
             <field name="arch" type="xml">
                 <tree string="Documento" position="replace">
                     <tree string="Documento" version="7.0" colors="blue:state=='draft';green:state=='protocol'">
+                        <field name="document_type"/>
+                        <field name="name"/>
+                        <field name="user_id"/>
                         <field name="state"/>
                     </tree>
                 </tree>

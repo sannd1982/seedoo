@@ -11,7 +11,6 @@ import datetime
 from openerp import SUPERUSER_ID
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
-from seedoo_protocollo.model.protocollo import protocollo_protocollo
 
 from openerp import SUPERUSER_ID
 

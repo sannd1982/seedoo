@@ -37,7 +37,8 @@ class wizard(osv.TransientModel):
         protocollo_obj = self.pool.get('protocollo.protocollo')
         prot = protocollo_obj.browse(cr, uid, protocollo_id)
         return prot.user_id
-    
+
+    # _defaults = {'assegnatario': lambda obj, cr, uid, ctx=None: uid,}
     _defaults = {
         'assegnatario': get_default_assegnatario,
     }

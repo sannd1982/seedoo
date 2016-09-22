@@ -78,7 +78,7 @@ class protocollo_protocollo(orm.Model):
                     tempo_esecuzione_attivita = attivita_titolario.categoria.tempo_standard
                     data_scadenza =  now + datetime.timedelta(days=tempo_esecuzione_attivita)
                     activity_vals = {
-                        'name': "Protocollo num %s - "%(prot.name) +attivita_titolario.name,
+                        'name': "Protocollo num %s - "%(prot.name) + attivita_titolario.name,
                         'descrizione': attivita_titolario.descrizione,
                         'priorita': attivita_titolario.priorita,
                         'referente_id': uid,

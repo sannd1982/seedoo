@@ -14,3 +14,23 @@ class res_users(orm.Model):
                     hr_department_collaborator \
                     where name = %d" % uid)
         return [ids[0] for ids in cr.fetchall()]
+    
+    def get_users_from_group(self, cr, uid, group, context=None):
+        # query = '''
+        #     SELECT res_users.id
+        #     FROM res_users
+        #     INNER JOIN res_groups_users_rel
+        #     ON res_users.id=res_groups_users_rel.uid
+        #     WHERE res_groups_users_rel.gid IN (
+        #       SELECT res_groups.id FROM res_groups
+        #       WHERE res_groups.name = '%s')
+        #     ORDER BY res_users.id DESC ;
+        #   ''' % (group)
+        # cr.execute(query)
+        # return cr.fetchall()
+        group_obj = self.pool.get('res.groups')
+        manager_group_ids = group_obj.search(cr, uid, [('name', '=', group)])
+        if len(manager_group_ids) == 1:
+            manager_group = group_obj.browse(cr, uid, manager_group_ids[0])
+            return manager_group.users
+        #todo add exception

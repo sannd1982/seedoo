@@ -38,6 +38,16 @@ class protocollo_typology(orm.Model):
 
 class protocollo_sender_receiver(orm.Model):
     _name = 'protocollo.sender_receiver'
+    
+    def on_change_pa_type(self, cr, uid, ids, pa_type):
+        res = {'value': {}}
+
+        if pa_type == 'aoo':
+            res['value']['super_type'] = 'pa'
+        elif pa_type == 'uo':
+            res['value']['super_type'] = 'aoo'
+
+        return res
 
     def on_change_partner(self, cr, uid, ids, partner_id, context=None):
         values = {}
@@ -76,6 +86,13 @@ class protocollo_sender_receiver(orm.Model):
                 ('government', 'Amministrazione pubblica')
             ], 'Tipologia', size=32, required=True),
 
+        'pa_type': fields.selection(
+            [
+                ('pa', 'Amministrazione Principale'),
+                ('aoo', 'Area Organizzativa Omogenea'),
+                ('uo', 'Unità Organizzativa')],
+            'Tipologia amministrazione', size=5, required=False),
+        
         'ident_code': fields.char(
             'Codice Identificativo Area',
             size=256,
@@ -90,7 +107,7 @@ class protocollo_sender_receiver(orm.Model):
             'Salva',
             help='Se spuntato salva i dati in anagrafica.'),
         'partner_id': fields.many2one('res.partner', 'Anagrafica',
-                                      domain="[('legal_type', '=', type)]"),
+                                      domain="['&',('legal_type', '=', type),('pa_type', '=', pa_type)]"),
         'name': fields.char('Nome Cognome/Ragione Sociale',
                             size=512,
                             required=True),
@@ -453,7 +470,7 @@ class protocollo_protocollo(orm.Model):
                                           readonly=True,
                                           states={
                                               'draft': [('readonly', False)]
-                                                  }),
+                                          }),
         'subject': fields.text('Oggetto',
                                required=True,
                                readonly=True,
@@ -476,7 +493,7 @@ class protocollo_protocollo(orm.Model):
                                           readonly=True,
                                           states={
                                               'draft': [('readonly', False)]
-                                                  }),
+                                          }),
         'emergency_protocol': fields.char(
             'Protocollo Emergenza', size=64, required=False,
             readonly=True,
@@ -717,16 +734,16 @@ class protocollo_protocollo(orm.Model):
         pd = prot_date.split(' ')[0]
         prot_date = datetime.datetime.strptime(pd, DSDT)
         prot_def = prot.registry.company_id.ammi_code + ' ' + \
-            prot.registry.company_id.ident_code + \
-            ' - ' + prot.registry.code + ' - ' + \
-            prot_date.strftime(
-                DSDT) + ' - ' + \
-            prot_number
+                   prot.registry.company_id.ident_code + \
+                   ' - ' + prot.registry.code + ' - ' + \
+                   prot_date.strftime(
+                       DSDT) + ' - ' + \
+                   prot_number
         location = self.pool.get('ir.config_parameter') \
-            .get_param(cr, uid, 'ir_attachment.location') + '/protocollazioni'
+                       .get_param(cr, uid, 'ir_attachment.location') + '/protocollazioni'
         signatureCmd = self.pool.get('ir.config_parameter') \
-            .get_param(cr, uid, 'itext.location') + \
-            '/signature.sh'
+                           .get_param(cr, uid, 'itext.location') + \
+                       '/signature.sh'
         file_path = self._full_path(cr, uid, location, prot.doc_id.store_fname)
         maintain_orig = False
         strong_encryption = False
@@ -802,7 +819,7 @@ class protocollo_protocollo(orm.Model):
             {'doc_id': attachment_id, 'datas': 0})
         attachment_obj.unlink(cr, SUPERUSER_ID, old_attachment_id)
         location = self.pool.get('ir.config_parameter') \
-            .get_param(cr, uid, 'ir_attachment.location') + '/protocollazioni'
+                       .get_param(cr, uid, 'ir_attachment.location') + '/protocollazioni'
         new_attachment = attachment_obj.browse(cr, user_id, attachment_id)
         file_path = self._full_path(
             cr, uid, location, new_attachment.store_fname)
@@ -817,7 +834,7 @@ class protocollo_protocollo(orm.Model):
             get_object_reference(
             cr, uid, 'seedoo_protocollo', 'dir_protocol')[1]
         ruid = prot.registry.company_id.reserved_user_id and \
-            prot.registry.company_id.reserved_user_id.id or None
+               prot.registry.company_id.reserved_user_id.id or None
         if not ruid:
             raise orm.except_orm(
                 _('Attenzione!'),
@@ -868,7 +885,7 @@ class protocollo_protocollo(orm.Model):
                         'street': send_rec.street,
                         'city': send_rec.city,
                         'country_id': send_rec.country_id and
-                        send_rec.country_id.id or False,
+                                      send_rec.country_id.id or False,
                         'email': send_rec.email,
                         'pec_mail': send_rec.pec_mail,
                         'phone': send_rec.phone,
@@ -952,7 +969,7 @@ class protocollo_protocollo(orm.Model):
                     template_reserved_id,
                     prot.id,
                     force_send=True
-                                             )
+                )
             if prot.assigne_emails:
                 template_id = self.pool.get('ir.model.data'). \
                     get_object_reference(cr, uid, 'seedoo_protocollo',
@@ -1027,7 +1044,7 @@ class protocollo_protocollo(orm.Model):
                 mail_mail.write(
                     cr, uid, msg_id,
                     {'attachment_ids': [(6, 0, attachment_ids)]}
-                                )
+                )
             vals = {'mail_out_ref': mail.id,
                     'mail_pec_ref': mail.mail_message_id.id}
             self.write(cr, uid, [prot.id], vals)
@@ -1226,7 +1243,7 @@ class protocollo_journal(orm.Model):
                         cr, uid,
                         {
                             'name': last_date.
-                            strftime(DSDF),
+                                strftime(DSDF),
                             'user_id': uid,
                             'protocol_ids': [[6, 0,
                                               protocol_ids]

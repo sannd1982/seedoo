@@ -4,10 +4,12 @@ this module contains the full copyright notices and license terms. -->
 <openerp>
     <data>
 
-        <menuitem name="Protocollo" id="menu_root_protocollo" sequence="110" groups="group_protocollo_simple_user,group_protocollo_user,group_protocollo_manager"/>
-        <menuitem name="Configurazioni" parent="menu_root_protocollo" id="protocollo_configuration" sequence="30" groups="group_protocollo_manager"/>
+        <menuitem name="Protocollo" id="menu_root_protocollo" sequence="110"
+                  groups="group_protocollo_simple_user,group_protocollo_user,group_protocollo_manager"/>
+        <menuitem name="Configurazioni" parent="menu_root_protocollo" id="protocollo_configuration" sequence="30"
+                  groups="group_protocollo_manager"/>
 
-    <!-- Typology -->
+        <!-- Typology -->
 
         <record model='ir.ui.view' id='protocollo_typology_form'>
             <field name="name">protocollo.typology.form</field>
@@ -16,7 +18,7 @@ this module contains the full copyright notices and license terms. -->
                 <form string="Tipologia" version="7.0">
                     <sheet>
                         <group col="4">
-                            <field name="name" />
+                            <field name="name"/>
                         </group>
                     </sheet>
                 </form>
@@ -28,7 +30,7 @@ this module contains the full copyright notices and license terms. -->
             <field name="model">protocollo.typology</field>
             <field name="arch" type="xml">
                 <tree string="Tipologie">
-                    <field name="name" />
+                    <field name="name"/>
                 </tree>
             </field>
         </record>
@@ -37,8 +39,8 @@ this module contains the full copyright notices and license terms. -->
             <field name="name">protocollo.typology.search</field>
             <field name="model">protocollo.typology</field>
             <field name="arch" type="xml">
-                <search string="Tipologie" >
-                    <field name="name" />
+                <search string="Tipologie">
+                    <field name="name"/>
                 </search>
             </field>
         </record>
@@ -49,17 +51,19 @@ this module contains the full copyright notices and license terms. -->
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="help" type="html">
-              <p class="oe_view_nocontent_create">
-                Premi qui per creare un nuovo record
-              </p><p>
-                Ricordati di inserire tutti i campi in celeste!
-              </p>
+                <p class="oe_view_nocontent_create">
+                    Premi qui per creare un nuovo record
+                </p>
+                <p>
+                    Ricordati di inserire tutti i campi in celeste!
+                </p>
             </field>
         </record>
 
-        <menuitem action="protocollo_typology_act" parent="protocollo_configuration" id="protocollo_typology_menu" groups="group_protocollo_manager"/>
+        <menuitem action="protocollo_typology_act" parent="protocollo_configuration" id="protocollo_typology_menu"
+                  groups="group_protocollo_manager"/>
 
-    <!-- Classification -->
+        <!-- Classification -->
 
         <record model='ir.ui.view' id='protocollo_classification_form'>
             <field name="name">protocollo.classification.form</field>
@@ -68,12 +72,12 @@ this module contains the full copyright notices and license terms. -->
                 <form string="Titolario" version="7.0">
                     <sheet>
                         <group col="4">
-                            <field name="class_type" />
+                            <field name="class_type"/>
                             <newline/>
-                            <field name="name" />
-                            <field name="code" />
-                            <field name="complete_name" />
-                            <field name="parent_id" />
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="complete_name"/>
+                            <field name="parent_id"/>
                             <field name="description" colspan="4"/>
                         </group>
                         <notebook>
@@ -93,10 +97,10 @@ this module contains the full copyright notices and license terms. -->
             <field name="name">protocollo.classification.tree</field>
             <field name="model">protocollo.classification</field>
             <field name="field_parent">child_ids</field>
-        	<field name="priority" eval="20"/>
+            <field name="priority" eval="20"/>
             <field name="arch" type="xml">
                 <tree string="Titolario">
-                    <field name="name" />
+                    <field name="name"/>
                 </tree>
             </field>
         </record>
@@ -104,11 +108,11 @@ this module contains the full copyright notices and license terms. -->
         <record model='ir.ui.view' id='protocollo_classification_tree2'>
             <field name="name">protocollo.classification.tree</field>
             <field name="model">protocollo.classification</field>
-        	<field name="priority" eval="10"/>
+            <field name="priority" eval="10"/>
             <field name="arch" type="xml">
                 <tree string="Titolario">
-                    <field name="name" />
-                    <field name="parent_id" />
+                    <field name="name"/>
+                    <field name="parent_id"/>
                 </tree>
             </field>
         </record>
@@ -117,9 +121,9 @@ this module contains the full copyright notices and license terms. -->
             <field name="name">protocollo.classification.search</field>
             <field name="model">protocollo.classification</field>
             <field name="arch" type="xml">
-                <search string="Titolario" >
-                    <field name="name"  />
-                    <field name="parent_id" />
+                <search string="Titolario">
+                    <field name="name"/>
+                    <field name="parent_id"/>
                 </search>
             </field>
         </record>
@@ -129,22 +133,24 @@ this module contains the full copyright notices and license terms. -->
             <field name="res_model">protocollo.classification</field>
             <field name="view_type">tree</field>
             <field name="view_id" ref="protocollo_classification_tree"/>
-        	<field name="domain">[('parent_id','=',False)]</field>
+            <field name="domain">[('parent_id','=',False)]</field>
         </record>
 
-        <menuitem action="protocollo_classification_act" parent="protocollo_configuration" id="protocollo_classification_menu" groups="group_protocollo_manager"/>
-		
+        <menuitem action="protocollo_classification_act" parent="protocollo_configuration"
+                  id="protocollo_classification_menu" groups="group_protocollo_manager"/>
+
         <record model='ir.actions.act_window' id='protocollo_classification_def_act'>
             <field name="name">Titolario</field>
             <field name="res_model">protocollo.classification</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="help" type="html">
-              <p class="oe_view_nocontent_create">
-                Premi qui per creare un nuovo record
-              </p><p>
-                Ricordati di inserire tutti i campi in celeste!
-              </p>
+                <p class="oe_view_nocontent_create">
+                    Premi qui per creare un nuovo record
+                </p>
+                <p>
+                    Ricordati di inserire tutti i campi in celeste!
+                </p>
             </field>
         </record>
 
@@ -162,9 +168,7 @@ this module contains the full copyright notices and license terms. -->
         </record>
 
 
-
-
-    <!-- Registry -->
+        <!-- Registry -->
 
         <record model='ir.ui.view' id='protocollo_registry_form'>
             <field name="name">protocollo.registry.form</field>
@@ -173,14 +177,14 @@ this module contains the full copyright notices and license terms. -->
                 <form string="Registro" version="7.0">
                     <sheet>
                         <group col="4">
-                            <field name="name" />
-                            <field name="code" />
-                            <field name="sequence" />
-                            <field name="company_id" />
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="sequence"/>
+                            <field name="company_id"/>
                             <field name="office_ids" colspan="4" domain="[
                                           ('parent_id','child_of',[%(protocollo_dept_root)d])] "/>
-                            <field name="priority" />
-                            <field name="allowed_users" />
+                            <field name="priority"/>
+                            <field name="allowed_users"/>
                             <newline/>
                             <field name="description" colspan="4"/>
                         </group>
@@ -194,8 +198,8 @@ this module contains the full copyright notices and license terms. -->
             <field name="model">protocollo.registry</field>
             <field name="arch" type="xml">
                 <tree string="Registri">
-                    <field name="name" />
-                    <field name="code" />
+                    <field name="name"/>
+                    <field name="code"/>
                 </tree>
             </field>
         </record>
@@ -204,9 +208,9 @@ this module contains the full copyright notices and license terms. -->
             <field name="name">protocollo.registry.search</field>
             <field name="model">protocollo.registry</field>
             <field name="arch" type="xml">
-                <search string="Registri" >
-                    <field name="name" />
-                    <field name="code" />
+                <search string="Registri">
+                    <field name="name"/>
+                    <field name="code"/>
                 </search>
             </field>
         </record>
@@ -217,108 +221,119 @@ this module contains the full copyright notices and license terms. -->
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="help" type="html">
-              <p class="oe_view_nocontent_create">
-                Premi qui per creare un nuovo record
-              </p><p>
-                Ricordati di inserire tutti i campi in celeste!
-              </p>
+                <p class="oe_view_nocontent_create">
+                    Premi qui per creare un nuovo record
+                </p>
+                <p>
+                    Ricordati di inserire tutti i campi in celeste!
+                </p>
             </field>
         </record>
 
-        <menuitem action="protocollo_registry_act" parent="protocollo_configuration" id="protocollo_registry_menu" groups="group_protocollo_manager"/>
+        <menuitem action="protocollo_registry_act" parent="protocollo_configuration" id="protocollo_registry_menu"
+                  groups="group_protocollo_manager"/>
 
-    <!-- Dossier -->
+        <!-- Dossier -->
 
         <record model='ir.ui.view' id='protocollo_dossier_form'>
             <field name="name">protocollo.dossier.form</field>
             <field name="model">protocollo.dossier</field>
             <field name="arch" type="xml">
                 <form string="Fascicolo" version="7.0">
-                   <header>
-		                    <button name="open" states="draft" string="Apri Fascicolo" />
-		                    <button name="close" states="open" string="Chiudi Fascicolo" />
-                        <field name="state" widget="statusbar" statusbar_visible="draft,open,closed" statusbar_colors='{"open":"blue","closed":"green"}'/>
-                	</header>
+                    <header>
+                        <button name="open" states="draft" string="Apri Fascicolo"/>
+                        <button name="close" states="open" string="Chiudi Fascicolo"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,open,closed"
+                               statusbar_colors='{"open":"blue","closed":"green"}'/>
+                    </header>
                     <sheet>
                         <div class="oe_title">
                             <label for="name" class="oe_edit_only"/>
                             <h1>
-                                <field name="name" class="oe_inline" />
+                                <field name="name" class="oe_inline"/>
                             </h1>
                             <label for="description" class="oe_edit_only"/>
                             <h1>
-                                <field name="description" class="oe_inline" />
+                                <field name="description" class="oe_inline"/>
                             </h1>
                             <label for="date_open" class="oe_edit_only"/>
                             <h2>
-                                <field name="date_open" />
+                                <field name="date_open"/>
                             </h2>
                             <label for="date_close" class="oe_edit_only"/>
                             <h2>
-                                <field name="date_close" />
+                                <field name="date_close"/>
                             </h2>
                             <label for="classification_id" class="oe_edit_only"/>
                             <h2>
-                                <field name="classification_id" on_change="on_change_dossier_type_classification(dossier_type, classification_id, parent_id)" />
+                                <field name="classification_id"
+                                       on_change="on_change_dossier_type_classification(dossier_type, classification_id, parent_id)"/>
                             </h2>
                             <label for="dossier_type" class="oe_edit_only"/>
                             <h2>
-                            <field name="dossier_type" on_change="on_change_dossier_type_classification(dossier_type, classification_id, parent_id)" />
+                                <field name="dossier_type"
+                                       on_change="on_change_dossier_type_classification(dossier_type, classification_id, parent_id)"/>
                             </h2>
                             <label for="dossier_typology" class="oe_edit_only"/>
                             <h2>
-                            <field name="dossier_typology"/>
+                                <field name="dossier_typology"/>
                             </h2>
                         </div>
                         <group col="4" string="Informazioni Generali">
-                    		<field name="paperless" />
-                    		<newline/>
-                    		<field name="year" />
-                    		<newline/>
-                    		<field name="parent_id" on_change="on_change_dossier_type_classification(dossier_type, classification_id, parent_id)" domain ="[('dossier_type', '=', parent_type)]" attrs="{'invisible':[('dossier_type','=','fascicolo')], 'required': [('dossier_type','in',('sottofascicolo', 'inserto'))]}" />
-                    		
-                            <field name="parent_type" invisible="1" />
-                    		<newline/>
-                    		<field name="child_ids" attrs="{'invisible':[('dossier_type','=','inserto')]}" />
-                    		
-                    		<field name="partner_id" attrs="{'invisible':[('dossier_typology','not in ',('fisica', 'giuridica'))]}" />
-	                    </group>
-	                    <notebook>
-	                    	<page string="Documenti">
-                        	<group col="4">
-                    			<field name="document_ids" domain="['|',('user_id','=',uid),('office_comp_ids.group_ids.users.id','in',[uid])]"/>
-                        	</group>
-                    		</page>
-	                    	<page string="Attori Coinvolti">
-                        	<group col="4" attrs="{'invisible':[('dossier_typology','!=','procedimento')]}">
-                    			<field name="user_id" />
-                    			<field name="owner_partner_id" options="{'limit': 10, 'create': false, 'create_edit': false}"/>
-                    			<field name="participant_partner_ids" />
-	                    	</group>
-	                    	</page>
-	                    	<page string="Permessi Fascicolo">
-                        	<group col="4">
-                        	<group col="2">
-                    			<field name="office_comp_ids" />
-                    			<field name="user_comp_ids" />
-                        	</group>
-                        	<group col="2">
-                    			<field name="office_view_ids" />
-                    			<field name="user_view_ids" />
-	                    	</group>
-                    	</group>
-                    	</page>
-	                    	<page string="Posizione Fisica Fascicolo" attrs="{'invisible':[('paperless','=',True)]}">
-                        	<group col="4">
-                    			<field name="address" />
-                    			<field name="building" />
-                    			<field name="floor" />
-                    			<field name="room" />
-	                    	</group>
-                    	</page>
-	                   </notebook>
-                    <label for="notes" />
-                    <field name="notes" />
+                            <field name="paperless"/>
+                            <newline/>
+                            <field name="year"/>
+                            <newline/>
+                            <field name="parent_id"
+                                   on_change="on_change_dossier_type_classification(dossier_type, classification_id, parent_id)"
+                                   domain="[('dossier_type', '=', parent_type)]"
+                                   attrs="{'invisible':[('dossier_type','=','fascicolo')], 'required': [('dossier_type','in',('sottofascicolo', 'inserto'))]}"/>
+
+                            <field name="parent_type" invisible="1"/>
+                            <newline/>
+                            <field name="child_ids" attrs="{'invisible':[('dossier_type','=','inserto')]}"/>
+
+                            <field name="partner_id"
+                                   attrs="{'invisible':[('dossier_typology','not in ',('fisica', 'giuridica'))]}"/>
+                        </group>
+                        <notebook>
+                            <page string="Documenti">
+                                <group col="4">
+                                    <field name="document_ids"
+                                           domain="['|',('user_id','=',uid),('office_comp_ids.group_ids.users.id','in',[uid])]"/>
+                                </group>
+                            </page>
+                            <page string="Attori Coinvolti">
+                                <group col="4" attrs="{'invisible':[('dossier_typology','!=','procedimento')]}">
+                                    <field name="user_id"/>
+                                    <field name="owner_partner_id"
+                                           options="{'limit': 10, 'create': false, 'create_edit': false}"/>
+                                    <field name="participant_partner_ids"/>
+                                </group>
+                            </page>
+                            <page string="Permessi Fascicolo">
+                                <group col="4">
+                                    <group col="2">
+                                        <field name="office_comp_ids"/>
+                                        <field name="user_comp_ids"/>
+                                    </group>
+                                    <group col="2">
+                                        <field name="office_view_ids"/>
+                                        <field name="user_view_ids"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Posizione Fisica Fascicolo" attrs="{'invisible':[('paperless','=',True)]}">
+                                <group col="4">
+                                    <field name="address"/>
+                                    <field name="building"/>
+                                    <field name="floor"/>
+                                    <field name="room"/>
+                                </group>
+                            </page>
+                        </notebook>
+                        <label for="notes"/>
+                        <field name="notes"/>
                     </sheet>
                 </form>
             </field>
@@ -329,8 +344,8 @@ this module contains the full copyright notices and license terms. -->
             <field name="model">protocollo.dossier</field>
             <field name="arch" type="xml">
                 <tree string="Fascicolo" version="7.0">
-                    <field name="name" />
-                    <field name="classification_id" />
+                    <field name="name"/>
+                    <field name="classification_id"/>
                 </tree>
             </field>
         </record>
@@ -339,8 +354,8 @@ this module contains the full copyright notices and license terms. -->
             <field name="name">protocollo.dossier.search</field>
             <field name="model">protocollo.dossier</field>
             <field name="arch" type="xml">
-                <search string="Fascicolo" >
-                    <field name="name" />
+                <search string="Fascicolo">
+                    <field name="name"/>
                 </search>
             </field>
         </record>
@@ -351,15 +366,17 @@ this module contains the full copyright notices and license terms. -->
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="help" type="html">
-              <p class="oe_view_nocontent_create">
-                Premi qui per creare un nuovo record
-              </p><p>
-                Ricordati di inserire tutti i campi in celeste!
-              </p>
+                <p class="oe_view_nocontent_create">
+                    Premi qui per creare un nuovo record
+                </p>
+                <p>
+                    Ricordati di inserire tutti i campi in celeste!
+                </p>
             </field>
         </record>
 
-        <menuitem action="protocollo_dossier_act" parent="protocollo_configuration" id="protocollo_dossier_menu" groups="group_protocollo_manager"/>
+        <menuitem action="protocollo_dossier_act" parent="protocollo_configuration" id="protocollo_dossier_menu"
+                  groups="group_protocollo_manager"/>
 
 
         <!-- Sender / Receiver -->
@@ -372,44 +389,51 @@ this module contains the full copyright notices and license terms. -->
                     <sheet>
                         <div>
                             <group col="8">
-                                <field name="save_partner" attrs="{'readonly': ['|',('partner_id','!=',False),('partner_id','is not',None)]}"/>
+                                <field name="save_partner"
+                                       attrs="{'readonly': ['|',('partner_id','!=',False),('partner_id','is not',None)]}"/>
                             </group>
                         </div>
                         <div class="gedoc_header">
                             <group col="4">
-                                <field name="type" />
-                                <field name="partner_id" on_change="on_change_partner(partner_id)" attrs="{'readonly': [('save_partner','=',True)]}"/>
+                                <field name="type"/>
+                                <field name="partner_id" on_change="on_change_partner(partner_id)"
+                                       attrs="{'readonly': [('save_partner','=',True)]}"/>
+                                <field name="pa_type" placeholder=""
+                                       attrs="{'invisible': [('type','!=', 'government')]}"
+                                       on_change="on_change_pa_type(pa_type)"/>
                             </group>
                             <group col="4">
                                 <group col="4" colspan="2">
                                     <field name="name" colspan="4"/>
                                 </group>
                                 <group col="4" colspan="2">
-                                    <field name="ammi_code" attrs="{'required': [('type','=','government')], 'readonly': [('type','in',('legal', 'individual'))]}"/>
-                                    <field name="ident_code" attrs="{'readonly': [('type','in',('legal', 'individual'))]}"/>
+                                    <field name="ammi_code"
+                                           attrs="{'required': [('type','=','government')], 'readonly': [('type','in',('legal', 'individual'))]}"/>
+                                    <field name="ident_code"
+                                           attrs="{'readonly': [('type','in',('legal', 'individual'))]}"/>
                                 </group>
                             </group>
                         </div>
-                    <div>
-                        <group col="4">
-                            <separator string="Info di Recapito" colspan="4"/>
-                            <field name="street"/>
-                            <field name="zip"/>
-                            <field name="city"/>
-                            <field name="country_id"/>
-                            <field name="pec_mail"/>
-                            <field name="email"/>
-                            <field name="phone"/>
-                            <field name="fax"/>
-                            <field name="mobile"/>
+                        <div>
+                            <group col="4">
+                                <separator string="Info di Recapito" colspan="4"/>
+                                <field name="street"/>
+                                <field name="zip"/>
+                                <field name="city"/>
+                                <field name="country_id"/>
+                                <field name="pec_mail"/>
+                                <field name="email"/>
+                                <field name="phone"/>
+                                <field name="fax"/>
+                                <field name="mobile"/>
 
-                            <separator string="Info di Spedizione" colspan="4"/>
-                            <field name="send_type"/>
-                            <field name="send_date"/>
-                            <separator string="Note"/>
-                            <field name="notes" nolabel="1" colspan="4"/>
-                        </group>
-                    </div>
+                                <separator string="Info di Spedizione" colspan="4"/>
+                                <field name="send_type"/>
+                                <field name="send_date"/>
+                                <separator string="Note"/>
+                                <field name="notes" nolabel="1" colspan="4"/>
+                            </group>
+                        </div>
                     </sheet>
                 </form>
             </field>
@@ -420,82 +444,102 @@ this module contains the full copyright notices and license terms. -->
             <field name="model">protocollo.sender_receiver</field>
             <field name="arch" type="xml">
                 <tree string="Mittenti/Destinatari">
-                    <field name="type" />
-                    <field name="ammi_code" attrs="{'required': [('type','=','government')], 'readonly': [('type','in',('legal', 'individual'))]}"  width="5%%" string="Cod.AMM"/>
-                    <field name="ident_code" attrs="{'readonly': [('type','in',('legal', 'individual'))]}" width="5%%" string="Cod.AOO"/>
+                    <field name="type"/>
+                    <field name="ammi_code"
+                           attrs="{'required': [('type','=','government')], 'readonly': [('type','in',('legal', 'individual'))]}"
+                           width="5%%" string="Cod.AMM"/>
+                    <field name="ident_code" attrs="{'readonly': [('type','in',('legal', 'individual'))]}" width="5%%"
+                           string="Cod.AOO"/>
                     <field name="name" string="Nome Cognome / Ragione Sociale"/>
-                    <field name="street" />
-                    <field name="zip" />
-                    <field name="city" />
-                    <field name="pec_mail" />
-                    <field name="email" />
-                    <field name="protocol_state" invisible="1" />
+                    <field name="street"/>
+                    <field name="zip"/>
+                    <field name="city"/>
+                    <field name="pec_mail"/>
+                    <field name="email"/>
+                    <field name="protocol_state" invisible="1"/>
                 </tree>
             </field>
         </record>
 
- <!-- Protocollo -->
+        <!-- Protocollo -->
 
         <record model='ir.ui.view' id='protocollo_protocollo_form'>
             <field name="name">protocollo.protocollo.form</field>
             <field name="model">protocollo.protocollo</field>
             <field name="arch" type="xml">
                 <form string="Protocollo" version="7.0">
-                   <header>
-		                   	<button name="register" states="draft" string="Registra Protocollo" class="oe_highlight_positive"/>
-		                    <button name="sent_pec" string="Invio Pec Protocollo" attrs="{'invisible':['|','|',('state','!=','registered'),('type','!=','out'),('pec','!=',True)]}"/>
-		                    <button name="sent" string="Invio Protocollo" attrs="{'invisible':['|','|',('state','!=','registered'),('type','!=','out'),('pec','!=',False)]}"/>
-		                    <button name="%(protocollo_cancel_action)d" type='action' states="registered,notified,sent,waiting,error" string="Annulla Protocollo" class="oe_highlight_warning"/>
-		                    <button name="%(protocollo_modify_action)d" type='action' string='Modifica Protocollo' states='registered' groups="seedoo_protocollo.group_protocollo_manager"/>
-		                    <button name="%(protocollo_modify_pec_action)d" type='action' string='Modifica Mail e Reinvio' attrs="{'invisible':['|','|',('type','!=','out'),('pec','=',False),('state','not in',('registered','waiting','error'))]}" groups="seedoo_protocollo.group_protocollo_manager"/>
-                        <field name="state" widget="statusbar" statusbar_visible="draft,registered" statusbar_colors='{"draft":"blue","notified":"red"}'/>
+                    <header>
+                        <button name="register" states="draft" string="Registra Protocollo"
+                                class="oe_highlight_positive"/>
+                        <button name="sent_pec" string="Invio Pec Protocollo"
+                                attrs="{'invisible':['|','|',('state','!=','registered'),('type','!=','out'),('pec','!=',True)]}"/>
+                        <button name="sent" string="Invio Protocollo"
+                                attrs="{'invisible':['|','|',('state','!=','registered'),('type','!=','out'),('pec','!=',False)]}"/>
+                        <button name="%(protocollo_cancel_action)d" type='action'
+                                states="registered,notified,sent,waiting,error" string="Annulla Protocollo"
+                                class="oe_highlight_warning"/>
+                        <button name="%(protocollo_modify_action)d" type='action' string='Modifica Protocollo'
+                                states='registered' groups="seedoo_protocollo.group_protocollo_manager"/>
+                        <button name="%(protocollo_modify_pec_action)d" type='action' string='Modifica Mail e Reinvio'
+                                attrs="{'invisible':['|','|',('type','!=','out'),('pec','=',False),('state','not in',('registered','waiting','error'))]}"
+                                groups="seedoo_protocollo.group_protocollo_manager"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,registered"
+                               statusbar_colors='{"draft":"blue","notified":"red"}'/>
                     </header>
                     <sheet>
                         <div class="gedoc_header">
-                        <group col="4" >
-                            <field name="name" />
-                            <field name="registration_date" />
-                            <field name="registry" />
-                            <field name="type"/>
-                        </group>
+                            <group col="4">
+                                <field name="name"/>
+                                <field name="registration_date"/>
+                                <field name="registry"/>
+                                <field name="type"/>
+                            </group>
                         </div>
-                        <group col="2" colspan="2" string="Informazioni Emergenza" attrs="{'invisible':[('emergency_active','=', False)]}">
-                        <field name="emergency_active" invisible="1"/>
-                        <field name="registration_type"/>
+                        <group col="2" colspan="2" string="Informazioni Emergenza"
+                               attrs="{'invisible':[('emergency_active','=', False)]}">
+                            <field name="emergency_active" invisible="1"/>
+                            <field name="registration_type"/>
                         </group>
-                        <group col="4" string="Dati Emergenza" attrs="{'invisible':[('registration_type','=','normal')]}">
-                            <field name="emergency_protocol" attrs="{'required':[('registration_type','=','emergency')]}"/>
-                            <field name="emergency_receiving_date" attrs="{'required':[('registration_type','=','emergency')]}" on_change="on_change_emergency_receiving_date(emergency_receiving_date)" />
+                        <group col="4" string="Dati Emergenza"
+                               attrs="{'invisible':[('registration_type','=','normal')]}">
+                            <field name="emergency_protocol"
+                                   attrs="{'required':[('registration_type','=','emergency')]}"/>
+                            <field name="emergency_receiving_date"
+                                   attrs="{'required':[('registration_type','=','emergency')]}"
+                                   on_change="on_change_emergency_receiving_date(emergency_receiving_date)"/>
                         </group>
                         <group col="4" string="Informazioni Generali">
-                        <group col="4" >
+                            <group col="4">
                                 <field name="user_id" readonly="1"/>
-                        </group>
-                        <newline/>
-                        <group col="2" >
-                            <field name="subject" />
+                            </group>
                             <newline/>
-                            <field name="sender_protocol" attrs="{'invisible':[('type','!=','in')]}"/>
-                            <newline/>
-                            <field name="reserved"/>
-                        </group>
-                        <group col="2" >
+                            <group col="2">
+                                <field name="subject"/>
+                                <newline/>
+                                <field name="sender_protocol" attrs="{'invisible':[('type','!=','in')]}"/>
+                                <newline/>
+                                <field name="reserved"/>
+                            </group>
+                            <group col="2">
                                 <field name="typology" on_change="on_change_typology(typology)" colspan="2"/>
                                 <newline/>
                                 <field name="creation_date"/>
                                 <newline/>
                                 <field name="receiving_date"/>
+                            </group>
+                            <newline/>
                         </group>
-                        <newline/>
+                        <group col="4">
+                            <field name="pec" invisible="1"/>
+                            <field name="body"
+                                   attrs="{'invisible':[('pec','!=',True)],'readonly':['|',('type','=','in'),('state','!=','draft')]}"
+                                   colspan="4"/>
                         </group>
-                        <group col="4" >
-                                <field name="pec" invisible="1" />
-                                <field name="body" attrs="{'invisible':[('pec','!=',True)],'readonly':['|',('type','=','in'),('state','!=','draft')]}" colspan="4"/>
-                        </group>
-                        <group col="4" >
+                        <group col="4">
                             <field name="doc_id" attrs="{'invisible':[('state','=','draft'),('pec','!=',True)]}"/>
                             <field name="datas_fname" invisible="1"/>
-                            <field name="datas" filename="datas_fname" nolabel="1" on_change="on_change_datas(datas)" attrs="{'invisible':['|',('reserved','=',True),('state','!=','draft')]}" />
+                            <field name="datas" filename="datas_fname" nolabel="1" on_change="on_change_datas(datas)"
+                                   attrs="{'invisible':['|',('reserved','=',True),('state','!=','draft')]}"/>
                             <newline/>
                             <field name="mimetype" invisible="1"/>
 
@@ -507,70 +551,75 @@ this module contains the full copyright notices and license terms. -->
                                 <separator string="Mittenti" attrs="{'invisible':[('type','!=','in')]}"/>
                                 <separator string="Destinatari" attrs="{'invisible':[('type','!=','out')]}"/>
                                 <group col="4" colspan="4">
-                                    <field name="sender_receivers" nolabel="1" >
+                                    <field name="sender_receivers" nolabel="1">
                                     </field>
                                 </group>
                             </page>
                             <page string="Preview">
-                                <field name="preview" 
-                                       nolabel="1" 
-                                       attrs="{'invisible':['|',('reserved','=',True),('mimetype','!=','application/pdf')], 'readonly':True}" 
+                                <field name="preview"
+                                       nolabel="1"
+                                       attrs="{'invisible':['|',('reserved','=',True),('mimetype','!=','application/pdf')], 'readonly':True}"
                                        widget="pdfviewer"/>
                             </page>
                             <page string="Classificazioni">
-	                    	  <group col="4">
-                                  <group>
-		                    		<label for="dossier_ids" />
-			                    	<field name="dossier_ids" nolabel="1"
-			                    	options="{'limit': 10, 'create': false, 'create_edit': false}"
-			                    	domain="[('state','=','open')]"
-			                    	/>
-		                    	</group>
-                                  <newline/>
-	                    	  	<group>
-		                    		<label for="classification" />
-			                    	<field name="classification" nolabel="1" widget="m2o_tree"
-			                    	options="{'limit': 10, 'create': false, 'create_edit': false}"/>
-		                    	</group>
+                                <group col="4">
+                                    <group>
+                                        <label for="dossier_ids"/>
+                                        <field name="dossier_ids" nolabel="1"
+                                               options="{'limit': 10, 'create': false, 'create_edit': false}"
+                                               domain="[('state','=','open')]"
+                                        />
+                                    </group>
+                                    <newline/>
+                                    <group>
+                                        <label for="classification"/>
+                                        <field name="classification" nolabel="1" widget="m2o_tree"
+                                               options="{'limit': 10, 'create': false, 'create_edit': false}"/>
+                                    </group>
 
-		                      </group>
-	                    	</page>
+                                </group>
+                            </page>
                             <page string="Assegnatari">
                                 <group col="4">
                                     <separator string="Uffici" colspan="2"/>
                                     <separator string="Utenti" colspan="2"/>
 
-                                    <field name="assigne" domain="[('parent_id','child_of',[%(protocollo_dept_root)d]),('assignable','=',True)]" nolabel="1" colspan="2">
-                                            <tree>
-                                                <field name="name" string="Nome Ufficio"/>
-                                                <field name="parent_id" string="Ufficio Padre"/>
-                                                <field name="manager_id" />
-                                            </tree>
+                                    <field name="assigne"
+                                           domain="[('parent_id','child_of',[%(protocollo_dept_root)d]),('assignable','=',True)]"
+                                           nolabel="1" colspan="2">
+                                        <tree>
+                                            <field name="name" string="Nome Ufficio"/>
+                                            <field name="parent_id" string="Ufficio Padre"/>
+                                            <field name="manager_id"/>
+                                        </tree>
                                     </field>
                                     <field name="assigne_users" nolabel="1" colspan="2">
-                                            <tree>
-                                                <field name="name"/>
-                                                <field name="email"/>
-                                            </tree>
+                                        <tree>
+                                            <field name="name"/>
+                                            <field name="email"/>
+                                        </tree>
                                     </field>
                                     <newline/>
-                                    <field name="assigne_cc" attrs="{'invisible':['|', ('pec','!=',True), ('type','=','in')]}" />
+                                    <field name="assigne_cc"
+                                           attrs="{'invisible':['|', ('pec','!=',True), ('type','=','in')]}"/>
                                 </group>
 
                             </page>
                             <page string="Info PEC" attrs="{'invisible':[('pec','!=',True)]}">
-                                <label for="mail_pec_ref" />
+                                <label for="mail_pec_ref"/>
                                 <field name="mail_pec_ref" context="{'pec_messages': True}"/>
                                 <newline/>
-		                    	<label for="pec_notifications_ids" attrs="{'invisible':['|', ('pec','!=',True), ('type','=','in')]}" />
-	                    		<field name="pec_notifications_ids" context="{'pec_messages': True}" attrs="{'invisible':['|', ('pec','!=',True), ('type','=','in')]}"/>
+                                <label for="pec_notifications_ids"
+                                       attrs="{'invisible':['|', ('pec','!=',True), ('type','=','in')]}"/>
+                                <field name="pec_notifications_ids" context="{'pec_messages': True}"
+                                       attrs="{'invisible':['|', ('pec','!=',True), ('type','=','in')]}"/>
                             </page>
                             <page string="Storico Modifiche">
                                 <field name="history_ids">
                                     <tree>
                                         <field name="name"/>
-                                        <field name="type" />
-                                        <field name="user_id" />
+                                        <field name="type"/>
+                                        <field name="user_id"/>
                                     </tree>
                                     <form>
                                         <field name="name"/>
@@ -584,11 +633,14 @@ this module contains the full copyright notices and license terms. -->
                                 </field>
                             </page>
                             <page string="Note">
-                                <label for="notes" />
+                                <label for="notes"/>
                                 <field name="notes" colspan="4"/>
                             </page>
-							<page string="Segnatura XML" groups="base.group_system">
-                                <label for="xml_signature" />
+                            <page string="Segnatura XML" groups="base.group_system">
+                                <label for="fingerprint"/>
+                                <field name="fingerprint" colspan="4"/>
+                                <newline/>
+                                <label for="xml_signature"/>
                                 <field name="xml_signature" colspan="4"/>
                             </page>
                         </notebook>
@@ -603,17 +655,18 @@ this module contains the full copyright notices and license terms. -->
             <field name="name">protocollo.protocollo.tree</field>
             <field name="model">protocollo.protocollo</field>
             <field name="arch" type="xml">
-                <tree string="Protocolli" version="7.0" colors="blue:state=='registered';green:state=='notified';green:state=='sent';orange:state=='waiting';red:state=='canceled';red:state=='error'">
+                <tree string="Protocolli" version="7.0"
+                      colors="blue:state=='registered';green:state=='notified';green:state=='sent';orange:state=='waiting';red:state=='canceled';red:state=='error'">
                     <field name="type"/>
-                    <field name="complete_name" />
+                    <field name="complete_name"/>
                     <field name="name" invisible="1"/>
                     <field name="assigne" invisible="1"/>
                     <field name="sender_receivers" invisible="1"/>
                     <field name="registration_date_from" invisible="1"/>
                     <field name="registration_date_to" invisible="1"/>
-                    <field name="registration_date" />
-                    <field name="sender_receivers_summary" />
-                    <field name="subject" />
+                    <field name="registration_date"/>
+                    <field name="sender_receivers_summary"/>
+                    <field name="subject"/>
                     <field name="typology"/>
                     <field name="state"/>
                 </tree>
@@ -627,18 +680,19 @@ this module contains the full copyright notices and license terms. -->
             <field name="arch" type="xml">
                 <search string="Protocolli">
                     <field name="type"/>
-                    <field name="name" filter_domain="['|', ('name','ilike',self), ('registration_date','ilike',self)]" string="protocollo"/>
+                    <field name="name" filter_domain="['|', ('name','ilike',self), ('registration_date','ilike',self)]"
+                           string="protocollo"/>
                     <field name="user_id"/>
                     <field name="assigne"/>
-                    <field name="sender_receivers" />
-                    <field name="subject" />
+                    <field name="sender_receivers"/>
+                    <field name="subject"/>
                     <field name="registration_date_from" filter_domain="[('registration_date','&gt;=',self)]"/>
                     <field name="registration_date_to" filter_domain="[('registration_date','&lt;=',self)]"/>
                     <field name="classification"/>
                     <field name="typology"/>
                     <field name="dossier_ids"/>
-                    <field name="state" />
-               </search>
+                    <field name="state"/>
+                </search>
             </field>
         </record>
 
@@ -647,7 +701,7 @@ this module contains the full copyright notices and license terms. -->
             <field name="model">protocollo.protocollo</field>
             <field name="arch" type="xml">
                 <graph string="Statistiche Protocolli" type="bar">
-                    <field name="registration_date" />
+                    <field name="registration_date"/>
                 </graph>
             </field>
         </record>
@@ -662,13 +716,15 @@ this module contains the full copyright notices and license terms. -->
             <field name="domain">[('type','=','in'),('state','!=','draft')]</field>
             <field name="context">{'default_type':'in'}</field>
             <field name="help" type="html">
-              <p class="oe_view_nocontent_create">
-                Premi qui per creare un nuovo protocollo in ingresso
-              </p><p>
-                Si possono creare protocollazioni in ingresso e uscita ed inserire gli assegnatari della pratica
-            </p><p>
-                Il sistema notifica sull'andamento del protocollo
-              </p>
+                <p class="oe_view_nocontent_create">
+                    Premi qui per creare un nuovo protocollo in ingresso
+                </p>
+                <p>
+                    Si possono creare protocollazioni in ingresso e uscita ed inserire gli assegnatari della pratica
+                </p>
+                <p>
+                    Il sistema notifica sull'andamento del protocollo
+                </p>
             </field>
         </record>
 
@@ -682,13 +738,15 @@ this module contains the full copyright notices and license terms. -->
             <field name="domain">[('type','=','in'),('state','=','draft')]</field>
             <field name="context">{'default_type':'in'}</field>
             <field name="help" type="html">
-              <p class="oe_view_nocontent_create">
-                Premi qui per creare un nuovo protocollo in ingresso
-              </p><p>
-                Si possono creare protocollazioni in ingresso e uscita ed inserire gli assegnatari della pratica
-            </p><p>
-                Il sistema notifica sull'andamento del protocollo
-              </p>
+                <p class="oe_view_nocontent_create">
+                    Premi qui per creare un nuovo protocollo in ingresso
+                </p>
+                <p>
+                    Si possono creare protocollazioni in ingresso e uscita ed inserire gli assegnatari della pratica
+                </p>
+                <p>
+                    Il sistema notifica sull'andamento del protocollo
+                </p>
             </field>
         </record>
 
@@ -702,13 +760,15 @@ this module contains the full copyright notices and license terms. -->
             <field name="domain">[('type','=','out'),('state','!=','draft')]</field>
             <field name="context">{'default_type':'out'}</field>
             <field name="help" type="html">
-              <p class="oe_view_nocontent_create">
-                Premi qui per creare un nuovo protocollo in uscita
-              </p><p>
-                Si possono creare protocollazioni in ingresso e uscita ed inserire gli assegnatari della pratica
-            </p><p>
-                Il sistema notifica sull'andamento del protocollo
-              </p>
+                <p class="oe_view_nocontent_create">
+                    Premi qui per creare un nuovo protocollo in uscita
+                </p>
+                <p>
+                    Si possono creare protocollazioni in ingresso e uscita ed inserire gli assegnatari della pratica
+                </p>
+                <p>
+                    Il sistema notifica sull'andamento del protocollo
+                </p>
             </field>
         </record>
 
@@ -722,13 +782,15 @@ this module contains the full copyright notices and license terms. -->
             <field name="domain">[('type','=','out'),('state','=','draft')]</field>
             <field name="context">{'default_type':'out'}</field>
             <field name="help" type="html">
-              <p class="oe_view_nocontent_create">
-                Premi qui per creare un nuovo protocollo in uscita
-              </p><p>
-                Si possono creare protocollazioni in ingresso e uscita ed inserire gli assegnatari della pratica
-            </p><p>
-                Il sistema notifica sull'andamento del protocollo
-              </p>
+                <p class="oe_view_nocontent_create">
+                    Premi qui per creare un nuovo protocollo in uscita
+                </p>
+                <p>
+                    Si possono creare protocollazioni in ingresso e uscita ed inserire gli assegnatari della pratica
+                </p>
+                <p>
+                    Il sistema notifica sull'andamento del protocollo
+                </p>
             </field>
         </record>
 
@@ -739,15 +801,19 @@ this module contains the full copyright notices and license terms. -->
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="protocollo_protocollo_tree"/>
             <field name="search_view_id" ref="protocollo_protocollo_search"/>
-            <field name="domain">[('state','in',('registered','notified','sent','waiting','error')),('is_visible','=',True)]</field>
+            <field name="domain">
+                [('state','in',('registered','notified','sent','waiting','error')),('is_visible','=',True)]
+            </field>
             <field name="help" type="html">
-              <p class="oe_view_nocontent_create">
-                Premi qui per creare un nuovo protocollo in uscita
-              </p><p>
-                Si possono creare protocollazioni in ingresso e uscita ed inserire gli assegnatari della pratica
-            </p><p>
-                Il sistema notifica sull'andamento del protocollo
-              </p>
+                <p class="oe_view_nocontent_create">
+                    Premi qui per creare un nuovo protocollo in uscita
+                </p>
+                <p>
+                    Si possono creare protocollazioni in ingresso e uscita ed inserire gli assegnatari della pratica
+                </p>
+                <p>
+                    Il sistema notifica sull'andamento del protocollo
+                </p>
             </field>
         </record>
 
@@ -758,7 +824,9 @@ this module contains the full copyright notices and license terms. -->
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="protocollo_protocollo_tree"/>
             <field name="search_view_id" ref="protocollo_protocollo_search"/>
-            <field name="domain">[('state','in',('registered','notified','sent','waiting','error')),('classification','=',False)]</field>
+            <field name="domain">
+                [('state','in',('registered','notified','sent','waiting','error')),('classification','=',False)]
+            </field>
         </record>
 
         <record model='ir.actions.act_window' id='protocollo_protocollo_not_dossier_act'>
@@ -768,58 +836,74 @@ this module contains the full copyright notices and license terms. -->
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="protocollo_protocollo_tree"/>
             <field name="search_view_id" ref="protocollo_protocollo_search"/>
-            <field name="domain">[('state','in',('registered','notified','sent','waiting','error')),('dossier_ids','=',False)]</field>
+            <field name="domain">
+                [('state','in',('registered','notified','sent','waiting','error')),('dossier_ids','=',False)]
+            </field>
         </record>
 
-        <menuitem name="Protocollo" parent="menu_root_protocollo" id="protocollo_protocollo_main" sequence="2" groups="group_protocollo_simple_user,group_protocollo_user,group_protocollo_manager"/>
-        <menuitem action="protocollo_protocollo_in_act" parent="protocollo_protocollo_main" id="protocollo_protocollo_in_menu" sequence="10" groups="group_protocollo_user,group_protocollo_manager"/>
-        <menuitem action="protocollo_protocollo_in_draft_act" parent="protocollo_protocollo_in_menu" id="protocollo_protocollo_in_draft_menu" sequence="10" groups="group_protocollo_user,group_protocollo_manager"/>
-        <menuitem action="protocollo_protocollo_out_act" parent="protocollo_protocollo_main" id="protocollo_protocollo_out_menu" sequence="10" groups="group_protocollo_user,group_protocollo_manager"/>
-        <menuitem action="protocollo_protocollo_out_draft_act" parent="protocollo_protocollo_out_menu" id="protocollo_protocollo_out_draft_menu" sequence="10" groups="group_protocollo_user,group_protocollo_manager"/>
-        <menuitem action="protocollo_protocollo_notified_act" parent="protocollo_protocollo_main" id="protocollo_protocollo_notified_menu" sequence="10" groups="group_protocollo_simple_user,group_protocollo_user,group_protocollo_manager"/>
-        <menuitem action="protocollo_protocollo_not_classified_act" parent="protocollo_protocollo_main" id="protocollo_protocollo_not_classified_menu" sequence="11" groups="group_protocollo_simple_user,group_protocollo_user,group_protocollo_manager"/>
-        <menuitem action="protocollo_protocollo_not_dossier_act" parent="protocollo_protocollo_main" id="protocollo_protocollo_not_dossier_menu" sequence="12" groups="group_protocollo_simple_user,group_protocollo_user,group_protocollo_manager"/>
+        <menuitem name="Protocollo" parent="menu_root_protocollo" id="protocollo_protocollo_main" sequence="2"
+                  groups="group_protocollo_simple_user,group_protocollo_user,group_protocollo_manager"/>
+        <menuitem action="protocollo_protocollo_in_act" parent="protocollo_protocollo_main"
+                  id="protocollo_protocollo_in_menu" sequence="10"
+                  groups="group_protocollo_user,group_protocollo_manager"/>
+        <menuitem action="protocollo_protocollo_in_draft_act" parent="protocollo_protocollo_in_menu"
+                  id="protocollo_protocollo_in_draft_menu" sequence="10"
+                  groups="group_protocollo_user,group_protocollo_manager"/>
+        <menuitem action="protocollo_protocollo_out_act" parent="protocollo_protocollo_main"
+                  id="protocollo_protocollo_out_menu" sequence="10"
+                  groups="group_protocollo_user,group_protocollo_manager"/>
+        <menuitem action="protocollo_protocollo_out_draft_act" parent="protocollo_protocollo_out_menu"
+                  id="protocollo_protocollo_out_draft_menu" sequence="10"
+                  groups="group_protocollo_user,group_protocollo_manager"/>
+        <menuitem action="protocollo_protocollo_notified_act" parent="protocollo_protocollo_main"
+                  id="protocollo_protocollo_notified_menu" sequence="10"
+                  groups="group_protocollo_simple_user,group_protocollo_user,group_protocollo_manager"/>
+        <menuitem action="protocollo_protocollo_not_classified_act" parent="protocollo_protocollo_main"
+                  id="protocollo_protocollo_not_classified_menu" sequence="11"
+                  groups="group_protocollo_simple_user,group_protocollo_user,group_protocollo_manager"/>
+        <menuitem action="protocollo_protocollo_not_dossier_act" parent="protocollo_protocollo_main"
+                  id="protocollo_protocollo_not_dossier_menu" sequence="12"
+                  groups="group_protocollo_simple_user,group_protocollo_user,group_protocollo_manager"/>
 
-	<!-- Browse Classification -->
-	    <record model="ir.actions.act_window" id="action_protocollo_protocollo_classification">
-	        <field name="type">ir.actions.act_window</field>
-	        <field name="res_model">protocollo.protocollo</field>
-	        <field name="name">Protocolli da Titolario</field>
-	        <field name="view_type">form</field>
-	        <field name="domain">[('classification','in',[active_id])]</field>
-	    </record>
-	
-	    <record model="ir.values" id="ir_action_protocollo_protocollo_classification_form">
-	        <field name="key2" eval="'tree_but_open'"/>
-	        <field name="model" eval="'protocollo.classification'"/>
-	        <field name="name">Naviga Titolario</field>
-	        <field name="value" eval="'ir.actions.act_window,%d'%action_protocollo_protocollo_classification"/>
-	    </record>
+        <!-- Browse Classification -->
+        <record model="ir.actions.act_window" id="action_protocollo_protocollo_classification">
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">protocollo.protocollo</field>
+            <field name="name">Protocolli da Titolario</field>
+            <field name="view_type">form</field>
+            <field name="domain">[('classification','in',[active_id])]</field>
+        </record>
 
-        <menuitem action="protocollo_classification_act" parent="protocollo_configuration" id="protocollo_classification_menu" groups="group_protocollo_manager"/>
-		<menuitem action="protocollo_classification_def_act" parent="protocollo_classification_menu" id="protocollo_classification_def_menu" groups="group_protocollo_manager"/>
-       
+        <record model="ir.values" id="ir_action_protocollo_protocollo_classification_form">
+            <field name="key2" eval="'tree_but_open'"/>
+            <field name="model" eval="'protocollo.classification'"/>
+            <field name="name">Naviga Titolario</field>
+            <field name="value" eval="'ir.actions.act_window,%d'%action_protocollo_protocollo_classification"/>
+        </record>
+
+        <menuitem action="protocollo_classification_act" parent="protocollo_configuration"
+                  id="protocollo_classification_menu" groups="group_protocollo_manager"/>
+        <menuitem action="protocollo_classification_def_act" parent="protocollo_classification_menu"
+                  id="protocollo_classification_def_menu" groups="group_protocollo_manager"/>
 
 
-    <!-- Protocol Journal -->
+        <!-- Protocol Journal -->
 
         <record model='ir.ui.view' id='protocollo_journal_form'>
             <field name="name">protocollo.journal.form</field>
             <field name="model">protocollo.journal</field>
             <field name="arch" type="xml">
-                <form string="Registro Giornaliero" version="7.0">
-                    <header>
-                        <field name="state" widget="statusbar" />
-                    </header>
-                    <sheet>
-                    	<group>
-                            <field name="name" />
-                            <field name="user_id" />
-                            <separator string="Protocollazioni della giornata" colspan="4"/>
-                            <field name="protocol_ids" colspan="4" nolabel="1"/>
-                        </group>
-                    </sheet>
-                </form>
+                <header>
+                    <field name="state" widget="statusbar" />
+                </header>
+                <sheet>
+                	<group>
+                        <field name="name" />
+                        <field name="user_id" />
+                        <separator string="Protocollazioni della giornata" colspan="4"/>
+                        <field name="protocol_ids" colspan="4" nolabel="1"/>
+                    </group>
+                </sheet>
             </field>
         </record>
 
@@ -828,8 +912,8 @@ this module contains the full copyright notices and license terms. -->
             <field name="model">protocollo.journal</field>
             <field name="arch" type="xml">
                 <tree string="Registro Giornaliero" version="7.0">
-                    <field name="name" />
-                    <field name="state" />
+                    <field name="name"/>
+                    <field name="state"/>
                 </tree>
             </field>
         </record>
@@ -838,8 +922,8 @@ this module contains the full copyright notices and license terms. -->
             <field name="name">protocollo.journal.search</field>
             <field name="model">protocollo.journal</field>
             <field name="arch" type="xml">
-                <search string="Registro Giornaliero" >
-                    <field name="name" />
+                <search string="Registro Giornaliero">
+                    <field name="name"/>
                 </search>
             </field>
         </record>
@@ -850,48 +934,50 @@ this module contains the full copyright notices and license terms. -->
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="help" type="html">
-              <p class="oe_view_nocontent_create">
-                Premi qui per creare un nuovo record
-              </p><p>
-                Ricordati di inserire tutti i campi in celeste!
-              </p>
+                <p class="oe_view_nocontent_create">
+                    Premi qui per creare un nuovo record
+                </p>
+                <p>
+                    Ricordati di inserire tutti i campi in celeste!
+                </p>
             </field>
         </record>
 
-        <menuitem action="protocollo_journal_act" parent="protocollo_configuration" id="protocollo_journal_menu" groups="group_protocollo_manager"/>
+        <menuitem action="protocollo_journal_act" parent="protocollo_configuration" id="protocollo_journal_menu"
+                  groups="group_protocollo_manager"/>
 
-    <!-- Protocol Emergency -->
+        <!-- Protocol Emergency -->
 
         <record model='ir.ui.view' id='protocollo_emergency_registry_form'>
             <field name="name">protocollo.emergency.registry.form</field>
             <field name="model">protocollo.emergency.registry</field>
             <field name="arch" type="xml">
-                <form string="Registro Emergenza" version="7.0">
+                <form string="Registro Emergenza">
                     <header>
                     	<field name="state" widget="statusbar" />
 	                </header>
 	                <sheet>
                     	<group>
-                        <field name="name" />
-                        <field name="registry" />
-                        <field name="user_id" />
-                        <newline/>
-                        <field name="date_start" />
-                        <field name="date_end" />
-                            <separator string="Numeri Riservati e Protocollazioni" colspan="4"/>
-                        <field name="emergency_ids" colspan="4" nolabel="1">
-                            <tree>
-                                <field name="name"/>
-                                <field name="emergency_number"/>
-                                <field name="protocol_id" />
-                            </tree>
-                            <form>
-                                <field name="name"/>
-                                <field name="emergency_number"/>
-                                <field name="protocol_id" />
-                            </form>
-                        </field>
-                    </group>
+		                    <field name="name" />
+		                    <field name="registry" />
+		                    <field name="user_id" />
+		                    <newline/>
+		                    <field name="date_start" />
+		                    <field name="date_end" />
+		                        <separator string="Numeri Riservati e Protocollazioni" colspan="4"/>
+		                    <field name="emergency_ids" colspan="4" nolabel="1">
+		                        <tree>
+		                            <field name="name"/>
+		                            <field name="emergency_number"/>
+		                            <field name="protocol_id" />
+		                        </tree>
+		                        <form>
+		                            <field name="name"/>
+		                            <field name="emergency_number"/>
+		                            <field name="protocol_id" />
+		                        </form>
+		                    </field>
+		                </group>
                     </sheet>
                 </form>
             </field>
@@ -902,11 +988,11 @@ this module contains the full copyright notices and license terms. -->
             <field name="model">protocollo.emergency.registry</field>
             <field name="arch" type="xml">
                 <tree string="Registro Emergenza" version="7.0">
-                    <field name="name" />
-                    <field name="registry" />
-                    <field name="date_start" />
-                    <field name="date_end" />
-                    <field name="state" />
+                    <field name="name"/>
+                    <field name="registry"/>
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                    <field name="state"/>
                 </tree>
             </field>
         </record>
@@ -915,8 +1001,8 @@ this module contains the full copyright notices and license terms. -->
             <field name="name">protocollo.emergency.registry.search</field>
             <field name="model">protocollo.emergency.registry</field>
             <field name="arch" type="xml">
-                <search string="Registro Emergenza" >
-                    <field name="name" />
+                <search string="Registro Emergenza">
+                    <field name="name"/>
                 </search>
             </field>
         </record>
@@ -927,18 +1013,19 @@ this module contains the full copyright notices and license terms. -->
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="help" type="html">
-              <p class="oe_view_nocontent_create">
-                Premi qui per creare un nuovo record
-              </p><p>
-                Ricordati di inserire tutti i campi in celeste!
-              </p>
+                <p class="oe_view_nocontent_create">
+                    Premi qui per creare un nuovo record
+                </p>
+                <p>
+                    Ricordati di inserire tutti i campi in celeste!
+                </p>
             </field>
         </record>
 
-        <menuitem action="protocollo_emergency_registry_act" parent="protocollo_configuration" id="protocollo_emergency_registry_menu" groups="group_protocollo_manager"/>
+        <menuitem action="protocollo_emergency_registry_act" parent="protocollo_configuration"
+                  id="protocollo_emergency_registry_menu" groups="group_protocollo_manager"/>
 
-
-        <template id="journal_qweb">
+		 <template id="journal_qweb">
             <t t-call="report.html_container">
                 <t t-foreach="docs" t-as="o">
                     <t t-call="report.external_layout">

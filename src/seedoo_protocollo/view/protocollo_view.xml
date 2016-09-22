@@ -447,7 +447,7 @@ this module contains the full copyright notices and license terms. -->
 		                    <button name="sent" string="Invio Protocollo" attrs="{'invisible':['|','|',('state','!=','registered'),('type','!=','out'),('pec','!=',False)]}"/>
 		                    <button name="%(protocollo_cancel_action)d" type='action' states="registered,notified,sent,waiting,error" string="Annulla Protocollo" class="oe_highlight_warning"/>
 		                    <button name="%(protocollo_modify_action)d" type='action' string='Modifica Protocollo' states='registered' groups="seedoo_protocollo.group_protocollo_manager"/>
-		                    <button name="%(protocollo_modify_pec_action)d" type='action' string='Modifica Mail e Reinvio' attrs="{'invisible':['|',('pec','=',False),('state','not in',('registered','waiting','error'))]}" groups="seedoo_protocollo.group_protocollo_manager"/>
+		                    <button name="%(protocollo_modify_pec_action)d" type='action' string='Modifica Mail e Reinvio' attrs="{'invisible':['|','|',('type','!=','out'),('pec','=',False),('state','not in',('registered','waiting','error'))]}" groups="seedoo_protocollo.group_protocollo_manager"/>
                         <field name="state" widget="statusbar" statusbar_visible="draft,registered" statusbar_colors='{"draft":"blue","notified":"red"}'/>
                     </header>
                     <sheet>
@@ -807,11 +807,18 @@ this module contains the full copyright notices and license terms. -->
             <field name="name">protocollo.journal.form</field>
             <field name="model">protocollo.journal</field>
             <field name="arch" type="xml">
-                <form string="Registro Giornaliero">
-                    <field name="name" />
-                    <field name="user_id" />
-                    <field name="protocol_ids" colspan="4"/>
-                    <field name="state" />
+                <form string="Registro Giornaliero" version="7.0">
+                    <header>
+                        <field name="state" widget="statusbar" />
+                    </header>
+                    <sheet>
+                    	<group>
+                            <field name="name" />
+                            <field name="user_id" />
+                            <separator string="Protocollazioni della giornata" colspan="4"/>
+                            <field name="protocol_ids" colspan="4" nolabel="1"/>
+                        </group>
+                    </sheet>
                 </form>
             </field>
         </record>
@@ -859,26 +866,33 @@ this module contains the full copyright notices and license terms. -->
             <field name="name">protocollo.emergency.registry.form</field>
             <field name="model">protocollo.emergency.registry</field>
             <field name="arch" type="xml">
-                <form string="Registro Emergenza">
-                    <field name="name" />
-                    <field name="registry" />
-                    <field name="user_id" />
-                    <newline/>
-                    <field name="date_start" />
-                    <field name="date_end" />
-                    <field name="emergency_ids" >
-                        <tree>
-                            <field name="name"/>
-                            <field name="emergency_number"/>
-                            <field name="protocol_id" />
-                        </tree>
-                        <form>
-                            <field name="name"/>
-                            <field name="emergency_number"/>
-                            <field name="protocol_id" />
-                        </form>
-                    </field>
-                    <field name="state" />
+                <form string="Registro Emergenza" version="7.0">
+                    <header>
+                    	<field name="state" widget="statusbar" />
+	                </header>
+	                <sheet>
+                    	<group>
+                        <field name="name" />
+                        <field name="registry" />
+                        <field name="user_id" />
+                        <newline/>
+                        <field name="date_start" />
+                        <field name="date_end" />
+                            <separator string="Numeri Riservati e Protocollazioni" colspan="4"/>
+                        <field name="emergency_ids" colspan="4" nolabel="1">
+                            <tree>
+                                <field name="name"/>
+                                <field name="emergency_number"/>
+                                <field name="protocol_id" />
+                            </tree>
+                            <form>
+                                <field name="name"/>
+                                <field name="emergency_number"/>
+                                <field name="protocol_id" />
+                            </form>
+                        </field>
+                    </group>
+                    </sheet>
                 </form>
             </field>
         </record>
@@ -922,6 +936,42 @@ this module contains the full copyright notices and license terms. -->
         </record>
 
         <menuitem action="protocollo_emergency_registry_act" parent="protocollo_configuration" id="protocollo_emergency_registry_menu" groups="group_protocollo_manager"/>
+
+
+        <template id="journal_qweb">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="report.external_layout">
+                        <div class="page">
+                            <h3>Registro Giornaliero - <span t-field="o.user_id.company_id.name"/></h3>
+                            <h4>Registro di protocollo del <span t-field="o.date"/></h4>
+                            <table style="width:100%;font-size: 10px;">
+                                  <tr style="padding: 5px; border: 1px solid #aaa;height: 30px; background-color: #f0f0f0">
+                                      <th style="padding: 2px 5px 2px 2px;" width="7%">Tipo</th>
+                                      <th style="padding: 2px 5px 2px 2px;" width="7%">Numero</th>
+                                      <th style="padding: 2px 5px 2px 2px;" width="1%">Data</th>
+                                      <th style="padding: 2px 5px 2px 2px;" width="42%">Oggetto</th>
+                                      <th style="padding: 2px 5px 2px 2px;" width="32%">Mittente/Destinatario</th>
+                                  </tr>
+                                <t t-foreach="o.protocol_ids" t-as="protocol">
+                                    <tr style="padding: 5px; border: 1px solid #aaa;height: 30px">
+                                        <td width="7%" style="padding: 2px 5px 2px 2px;"><span t-field="protocol.type"/></td>
+                                        <td width="7%" style="padding: 2px 5px 2px 2px;"><span t-field="protocol.name"/></td>
+                                        <td width="14%" style="padding: 2px 5px 2px 2px;"><span t-field="protocol.registration_date"/></td>
+                                        <td width="40%" style="padding: 2px 5px 2px 2px;"><span t-field="protocol.subject"/></td>
+                                        <td width="32%" style="padding: 2px 5px 2px 2px;">
+                                            <t t-foreach="protocol.sender_receivers" t-as="sr">
+                                                <span t-field="sr.name"/><br/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
 
     </data>
 </openerp>

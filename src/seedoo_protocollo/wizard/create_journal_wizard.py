@@ -66,6 +66,6 @@ class wizard(osv.TransientModel):
 
         return {
             'type': 'ir.actions.report.xml',
-            'report_name': 'protocollo.journal.webkit',
+            'report_name': 'seedoo_protocollo.journal_qweb',
             'datas': datas,
             }

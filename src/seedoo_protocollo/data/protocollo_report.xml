@@ -2,16 +2,17 @@
 <!-- This file is part of Seedoo.  The COPYRIGHT file at the top level of
 this module contains the full copyright notices and license terms. -->
 <openerp>
-  <data>
-    <report id="report_protocollo_journal"
-            name="protocollo.journal.webkit"
-            auto="False"
-            model="protocollo.journal"
-            file="seedoo_protocollo/report/protocollo_journal.mako"
-            string="Stampa Registro Giornaliero"
-            attachment="(object.state in ('closed')) and ('registro'+(object.date or '').replace('/','_')+'.pdf')"
-            attachment_use="True"
-            report_type="webkit" />
+    <data>
+        <report
+                id="report_protocollo_journal_qweb"
+                model="protocollo.journal"
+                string="Stampa Registro Giornaliero"
+                report_type="qweb-pdf"
+                name="seedoo_protocollo.journal_qweb"
+                file="seedoo_protocollo.journal_qweb"
+                attachment_use="True"
+                attachment="(object.state in ('closed')) and ('registro'+(object.date or '').replace('/','_')+'.pdf')"
+        />
 
-  </data>
+    </data>
 </openerp>

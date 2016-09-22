@@ -10,6 +10,7 @@ from openerp.tools import DEFAULT_SERVER_DATE_FORMAT as DSDT
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT as DSDF
 import openerp.exceptions
 from openerp import netsvc
+from openerp.report import render_report
 import re
 import os
 import subprocess
@@ -1181,7 +1182,7 @@ class protocollo_journal(orm.Model):
 
     def _create_journal(self, cr, uid, ids=False, context=None):
         journal_obj = self.pool.get('protocollo.journal')
-        journal_id = 0
+        journal_ids = []
         last_journal_id = journal_obj.search(
             cr, uid,
             [
@@ -1221,7 +1222,7 @@ class protocollo_journal(orm.Model):
                      ' 23:59:59'),
                 ])
                 try:
-                    journal_obj.create(
+                    journal_id = journal_obj.create(
                         cr, uid,
                         {
                             'name': last_date.
@@ -1234,6 +1235,7 @@ class protocollo_journal(orm.Model):
                             'state': 'closed',
                         }
                     )
+                    journal_ids.append(journal_id)
                 except Exception as e:
                     _logger.exception(
                         "Unable to create Protocol Journal %s"
@@ -1267,18 +1269,24 @@ class protocollo_journal(orm.Model):
                         'state': 'closed',
                     }
                 )
+                journal_ids.append(journal_id)
             except Exception as e:
                 _logger.exception("Unable to create Protocol Journal %s"
                                   % time.strftime(DSDT))
                 _logger.info(e)
                 return False
-        report_service = 'report.protocollo.journal.webkit'
-        service = netsvc.LocalService(report_service)
-        if journal_id > 0:
-            service.create(cr, uid,
-                           [journal_id],
-                           {'model': 'protocollo.journal'},
-                           context)
+        if len(journal_ids) > 0:
+            for journal_id in journal_ids:
+                report_data, format = render_report(cr, uid, [journal_id], 'seedoo_protocollo.journal_qweb', {}, context=context)
+                # attach_vals = {
+                #     'name': 'Registro Giornaliero',
+                #     'datas_fname': 'Registro Giornaliero.pdf',
+                #     'res_model': 'protocollo.journal',
+                #     'res_id': journal_id,
+                #     'datas': base64.encodestring(report_data),
+                #     'file_type': format
+                # }
+                # self.pool.get('ir.attachment').create(cr, uid, attach_vals)
         return True
 
 

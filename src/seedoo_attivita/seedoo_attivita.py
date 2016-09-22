@@ -12,6 +12,14 @@ from openerp import SUPERUSER_ID
 _logger = logging.getLogger(__name__)
 
 
+class attivita_categoria(osv.Model):
+    _inherit = "attivita.categoria"
+
+    _columns = {
+        'protocollo': fields.boolean("Categoria di protocollo"),
+    }
+
+
 class attivita_attivita(orm.Model):
 
     _inherit = "attivita.attivita"
@@ -21,6 +29,10 @@ class attivita_attivita(orm.Model):
         'titolario_id': fields.many2one('protocollo.classification', 'Titolario', readonly=False),
         'template': fields.boolean("Template"),
         'template_instance': fields.boolean("Creato da template"),
+        'protocollo': fields.related('categoria',
+            'protocollo',
+            type='boolean',
+            string='Attivita di Protocollo',)
     }
 
     _defaults ={
@@ -79,7 +91,8 @@ class protocollo_protocollo(orm.Model):
                         'template_instance': True,
                     }
                     attivita_obj.create(cr,SUPERUSER_ID, activity_vals, context=None)
-                    self.write(cr,uid,ids,{'assigne_users': [(4, attivita_titolario.assegnatario_id.id)]})
+                    res_id = self.write(cr,uid,ids,{'assigne_users': [(4, attivita_titolario.assegnatario_id.id)]})
+        return res_id
 
 
 

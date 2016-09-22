@@ -2,6 +2,17 @@
 <openerp>
     <data>
 
+        <record model='ir.ui.view' id='attivita_categoria_protocollo_form'>
+            <field name="name">attivita.categoria.form</field>
+            <field name="model">attivita.categoria</field>
+            <field name="inherit_id" ref="attivita.attivita_categoria_form"/>
+            <field name="arch" type="xml">
+                <field name="tempo_standard" position="after">
+                    <field name="protocollo" />
+                </field>
+            </field>
+        </record>
+
         <record model='ir.ui.view' id='protocollo_protocollo_attivita_form'>
             <field name="name">protocollo.protocollo.form</field>
             <field name="model">protocollo.protocollo</field>
@@ -42,7 +53,8 @@
             <field name="arch" type="xml">
                 <field name="ultimo_aggiornamento" position="after">
                     <field name="template" invisible="1"/>
-                    <field name="protocollo_id" attrs="{'invisible': [('categoria','not in', [1,2,3,4])]}"/>
+                    <field name="protocollo" invisible="1"/>
+                    <field name="protocollo_id" attrs="{'invisible': [('protocollo','=', False)]}"/>
                     <field name="titolario_id" attrs="{'invisible': [('template','=', False)]}"/>
                 </field>
             </field>

@@ -170,6 +170,7 @@
         <record model='ir.ui.view' id='protocollo_dossier_tree'>
             <field name="name">protocollo.dossier.tree</field>
             <field name="model">protocollo.dossier</field>
+            <field name="field_parent">child_ids</field>
             <field name="arch" type="xml">
                 <tree string="Fascicolo" version="7.0" colors="blue:state=='open';green:state=='closed';grey:state=='draft'">
                     <field name="name" />
@@ -210,6 +211,7 @@
             <field name="res_model">protocollo.dossier</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
+            <field name="domain">[('dossier_type','=','fascicolo')]</field>
             <field name="help" type="html">
               <p class="oe_view_nocontent_create">
                 Premi qui per creare un nuovo record
@@ -296,6 +298,36 @@
         action="action_dossier_classification_tree"
         id="menu_dossier_classification_tree"
         parent="main_menu_gedoc" sequence="30"/>
+
+
+
+    <record model="ir.actions.act_window" id="action_struttura_fascicoli">
+        <field name="name">Struttura Fascicoli</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">protocollo.dossier</field>
+        <field name="view_type">tree</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain" eval="[('parent_id','=', False)]"></field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_open_dossier">
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">protocollo.dossier</field>
+        <field name="name">Fascicolo</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('id','in',[active_id])]</field>
+    </record>
+
+    <record model="ir.values" id="ir_action_employee_department">
+        <field name="key2" eval="'tree_but_open'"/>
+        <field name="model" eval="'protocollo.dossier'"/>
+        <field name="name">Struttura Fascicoli</field>
+        <field name="value" eval="'ir.actions.act_window,%d'%action_open_dossier"/>
+    </record>
+
+    <menuitem name="Naviga Fascicoli" id="menu_struttura_fascicoli" parent="protocollo_dossier_menu" action="action_struttura_fascicoli" sequence="5"/>
+
 
     <record model="ir.actions.act_window" id="action_dossier_classification_form">
         <field name="type">ir.actions.act_window</field>

@@ -66,6 +66,7 @@ Configure ir.attachment.location
             'view/protocollo_view.xml',
             'view/mail_pec_view.xml',
             'view/contact_view.xml',
+            'view/report_view.xml',
             'gedoc/view/gedoc_view.xml',
             'wizard/create_journal_wizard_view.xml',
             'wizard/create_emergency_registry_wizard_view.xml',

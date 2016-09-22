@@ -25,3 +25,16 @@ class MailMessage(orm.Model):
             context = {}
         self.write(cr, SUPERUSER_ID, ids[0], {'pec_state': 'not_protocol'})
         return True
+
+    def name_get(self, cr, user, ids, context=None):
+        if not ids:
+            return []
+        if isinstance(ids, (int, long)):
+            ids = [ids]
+        result = self.browse(cr, user, ids, context=context)
+        res = []
+        for rs in result:
+            name = "%s - %s" % (rs.email_from, rs.subject)
+            res += [(rs.id, name)]
+        return res
+

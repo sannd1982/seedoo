@@ -58,7 +58,7 @@ this module contains the full copyright notices and license terms. -->
         <field name="name">Protocollazioni</field>
         <field name="user_id" eval="False"/>
         <field name="parent_id" ref="document.dir_root"/>
-        <field name="ressource_id">0</field>
+        <field name="resource_id">0</field>
     </record>
 
         <!-- Email template for protocol notification -->

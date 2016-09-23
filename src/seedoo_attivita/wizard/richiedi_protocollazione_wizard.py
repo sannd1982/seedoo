@@ -128,7 +128,14 @@ class document_request_sender_receiver_wizard(osv.TransientModel):
             'state': fields.selection(STATE_SELECTION, 'Stato', readonly=True, help="Lo stato del documento.",
                                       select=True)
         }
-        
+
+        # def view_init(self, cr, uid, fields_list, context=None):
+        #     if 'active_id' in context.keys():
+        #         gedoc_obj = self.pool.get('gedoc.document')
+        #         gedoc = gedoc_obj.browse(cr, uid, context['active_id'])
+        #         if len(gedoc.main_doc_id.ids) == 0:
+        #             raise osv.except_osv(_("Warning!"), _("Inserire un allegato !!."))
+        #             return False
 
         def action_request(self, cr, uid, ids, context=None):
             wizard = self.browse(cr, uid, ids[0], context=context)
@@ -173,7 +180,7 @@ class document_request_sender_receiver_wizard(osv.TransientModel):
                 'mimetype': gedoc.main_doc_id.file_type,
                 'datas': gedoc.main_doc_id.datas
             }
-            prot_id = self.pool.get("protocollo.protocollo").create(cr, uid, protocollo_vals, context=None)
+            prot_id = self.pool.get("protocollo.protocollo").create(cr, SUPERUSER_ID, protocollo_vals, context=None)
 
         # crea attività
             prot = self.pool.get('protocollo.protocollo').browse(cr, uid, prot_id)
@@ -211,7 +218,7 @@ class document_request_sender_receiver_wizard(osv.TransientModel):
                     'categoria': category.id,
                     'protocollo_id': prot.id
                 }
-                gedoc_obj.pool.get("attivita.attivita").create(cr, uid, activity_vals, context=None)
+                gedoc_obj.pool.get("attivita.attivita").create(cr, SUPERUSER_ID, activity_vals, context=None)
             
             
         

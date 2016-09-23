@@ -80,7 +80,7 @@ this module contains the full copyright notices and license terms. -->
             <field name="department_id" ref="generic_dept"/>
             <field name="to_notify" eval="True" />
         </record>       
-
+<!--
         <record model="fetchmail.server" id="l10n_it_pec_messages.imap_pec_server">
             <field name="user_ids" eval="[
                 (6, 0,
@@ -92,9 +92,11 @@ this module contains the full copyright notices and license terms. -->
                 )]"/>
         </record>
 
+
         <record model="ir.mail_server" id="l10n_it_pec_messages.smtp_pec_server">
             <field name="smtp_user">test@local.pec.it</field>
         </record>
+-->
 
         <record id="protocollo_registry_default" model="protocollo.registry">
             <field name="allowed_users" eval="[

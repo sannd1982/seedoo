@@ -549,6 +549,7 @@ class protocollo_protocollo(orm.Model):
             STATE_SELECTION, 'Stato', readonly=True,
             help="Lo stato del protocollo.", select=True),
         'year': fields.integer('Anno', required=True),
+        'attachment_ids': fields.one2many('ir.attachment','res_id', 'Allegati',  readonly=True, domain=[('res_model','=','protocollo.protocollo')]),
         'xml_signature': fields.text('Segnatura xml')
     }
 

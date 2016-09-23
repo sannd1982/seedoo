@@ -96,9 +96,22 @@ class ir_attachment(osv.Model):
                                              context=context)
         return True
 
+    def _get_preview_datas(self, cr, uid, ids, field, arg, context=None):
+        if isinstance(ids, (list, tuple)) and not len(ids):
+            return []
+        if isinstance(ids, (long, int)):
+            ids = [ids]
+        res = dict.fromkeys(ids, False)
+        for attach in self.browse(cr, uid, ids):
+            res[attach.id] = attach.datas
+        return res
+
     _columns = {
         'is_protocol': fields.boolean('Doc Protocollo'),
         'reserved': fields.boolean('Doc Riservato'),
+        'preview': fields.function(_get_preview_datas,
+                                   type='binary',
+                                   string='Preview'),
         'datas': fields.function(
                          _data_get,
                          fnct_inv=_data_set,

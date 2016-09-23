@@ -519,6 +519,9 @@
                             <field name="data_doc"/>
                         </group>
                         <notebook>
+                            <page string="Allegati">
+                                <field name="attachment_ids" colspan="4"/>
+                            </page>
                             <page string="Fascicoli">
                                 <field name="dossier_ids"/>
                             </page>

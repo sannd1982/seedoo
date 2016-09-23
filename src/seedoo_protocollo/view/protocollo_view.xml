@@ -608,6 +608,9 @@ this module contains the full copyright notices and license terms. -->
                                     </form>
                                 </field>
                             </page>
+                            <page string="Allegati">
+                                <field name="attachment_ids" colspan="4"/>
+                            </page>
                             <page string="Note">
                                 <label for="notes"/>
                                 <field name="notes" colspan="4"/>

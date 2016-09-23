@@ -542,6 +542,8 @@ class gedoc_document(osv.Model):
             'dossier_document_rel',
             'document_id', 'dossier_id',
             'Fascicoli'),
+        'attachment_ids': fields.one2many('ir.attachment','res_id', 'Allegati', readonly=True, domain=[('res_model','=','gedoc.document')]),
+
     }
 
     _defaults = {

@@ -12,7 +12,16 @@ this module contains the full copyright notices and license terms. -->
         <field name="arch" type="xml">
         <field name="index_content" position="replace" >
         	<field name="reserved" invisible="1"/>
-        	<field name="index_content" nolabel="1" attrs="{'invisible':[('reserved','=',True)]}"/>
+        	<notebook>
+                <page string="Preview">
+                    <field name="preview"
+                           nolabel="1"
+                           widget="pdfviewer"/>
+                </page>
+                <page string="Contenuto Indicizzato">
+                    <field name="index_content" nolabel="1" attrs="{'invisible':[('reserved','=',True)]}"/>
+                </page>
+            </notebook>
         </field>
         </field>
     </record>

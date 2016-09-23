@@ -202,11 +202,11 @@ class document_request_sender_receiver_wizard(osv.TransientModel):
         # cambia lo stato del documento
             if 'active_id' in context.keys():
                 gedoc_obj = self.pool.get('gedoc.document')
-                gedoc_obj.write(cr, SUPERUSER_ID, [context['active_id']], {'state': 'protocol'})
+                gedoc_obj.write(cr, SUPERUSER_ID, [context['active_id']], {'user_comp_ids': [(4,assegnatario_id)], 'state': 'protocol'})
             
                 gedoc = gedoc_obj.browse(cr, uid, context['active_id'])
                 activity_vals = {
-                    'name': "Richiesta protocollazione protocollo num %s da %s " % (prot.name, user_value.login),
+                    'name': "Richiesta protocollazione documento %s da %s " % (gedoc.name, user_value.login),
                     'descrizione': gedoc.subject,
                     'priorita': '3',
                     'referente_id': prot.user_id.id,

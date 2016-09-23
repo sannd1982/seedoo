@@ -339,7 +339,6 @@ this module contains the full copyright notices and license terms. -->
             </field>
         </record>
 
-  
 
         <record model='ir.actions.act_window' id='protocollo_dossier_act'>
             <field name="name">Fascicolo</field>
@@ -544,14 +543,14 @@ this module contains the full copyright notices and license terms. -->
                             </page>
                             <page string="Classificazioni">
                                 <group col="4">
-                                        <label for="dossier_ids"/>
-                                        <field name="dossier_ids" nolabel="1"
-                                               options="{'limit': 10, 'create': false, 'create_edit': false}"
-                                               domain="[('state','=','open')]" colspan="4"
-                                        />
-                                        <label for="classification"/>
-                                        <field name="classification" nolabel="1" widget="m2o_tree" colspan="4"
-                                               options="{'limit': 10, 'create': false, 'create_edit': false}"/>
+                                    <label for="dossier_ids"/>
+                                    <field name="dossier_ids" nolabel="1"
+                                           options="{'limit': 10, 'create': false, 'create_edit': false}"
+                                           domain="[('state','=','open')]" colspan="4"
+                                    />
+                                    <label for="classification"/>
+                                    <field name="classification" nolabel="1" widget="m2o_tree" colspan="4"
+                                           options="{'limit': 10, 'create': false, 'create_edit': false}"/>
 
                                 </group>
                             </page>
@@ -773,6 +772,28 @@ this module contains the full copyright notices and license terms. -->
             </field>
         </record>
 
+        <record model='ir.actions.act_window' id='protocollo_protocollo_out_draft_others_act'>
+            <field name="name">Altri Documenti Da Protocollare</field>
+            <field name="res_model">protocollo.protocollo</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="protocollo_protocollo_tree"/>
+            <field name="search_view_id" ref="protocollo_protocollo_search"/>
+            <field name="domain">[('type','=','out'),('state','=','draft')]</field>
+            <field name="context">{'default_type':'out'}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Premi qui per creare un nuovo protocollo in uscita
+                </p>
+                <p>
+                    Si possono creare protocollazioni in ingresso e uscita ed inserire gli assegnatari della pratica
+                </p>
+                <p>
+                    Il sistema notifica sull'andamento del protocollo
+                </p>
+            </field>
+        </record>
+
         <record model='ir.actions.act_window' id='protocollo_protocollo_notified_act'>
             <field name="name">Protocollazioni Registrate</field>
             <field name="res_model">protocollo.protocollo</field>
@@ -834,6 +855,9 @@ this module contains the full copyright notices and license terms. -->
         <menuitem action="protocollo_protocollo_out_draft_act" parent="protocollo_protocollo_out_menu"
                   id="protocollo_protocollo_out_draft_menu" sequence="10"
                   groups="group_protocollo_user,group_protocollo_manager"/>
+        <menuitem action="protocollo_protocollo_out_draft_others_act" parent="protocollo_protocollo_out_menu"
+                  id="protocollo_protocollo_out_draft_others_menu" sequence="20"
+                  groups="group_protocollo_user,group_protocollo_manager"/>
         <menuitem action="protocollo_protocollo_notified_act" parent="protocollo_protocollo_main"
                   id="protocollo_protocollo_notified_menu" sequence="10"
                   groups="group_protocollo_simple_user,group_protocollo_user,group_protocollo_manager"/>
@@ -873,12 +897,12 @@ this module contains the full copyright notices and license terms. -->
             <field name="model">protocollo.journal</field>
             <field name="arch" type="xml">
                 <header>
-                    <field name="state" widget="statusbar" />
+                    <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
-                	<group>
-                        <field name="name" />
-                        <field name="user_id" />
+                    <group>
+                        <field name="name"/>
+                        <field name="user_id"/>
                         <separator string="Protocollazioni della giornata" colspan="4"/>
                         <field name="protocol_ids" colspan="4" nolabel="1"/>
                     </group>
@@ -933,30 +957,30 @@ this module contains the full copyright notices and license terms. -->
             <field name="arch" type="xml">
                 <form string="Registro Emergenza">
                     <header>
-                    	<field name="state" widget="statusbar" />
-	                </header>
-	                <sheet>
-                    	<group>
-		                    <field name="name" />
-		                    <field name="registry" />
-		                    <field name="user_id" />
-		                    <newline/>
-		                    <field name="date_start" />
-		                    <field name="date_end" />
-		                        <separator string="Numeri Riservati e Protocollazioni" colspan="4"/>
-		                    <field name="emergency_ids" colspan="4" nolabel="1">
-		                        <tree>
-		                            <field name="name"/>
-		                            <field name="emergency_number"/>
-		                            <field name="protocol_id" />
-		                        </tree>
-		                        <form>
-		                            <field name="name"/>
-		                            <field name="emergency_number"/>
-		                            <field name="protocol_id" />
-		                        </form>
-		                    </field>
-		                </group>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="registry"/>
+                            <field name="user_id"/>
+                            <newline/>
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                            <separator string="Numeri Riservati e Protocollazioni" colspan="4"/>
+                            <field name="emergency_ids" colspan="4" nolabel="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="emergency_number"/>
+                                    <field name="protocol_id"/>
+                                </tree>
+                                <form>
+                                    <field name="name"/>
+                                    <field name="emergency_number"/>
+                                    <field name="protocol_id"/>
+                                </form>
+                            </field>
+                        </group>
                     </sheet>
                 </form>
             </field>
@@ -1004,30 +1028,43 @@ this module contains the full copyright notices and license terms. -->
         <menuitem action="protocollo_emergency_registry_act" parent="protocollo_configuration"
                   id="protocollo_emergency_registry_menu" groups="group_protocollo_manager"/>
 
-		 <template id="journal_qweb">
+        <template id="journal_qweb">
             <t t-call="report.html_container">
                 <t t-foreach="docs" t-as="o">
                     <t t-call="report.external_layout">
                         <div class="page">
-                            <h3>Registro Giornaliero - <span t-field="o.user_id.company_id.name"/></h3>
-                            <h4>Registro di protocollo del <span t-field="o.date"/></h4>
+                            <h3>Registro Giornaliero -
+                                <span t-field="o.user_id.company_id.name"/>
+                            </h3>
+                            <h4>Registro di protocollo del
+                                <span t-field="o.date"/>
+                            </h4>
                             <table style="width:100%;font-size: 10px;">
-                                  <tr style="padding: 5px; border: 1px solid #aaa;height: 30px; background-color: #f0f0f0">
-                                      <th style="padding: 2px 5px 2px 2px;" width="7%">Tipo</th>
-                                      <th style="padding: 2px 5px 2px 2px;" width="7%">Numero</th>
-                                      <th style="padding: 2px 5px 2px 2px;" width="1%">Data</th>
-                                      <th style="padding: 2px 5px 2px 2px;" width="42%">Oggetto</th>
-                                      <th style="padding: 2px 5px 2px 2px;" width="32%">Mittente/Destinatario</th>
-                                  </tr>
+                                <tr style="padding: 5px; border: 1px solid #aaa;height: 30px; background-color: #f0f0f0">
+                                    <th style="padding: 2px 5px 2px 2px;" width="7%">Tipo</th>
+                                    <th style="padding: 2px 5px 2px 2px;" width="7%">Numero</th>
+                                    <th style="padding: 2px 5px 2px 2px;" width="1%">Data</th>
+                                    <th style="padding: 2px 5px 2px 2px;" width="42%">Oggetto</th>
+                                    <th style="padding: 2px 5px 2px 2px;" width="32%">Mittente/Destinatario</th>
+                                </tr>
                                 <t t-foreach="o.protocol_ids" t-as="protocol">
                                     <tr style="padding: 5px; border: 1px solid #aaa;height: 30px">
-                                        <td width="7%" style="padding: 2px 5px 2px 2px;"><span t-field="protocol.type"/></td>
-                                        <td width="7%" style="padding: 2px 5px 2px 2px;"><span t-field="protocol.name"/></td>
-                                        <td width="14%" style="padding: 2px 5px 2px 2px;"><span t-field="protocol.registration_date"/></td>
-                                        <td width="40%" style="padding: 2px 5px 2px 2px;"><span t-field="protocol.subject"/></td>
+                                        <td width="7%" style="padding: 2px 5px 2px 2px;">
+                                            <span t-field="protocol.type"/>
+                                        </td>
+                                        <td width="7%" style="padding: 2px 5px 2px 2px;">
+                                            <span t-field="protocol.name"/>
+                                        </td>
+                                        <td width="14%" style="padding: 2px 5px 2px 2px;">
+                                            <span t-field="protocol.registration_date"/>
+                                        </td>
+                                        <td width="40%" style="padding: 2px 5px 2px 2px;">
+                                            <span t-field="protocol.subject"/>
+                                        </td>
                                         <td width="32%" style="padding: 2px 5px 2px 2px;">
                                             <t t-foreach="protocol.sender_receivers" t-as="sr">
-                                                <span t-field="sr.name"/><br/>
+                                                <span t-field="sr.name"/>
+                                                <br/>
                                             </t>
                                         </td>
                                     </tr>

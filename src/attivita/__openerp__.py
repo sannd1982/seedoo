@@ -43,7 +43,7 @@ Gestione della attività
         'wizard/assegna_attivita_view.xml',
         'wizard/wizard_attivita_view.xml',
         'wizard/registra_aggiornamento_view.xml',
-        'attivita_view.xml',
+        'view/attivita_view.xml',
         'data/email_notifications.xml'
     ],
     'images': [],

@@ -8,7 +8,7 @@
             <field name="inherit_id" ref="attivita.attivita_categoria_form"/>
             <field name="arch" type="xml">
                 <field name="tempo_standard" position="after">
-                    <field name="protocollo" />
+                    <field name="protocollo"/>
                 </field>
             </field>
         </record>
@@ -20,6 +20,13 @@
             <field name="arch" type="xml">
                 <page string="Storico Modifiche" position="after">
                     <page string="Attivita Correlate">
+                        <group>
+                            <button name="%(create_activity_from_protocol_action)d" type='action'
+                                    states="registered,notified,sent,waiting,error"
+                                    string="Crea Attivita"
+                                    class="oe_highlight_positive"/>
+                        </group>
+                        <newline/>
                         <field name="attivita_ids"/>
                     </page>
                 </page>
@@ -125,7 +132,8 @@
             <field name="res_model">attivita.attivita</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form,calendar</field>
-            <field name="domain">[('template','=',False),('state','=','lavorazione'),('assegnatario_id','=',uid)]</field>
+            <field name="domain">[('template','=',False),('state','=','lavorazione'),('assegnatario_id','=',uid)]
+            </field>
         </record>
 
         <record model='ir.actions.act_window' id='attivita.attivita_attivita_concluse_action'>
@@ -136,12 +144,14 @@
             <field name="domain">[('template','=',False),('state','=','concluso'),('referente_id','=',uid)]</field>
         </record>
 
-                <record model='ir.actions.act_window' id='attivita_attivita_kanban_action'>
+        <record model='ir.actions.act_window' id='attivita_attivita_kanban_action'>
             <field name="name">Le mie attività Attività</field>
             <field name="res_model">attivita.attivita</field>
             <field name="view_type">form</field>
             <field name="view_mode">kanban,tree,form</field>
-            <field name="domain">[('template','=',False),('assegnatario_id','=',uid),('state','in',['assegnato','lavorazione'])]</field>
+            <field name="domain">
+                [('template','=',False),('assegnatario_id','=',uid),('state','in',['assegnato','lavorazione'])]
+            </field>
         </record>
 
         <record model='ir.actions.act_window' id='attivita.attivita_attivita_archiviate_action'>
@@ -162,7 +172,8 @@
             <field name="domain">[('template','=',False)]</field>
         </record>
 
-        <menuitem name="Kanban" id="menu_attivita_kanban" parent="attivita.menu_attivita" sequence="8" action="attivita_attivita_kanban_action"/>
+        <menuitem name="Kanban" id="menu_attivita_kanban" parent="attivita.menu_attivita" sequence="8"
+                  action="attivita_attivita_kanban_action"/>
 
     </data>
 </openerp>

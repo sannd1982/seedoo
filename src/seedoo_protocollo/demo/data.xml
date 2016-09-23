@@ -92,6 +92,7 @@ this module contains the full copyright notices and license terms. -->
                 )]"/>
         </record>
 
+
         <record model="ir.mail_server" id="l10n_it_pec_messages.smtp_pec_server">
             <field name="smtp_user">test@local.pec.it</field>
         </record>

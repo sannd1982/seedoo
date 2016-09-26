@@ -269,6 +269,45 @@
             </field>
         </record>
 
+        <record model='ir.ui.view' id='attivita_attivita_scadenza_search'>
+            <field name="name">attivita.attivita.search</field>
+            <field name="model">attivita.attivita</field>
+            <field name="priority">20</field>
+            <field name="arch" type="xml">
+                <search string="Attività">
+                    <filter string="Sono coinvolto" name="coinvolto"
+                            domain="['|',('referente_id','=',uid),('assegnatario_id','=',uid)]"
+                            help="Sono responsabile o assegnatario"/>
+                    <filter string="Sono assegnatario" name="assegnatario" domain="[('assegnatario_id','=',uid)]"/>
+                    <filter string="Sono referente" name="referente" domain="[('referente_id','=',uid)]"/>
+                    <newline/>
+                    <group expand="1" string="Filtra per scadenza">
+                    <filter string="Scadute" name="scadute" domain="[('data_scadenza','&lt;=',context_today().strftime('%%Y-%%m-%%d'))]"/>
+                    <filter string="In scadenza: 2 giorni" name="scadenza_2"
+                            domain="[('data_scadenza','&lt;=',(context_today() + datetime.timedelta(2)).strftime('%%Y-%%m-%%d')),('data_scadenza','&gt;=',context_today().strftime('%%Y-%%m-%%d'))]"/>
+                    <filter string="In scadenza: 5 giorni" name="scadenza_5"
+                            domain="[('data_scadenza','&lt;=',(context_today() + datetime.timedelta(5)).strftime('%%Y-%%m-%%d')),('data_scadenza','&gt;=',(context_today() + datetime.timedelta(2)).strftime('%%Y-%%m-%%d')))]"/>
+                    </group>
+                    <group expand="0" string="Group By..." colspan="16">
+                        <filter string="Stato" domain="[]" context="{'group_by':'state'}"/>
+                        <filter string="Categoria" domain="[]" context="{'group_by':'categoria'}"/>
+                        <filter string="Referente" domain="[]" context="{'group_by':'referente_id'}"/>
+                        <filter string="Assegnatario" domain="[]" context="{'group_by':'assegnatario_id'}"/>
+                    </group>
+                    <field name="name"/>
+                    <field name="referente_id"/>
+                    <field name="assegnatario_id"/>
+                    <field name="descrizione"/>
+                    <field name="data_creazione"/>
+                    <field name="data_assegnazione"/>
+                    <field name="data_presa_carico"/>
+                    <field name="data_scadenza"/>
+                    <field name="data_chiusura"/>
+                    <field name="categoria"/>
+                </search>
+            </field>
+        </record>
+
         <!-- Project Task Kanban View -->
         <record model="ir.ui.view" id="attivita_attivita_kanban">
             <field name="name">attivita.attivita.kanban</field>
@@ -381,6 +420,16 @@
             <field name="domain">[('state','=','chiuso'),('referente_id','=',uid)]</field>
         </record>
 
+        <record model='ir.actions.act_window' id='attivita_attivita_scadenza_action'>
+            <field name="name">Attività in scadenza</field>
+            <field name="res_model">attivita.attivita</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state','not in',['concluso','chiuso','annullato'])]</field>
+            <field name="search_view_id" ref="attivita_attivita_scadenza_search"/>
+        </record>
+
+
         <menuitem name="Attività" id="menu_attivita" parent="menu_root_attivita" sequence="1"/>
         <menuitem name="Tutte" id="menu_tutte_attivita" parent="menu_attivita" sequence="1"
                   action="attivita_attivita_action"/>
@@ -394,6 +443,10 @@
                   action="attivita_attivita_concluse_action"/>
         <menuitem name="Archiviate" id="menu_attivita_archiviate" parent="menu_attivita" sequence="7"
                   action="attivita_attivita_archiviate_action"/>
+        <menuitem name="Scadenza" id="menu_attivita_scadenza" parent="menu_attivita" sequence="8"
+                  action="attivita_attivita_scadenza_action"/>
+
+
 
 
         <record model='ir.ui.view' id='attivita_aggiornamento_form'>

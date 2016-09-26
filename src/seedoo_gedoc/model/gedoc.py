@@ -112,7 +112,7 @@ class protocollo_dossier(osv.Model):
                 classification_id:
             classification = self.pool.get('protocollo.classification').\
                 browse(cr, uid, classification_id, context=context)
-            num = len(classification.dossier_ids) + 1
+            num = len(classification.dossier_ids)
             name = '<' + self.DOSSIER_TYPE[dossier_type] + ' N.' + \
                 str(num) + ' del \'' + \
                 classification.name + '\'>'

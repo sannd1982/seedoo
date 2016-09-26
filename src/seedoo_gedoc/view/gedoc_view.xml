@@ -115,7 +115,7 @@
                                 <field name="dossier_typology"/>
                                 <field name="date_close"/>
                                 <field name="classification_id"
-                                       on_change="on_change_dossier_type_classification(dossier_type, classification_id, parent_id)"/>
+                                       on_change="on_change_dossier_type_classification(dossier_type, classification_id, parent_id)" colspan="4"/>
                             </group>
                         </div>
                         <group col="8" string="Informazioni Generali">

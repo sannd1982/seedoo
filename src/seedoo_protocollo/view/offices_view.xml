@@ -60,7 +60,7 @@ this module contains the full copyright notices and license terms. -->
         <field name="arch" type="xml">
             <field name="manager_id" position="after">
                 <field name="collaborator_ids"
-                       filter_domain="[('collaborator_ids.user_id.id','=',self)]"
+                       filter_domain="[('collaborator_ids.name.id','=',self)]"
                         invisible="True"/>
             </field>
 

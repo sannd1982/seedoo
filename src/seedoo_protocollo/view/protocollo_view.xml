@@ -707,7 +707,7 @@ this module contains the full copyright notices and license terms. -->
         </record>
 
         <record model='ir.actions.act_window' id='protocollo_protocollo_in_draft_act'>
-            <field name="name">Protocollazioni in Ingresso Da Registrare</field>
+            <field name="name">In compilazione</field>
             <field name="res_model">protocollo.protocollo</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
@@ -751,7 +751,7 @@ this module contains the full copyright notices and license terms. -->
         </record>
 
         <record model='ir.actions.act_window' id='protocollo_protocollo_out_draft_act'>
-            <field name="name">Protocollazioni in Uscita Da Registrare</field>
+            <field name="name">In compilazione</field>
             <field name="res_model">protocollo.protocollo</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
@@ -773,7 +773,7 @@ this module contains the full copyright notices and license terms. -->
         </record>
 
         <record model='ir.actions.act_window' id='protocollo_protocollo_out_draft_others_act'>
-            <field name="name">Altri Documenti Da Protocollare</field>
+            <field name="name">Richiesta protocollazione</field>
             <field name="res_model">protocollo.protocollo</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>

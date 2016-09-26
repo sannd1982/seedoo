@@ -533,8 +533,8 @@ class gedoc_document(osv.Model):
             ),
         'user_view_ids': fields.many2many(
             'res.users',
-            'dossier_user_view_rel',
-            'dossier_id', 'user_id',
+            'document_user_view_rel',
+            'document_id', 'user_id',
             'Utenti Interessati',
             ),
         'dossier_ids': fields.many2many(

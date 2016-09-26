@@ -264,7 +264,7 @@
             <field name="res_model">protocollo.dossier</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="domain">['|', ('office_comp_ids.group_ids.users','in',[uid]), ('user_comp_ids', 'in', uid)]
+            <field name="domain">['|', ('office_comp_ids.collaborator_ids.name','in',[uid]), ('user_comp_ids', 'in', uid)]
             </field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
@@ -284,7 +284,7 @@
             <field name="res_model">protocollo.dossier</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="domain">['|', ('office_view_ids.group_ids.users','in',[uid]), ('user_view_ids', 'in', uid)]
+            <field name="domain">['|', ('office_view_ids.collaborator_ids.name','in',[uid]), ('user_view_ids', 'in', uid)]
             </field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">

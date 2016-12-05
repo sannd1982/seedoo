@@ -7,17 +7,19 @@
             <field name="arch" type="xml">
                 <form string="Attività" version="7.0">
                     <sheet>
-                    	<group>
-		                    <field name="presa_carico_libera" invisible="1" />
-		                    <field name="assegnatario_id" />
-			                <field name="data_scadenza" />
-		                    <field name="notifica" />
-	                    </group>
+                        <group>
+                            <field name="presa_carico_libera" invisible="1"/>
+                            <field name="assegnatario_id"/>
+                            <field name="data_scadenza"/>
+                            <field name="notifica"/>
+                        </group>
                     </sheet>
                     <footer>
-                        <button name="assegna" string="Assegna Attività" type="object" class="oe_highlight"/>
+                        <button name="assegna" string="Assegna Attività"
+                                type="object" class="oe_highlight"/>
                         or
-                        <button string="Cancel" class="oe_link" special="cancel"/>
+                        <button string="Cancel" class="oe_link"
+                                special="cancel"/>
                     </footer>
                 </form>
             </field>

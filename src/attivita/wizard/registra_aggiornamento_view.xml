@@ -7,22 +7,26 @@
             <field name="arch" type="xml">
                 <form string="Aggiornamento" version="7.0">
                     <sheet>
-                    	<group>
-		                    <field name="name" />
-			                <field name="avanzamento_attivita" />
-		                    <field name="avanzamento" attrs="{'invisible': [('avanzamento_attivita','=', False)]}"/>
-	                    </group>
+                        <group>
+                            <field name="name"/>
+                            <field name="avanzamento_attivita"/>
+                            <field name="avanzamento"
+                                   attrs="{'invisible': [('avanzamento_attivita','=', False)]}"/>
+                        </group>
                     </sheet>
                     <footer>
-                        <button name="registra" string="Registra" type="object" class="oe_highlight"/>
+                        <button name="registra" string="Registra" type="object"
+                                class="oe_highlight"/>
                         or
-                        <button string="Cancel" class="oe_link" special="cancel"/>
+                        <button string="Cancel" class="oe_link"
+                                special="cancel"/>
                     </footer>
                 </form>
             </field>
         </record>
 
-        <record id="action_registra_aggiornamento" model="ir.actions.act_window">
+        <record id="action_registra_aggiornamento"
+                model="ir.actions.act_window">
             <field name="name">Registra Aggiornamento</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">attivita.registra.aggiornamento</field>

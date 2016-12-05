@@ -1,4 +1,7 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
+# This file is part of Seedoo.  The COPYRIGHT file at the top level of
+# this module contains the full copyright notices and license terms.
+
 from openerp.tests.common import TransactionCase
 import logging
 import datetime
@@ -15,7 +18,7 @@ class TestAttivita(TransactionCase):
 
     def setUp(self):
         super(TestAttivita, self).setUp()
-        #cr, uid = self.cr, self.uid
+        # cr, uid = self.cr, self.uid
         self.attivita_model = self.registry('attivita.attivita')
         self.attivita_storico_model = self.registry('attivita.storico')
         self.res_groups_model = self.registry('res.groups')
@@ -40,7 +43,7 @@ class TestAttivita(TransactionCase):
                 ('orizzontale', 3)]
 
     def _get_state_definition(self, cr, uid, state, context=None):
-        return dict(self._type_selection(cr,uid))[state]
+        return dict(self._type_selection(cr, uid))[state]
 
     def _type_selection(self, cr, uid, context=None):
         return [('draft', 'Bozza'),
@@ -52,38 +55,43 @@ class TestAttivita(TransactionCase):
                 ('rifiutato', 'Rifiutato')]
 
     def test_name_search(self):
-        #cr, uid = self.cr, self.uid
-        self.assertEqual(5,5, "name_search 'ilike Tax' should have returned Tax Received account only")
-
+        # cr, uid = self.cr, self.uid
+        self.assertEqual(5, 5,
+                         "name_search 'ilike Tax' should have returned Tax Received account only")
 
     def test_user_monitor_activity(self):
         cr, uid = self.cr, self.uid
-        activity_monitor_group_id = self.res_groups_model.search(cr, uid, [('name','=',self.monitor_group_name)])
+        activity_monitor_group_id = self.res_groups_model.search(cr, uid, [
+            ('name', '=', self.monitor_group_name)])
 
-        self._logger.info("activity_monitor_group_id %s"%activity_monitor_group_id)
+        self._logger.info(
+            "activity_monitor_group_id %s" % activity_monitor_group_id)
 
         data = {
 
-                'name': 'TestMonitor',
-                'login': 'testMonitor',
-                'alias_name': 'testMonitor',
-                'email': 'test.monitor@test.srd',
-                'groups_id': [(6, 0, activity_monitor_group_id)]
-            }
+            'name': 'TestMonitor',
+            'login': 'testMonitor',
+            'alias_name': 'testMonitor',
+            'email': 'test.monitor@test.srd',
+            'groups_id': [(6, 0, activity_monitor_group_id)]
+        }
 
-        user_id = self.res_users_model.create(cr,uid, data)
+        user_id = self.res_users_model.create(cr, uid, data)
 
-        activity_ids = self.attivita_model.search(cr,SUPERUSER_ID, [])
+        activity_ids = self.attivita_model.search(cr, SUPERUSER_ID, [])
 
-        user_activity_ids = self.attivita_model.search(cr,user_id, [])
+        user_activity_ids = self.attivita_model.search(cr, user_id, [])
 
-        self.assertEqual(len(activity_ids), len(user_activity_ids),"activiy list should be equal")
+        self.assertEqual(len(activity_ids), len(user_activity_ids),
+                         "activiy list should be equal")
 
     def test_user_assignee_activity(self):
         cr, uid = self.cr, self.uid
-        activity_assignee_group_id = self.res_groups_model.search(cr, uid, [('name','=',self.assignee_group_name)])
+        activity_assignee_group_id = self.res_groups_model.search(cr, uid, [
+            ('name', '=', self.assignee_group_name)])
 
-        self._logger.info("activity_assignee_group_id %s"%activity_assignee_group_id)
+        self._logger.info(
+            "activity_assignee_group_id %s" % activity_assignee_group_id)
 
         data = {
 
@@ -94,14 +102,14 @@ class TestAttivita(TransactionCase):
             'groups_id': [(6, 0, activity_assignee_group_id)]
         }
 
-        user_id = self.res_users_model.create(cr,uid, data)
+        user_id = self.res_users_model.create(cr, uid, data)
         now = datetime.datetime.now()
-        data_scadenza =  now + datetime.timedelta(days=15)
+        data_scadenza = now + datetime.timedelta(days=15)
 
-        for i in [1,2]:
+        for i in [1, 2]:
             activity_vals = {
-                'name': 'Test assegnee %s'%i,
-                'descrizione': 'Test assegnee %s'%i,
+                'name': 'Test assegnee %s' % i,
+                'descrizione': 'Test assegnee %s' % i,
                 'priorita': '3',
                 'referente_id': SUPERUSER_ID,
                 'assegnatario_id': user_id,
@@ -111,19 +119,22 @@ class TestAttivita(TransactionCase):
                 'data_presa_carico': now
             }
 
-            attivita_id = self.attivita_model.create(cr,uid,activity_vals)
+            attivita_id = self.attivita_model.create(cr, uid, activity_vals)
 
-        activity_ids = self.attivita_model.search(cr,SUPERUSER_ID, [('assegnatario_id','=',user_id)])
+        activity_ids = self.attivita_model.search(cr, SUPERUSER_ID, [
+            ('assegnatario_id', '=', user_id)])
 
-        user_activity_ids = self.attivita_model.search(cr,user_id, [])
+        user_activity_ids = self.attivita_model.search(cr, user_id, [])
 
-        self.assertEqual(len(activity_ids), len(user_activity_ids),"activiy list should be equal")
+        self.assertEqual(len(activity_ids), len(user_activity_ids),
+                         "activiy list should be equal")
 
     def test_user_ref_activity(self):
         cr, uid = self.cr, self.uid
-        activity_ref_group_id = self.res_groups_model.search(cr, uid, [('name','=',self.ref_group_name)])
+        activity_ref_group_id = self.res_groups_model.search(cr, uid, [
+            ('name', '=', self.ref_group_name)])
 
-        self._logger.info("activity_ref_group_id %s"%activity_ref_group_id)
+        self._logger.info("activity_ref_group_id %s" % activity_ref_group_id)
 
         data = {
 
@@ -134,14 +145,14 @@ class TestAttivita(TransactionCase):
             'groups_id': [(6, 0, activity_ref_group_id)]
         }
 
-        user_id = self.res_users_model.create(cr,uid, data)
+        user_id = self.res_users_model.create(cr, uid, data)
         now = datetime.datetime.now()
-        data_scadenza =  now + datetime.timedelta(days=15)
+        data_scadenza = now + datetime.timedelta(days=15)
 
-        for i in [1,2]:
+        for i in [1, 2]:
             activity_vals = {
-                'name': 'Test assegnee %s'%i,
-                'descrizione': 'Test assegnee %s'%i,
+                'name': 'Test assegnee %s' % i,
+                'descrizione': 'Test assegnee %s' % i,
                 'priorita': '3',
                 'referente_id': user_id,
                 'assegnatario_id': SUPERUSER_ID,
@@ -151,19 +162,20 @@ class TestAttivita(TransactionCase):
                 'data_presa_carico': now
             }
 
-            attivita_id = self.attivita_model.create(cr,uid,activity_vals)
+            attivita_id = self.attivita_model.create(cr, uid, activity_vals)
 
-        activity_ids = self.attivita_model.search(cr,SUPERUSER_ID, [('referente_id','=',user_id)])
+        activity_ids = self.attivita_model.search(cr, SUPERUSER_ID, [
+            ('referente_id', '=', user_id)])
 
-        user_activity_ids = self.attivita_model.search(cr,user_id, [])
+        user_activity_ids = self.attivita_model.search(cr, user_id, [])
 
-        self.assertEqual(len(activity_ids), len(user_activity_ids),"activiy list should be equal")
-
+        self.assertEqual(len(activity_ids), len(user_activity_ids),
+                         "activiy list should be equal")
 
     def test_activiy_history(self):
         cr, uid = self.cr, self.uid
         now = datetime.datetime.now()
-        data_scadenza =  now + datetime.timedelta(days=15)
+        data_scadenza = now + datetime.timedelta(days=15)
 
         activity_vals = {
             'name': 'Test assegnee',
@@ -177,37 +189,51 @@ class TestAttivita(TransactionCase):
             'data_presa_carico': now
         }
 
-        attivita_id = self.attivita_model.create(cr,uid,activity_vals)
+        attivita_id = self.attivita_model.create(cr, uid, activity_vals)
 
-        for s in ['assegnato','lavorazione', 'concluso', 'chiuso','annullato']:
+        for s in ['assegnato', 'lavorazione', 'concluso', 'chiuso',
+                  'annullato']:
             activity_vals = {
                 'state': s,
             }
 
             if s == 'annullato':
-                activity_vals['motivazione_annullamento'] = 'test motivazione_annullamento'
+                activity_vals[
+                    'motivazione_annullamento'] = 'test motivazione_annullamento'
 
-            self.attivita_model.write(cr,uid,attivita_id,activity_vals)
+            self.attivita_model.write(cr, uid, attivita_id, activity_vals)
 
-            ids = self.attivita_storico_model.search(cr,uid,[('attivita_id','=',attivita_id), ('name','=ilike',self._get_state_definition(cr,uid,s))])
+            ids = self.attivita_storico_model.search(cr, uid, [
+                ('attivita_id', '=', attivita_id),
+                ('name', '=ilike', self._get_state_definition(cr, uid, s))])
             self.assertTrue(bool(ids))
 
-
-        attivita_rifiouto_module_installed = self.ir_module_model.search(cr,uid, [('name','=','attivita_rifiuto'),('state','=','installed')])
+        attivita_rifiouto_module_installed = self.ir_module_model.search(cr,
+                                                                         uid, [
+                                                                             (
+                                                                                 'name',
+                                                                                 '=',
+                                                                                 'attivita_rifiuto'),
+                                                                             (
+                                                                                 'state',
+                                                                                 '=',
+                                                                                 'installed')])
         if attivita_rifiouto_module_installed:
             activity_vals = {
                 'state': 'rifiutato',
-                'motivazione_rifiuto':'test motivazione_rifiuto'
+                'motivazione_rifiuto': 'test motivazione_rifiuto'
             }
-            self.attivita_model.write(cr,uid,attivita_id,activity_vals)
+            self.attivita_model.write(cr, uid, attivita_id, activity_vals)
 
-            ids = self.attivita_storico_model.search(cr,uid,[('attivita_id','=',attivita_id), ('name','=ilike',self._get_state_definition(cr,uid,s))])
+            ids = self.attivita_storico_model.search(cr, uid, [
+                ('attivita_id', '=', attivita_id),
+                ('name', '=ilike', self._get_state_definition(cr, uid, s))])
             self.assertTrue(bool(ids))
 
     def test_activiy_visibility_search(self):
         cr, uid = self.cr, self.uid
 
-        existing_usr_on_system_ids = self.res_users_model.search(cr,uid, [])
+        existing_usr_on_system_ids = self.res_users_model.search(cr, uid, [])
 
         existing_usr_on_system_num = len(existing_usr_on_system_ids)
 
@@ -219,7 +245,7 @@ class TestAttivita(TransactionCase):
             'desc': 'Direzione'
         }
 
-        direzione_id = self.res_dep_model.create(cr,uid, vals)
+        direzione_id = self.res_dep_model.create(cr, uid, vals)
 
         vals = {
             'name': 'Amministrazione',
@@ -229,7 +255,7 @@ class TestAttivita(TransactionCase):
             'desc': 'Amministrazione'
         }
 
-        amministrazione_id = self.res_dep_model.create(cr,uid, vals)
+        amministrazione_id = self.res_dep_model.create(cr, uid, vals)
 
         vals = {
             'name': 'Contabilita',
@@ -239,37 +265,40 @@ class TestAttivita(TransactionCase):
             'desc': 'Contabilita'
         }
 
-        contabilita_id = self.res_dep_model.create(cr,uid, vals)
+        contabilita_id = self.res_dep_model.create(cr, uid, vals)
 
-        #USERS AND EMPS
-        self._create_emp(cr,uid, direzione_id, 'Direzione')
-        admin1_id = self._create_emp(cr,uid, amministrazione_id,'Amministrazione1')
-        self._create_emp(cr,uid, amministrazione_id, 'Amministrazione2')
-        self._create_emp(cr,uid, contabilita_id,'Contabilita')
-
+        # USERS AND EMPS
+        self._create_emp(cr, uid, direzione_id, 'Direzione')
+        admin1_id = self._create_emp(cr, uid, amministrazione_id,
+                                     'Amministrazione1')
+        self._create_emp(cr, uid, amministrazione_id, 'Amministrazione2')
+        self._create_emp(cr, uid, contabilita_id, 'Contabilita')
 
         for i in ['totale', 'gerarchico', 'orizzontale']:
 
-            self.brains_conf_model.write(cr,uid,1, vals={'tipologia_assegnamento':i})
-            ids = self.res_users_model.search(cr, admin1_id, [('is_visible','=',True)])
+            self.brains_conf_model.write(cr, uid, 1,
+                                         vals={'tipologia_assegnamento': i})
+            ids = self.res_users_model.search(cr, admin1_id,
+                                              [('is_visible', '=', True)])
             n = self._get_visibility_users(cr, uid, i)
             if i == 'totale':
-                n = n+existing_usr_on_system_num
+                n = n + existing_usr_on_system_num
 
-            self.assertEquals(len(ids), n, "User with vvisiility type configuration [%s] must see %s users"%(i,n))
+            self.assertEquals(len(ids), n,
+                              "User with vvisiility type configuration [%s] must see %s users" % (
+                                  i, n))
 
-
-    def _create_emp(self, cr,uid, department_id ,name):
+    def _create_emp(self, cr, uid, department_id, name):
 
         data = {
 
             'name': name,
             'login': name,
             'alias_name': name,
-            'email': '%s@test.srd'%name,
+            'email': '%s@test.srd' % name,
         }
 
-        user_id = self.res_users_model.create(cr,uid, data)
+        user_id = self.res_users_model.create(cr, uid, data)
 
         emp_vals = {
             'message_follower_ids': False,
@@ -301,7 +330,7 @@ class TestAttivita(TransactionCase):
             'passport_id': False
         }
 
-        self.res_emp_model.create(cr,uid,emp_vals)
+        self.res_emp_model.create(cr, uid, emp_vals)
 
         return user_id
 

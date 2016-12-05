@@ -43,7 +43,8 @@
             <field name="arch" type="xml">
                 <search string="Categorie">
                     <group expand="0" string="Group By..." colspan="16">
-                        <filter string="Categoria Superiore" domain="[]" context="{'group_by':'parent_id'}"/>
+                        <filter string="Categoria Superiore" domain="[]"
+                                context="{'group_by':'parent_id'}"/>
                     </group>
                     <field name="name"/>
                     <field name="parent_id"/>
@@ -61,9 +62,11 @@
         </record>
 
 
-        <menuitem name="Categorie" id="menu_categorie_root" parent="attivita.menu_root_attivita" sequence="3"
+        <menuitem name="Categorie" id="menu_categorie_root"
+                  parent="attivita.menu_root_attivita" sequence="3"
                   groups="attivita.res_groups_attivita_manager,base.group_erp_manager"/>
-        <menuitem name="Categorie" id="menu_categorie" parent="menu_categorie_root" sequence="1"
+        <menuitem name="Categorie" id="menu_categorie"
+                  parent="menu_categorie_root" sequence="1"
                   action="attivita_categorie_action"
                   groups="attivita.res_groups_attivita_manager,base.group_erp_manager"/>
 
@@ -74,28 +77,38 @@
             <field name="arch" type="xml">
                 <form string="Attività" version="7.0">
                     <header>
-                        <button name="%(action_assegna_attivita)d" string="Assegna"
+                        <button name="%(action_assegna_attivita)d"
+                                string="Assegna"
                                 groups="attivita.res_groups_referente,attivita.res_groups_attivita_manager,base.group_erp_manager"
-                                type="action" states="draft" class="oe_highlight"/>
-                        <button name="%(action_assegna_attivita)d" string="Smista"
+                                type="action" states="draft"
+                                class="oe_highlight"/>
+                        <button name="%(action_assegna_attivita)d"
+                                string="Smista"
                                 groups="attivita.res_groups_referente,attivita.res_groups_attivita_manager,base.group_erp_manager"
-                                type="action" states="assegnato" class="oe_highlight"/>
+                                type="action" states="assegnato"
+                                class="oe_highlight"/>
                         <button name="prendi_carico" string="Prendi in carico"
                                 groups="attivita.res_groups_assegnatario,attivita.res_groups_attivita_manager,base.group_erp_manager"
-                                type="object" states="assegnato" class="oe_highlight"/>
+                                type="object" states="assegnato"
+                                class="oe_highlight"/>
                         <button name="concludi" string="Concludi"
                                 groups="attivita.res_groups_assegnatario,attivita.res_groups_attivita_manager,base.group_erp_manager"
-                                type="object" states="lavorazione" class="oe_highlight"/>
+                                type="object" states="lavorazione"
+                                class="oe_highlight"/>
                         <button name="valida" string="Valida e chiudi"
                                 groups="attivita.res_groups_referente,attivita.res_groups_attivita_manager,base.group_erp_manager"
-                                type="object" states="concluso" class="oe_highlight"/>
+                                type="object" states="concluso"
+                                class="oe_highlight"/>
                         <button name="%(action_wizard_attivita)d"
                                 groups="attivita.res_groups_referente,attivita.res_groups_attivita_manager,base.group_erp_manager"
-                                string="Annulla" type="action" states="rifiutato,assegnato" class="oe_highlight"
+                                string="Annulla" type="action"
+                                states="rifiutato,assegnato"
+                                class="oe_highlight"
                                 context="{'case': 'annulla'}"/>
                         <button name="%(action_wizard_attivita)d"
                                 groups="attivita.res_groups_referente,attivita.res_groups_attivita_manager,base.group_erp_manager"
-                                string="Richiedi Integrazione" type="action" states="concluso" class="oe_highlight"
+                                string="Richiedi Integrazione" type="action"
+                                states="concluso" class="oe_highlight"
                                 context="{'case': 'integrazione'}"/>
 
                         <field name="state" widget="statusbar"/>
@@ -103,16 +116,20 @@
                     <sheet>
                         <field name="richiesta_integrazione" invisible="1"/>
 
-                        <div class="info_message" attrs="{'invisible':[('state','!=','annullato')]}">
+                        <div class="info_message"
+                             attrs="{'invisible':[('state','!=','annullato')]}">
                             <p>
                                 <label for="motivazione_annullamento"/>
-                                <field name="motivazione_annullamento" readonly="1"/>
+                                <field name="motivazione_annullamento"
+                                       readonly="1"/>
                             </p>
                         </div>
-                        <div class="info_message" attrs="{'invisible':[('richiesta_integrazione','!=',True)]}">
+                        <div class="info_message"
+                             attrs="{'invisible':[('richiesta_integrazione','!=',True)]}">
                             <p>
                                 <label for="motivazione_richiesta_integrazione"/>
-                                <field name="motivazione_richiesta_integrazione" readonly="1"/>
+                                <field name="motivazione_richiesta_integrazione"
+                                       readonly="1"/>
                             </p>
                         </div>
                         <div class="oe_title">
@@ -125,12 +142,14 @@
 
                         <group>
                             <group>
-                                <field name="avanzamento" widget="progressbar"/>
+                                <field name="avanzamento"
+                                       widget="progressbar"/>
                                 <field name="ultimo_aggiornamento"/>
                             </group>
                             <group>
                                 <field name="priorita" required="1"/>
-                                <field name="categoria" domain="[('attiva','=',True)]"
+                                <field name="categoria"
+                                       domain="[('attiva','=',True)]"
                                        on_change="onchange_categoria(categoria, data_assegnazione)"/>
                             </group>
                         </group>
@@ -138,7 +157,8 @@
                             <page string="Generale">
                                 <group>
                                     <group>
-                                        <separator string="Soggetti Coinvolti" colspan="4"/>
+                                        <separator string="Soggetti Coinvolti"
+                                                   colspan="4"/>
                                         <newline/>
                                         <field name="referente_id"
                                                domain="[('groups_id', 'in', [%(res_groups_referente)d])]"/>
@@ -157,24 +177,35 @@
                                     </group>
                                 </group>
                             </page>
-                            <page string="Aggiornamenti" attrs="{'invisible': [('state','=','draft')]}" readonly="1">
-                                <button name="%(action_registra_aggiornamento)d" string="Registra Aggiornamento"
-                                        type="action" states="assegnato,lavorazione,concluso" class="oe_highlight"
+                            <page string="Aggiornamenti"
+                                  attrs="{'invisible': [('state','=','draft')]}"
+                                  readonly="1">
+                                <button name="%(action_registra_aggiornamento)d"
+                                        string="Registra Aggiornamento"
+                                        type="action"
+                                        states="assegnato,lavorazione,concluso"
+                                        class="oe_highlight"
                                         icon="gtk-go-forward"/>
                                 <field name="aggiornamenti_ids" colspan="4">
-                                    <tree string="Aggiornamenti Attività" version="7.0">
+                                    <tree string="Aggiornamenti Attività"
+                                          version="7.0">
                                         <field name="name"/>
                                         <field name="autore_id"/>
                                         <field name="referente_id"/>
                                         <field name="data_creazione"/>
                                         <field name="data_lettura"/>
                                         <field name="state"/>
-                                        <button name="segna_letto" string="Segna Letto" type="object" states="draft"
-                                                class="oe_highlight" icon="gtk-go-forward"/>
+                                        <button name="segna_letto"
+                                                string="Segna Letto"
+                                                type="object" states="draft"
+                                                class="oe_highlight"
+                                                icon="gtk-go-forward"/>
                                     </tree>
                                 </field>
                             </page>
-                            <page string="Storico" attrs="{'invisible': [('state','=','draft')]}" readonly="1">
+                            <page string="Storico"
+                                  attrs="{'invisible': [('state','=','draft')]}"
+                                  readonly="1">
                                 <field name="storico_ids" colspan="4">
                                     <tree string="Storico" version="7.0">
                                         <field name="data_evento"/>
@@ -213,7 +244,8 @@
                     <field name="data_presa_carico"/>
                     <field name="data_scadenza"/>
                     <field name="data_chiusura"/>
-                    <field name="avanzamento" widget="progressbar" avg="Avanzamento Medio"/>
+                    <field name="avanzamento" widget="progressbar"
+                           avg="Avanzamento Medio"/>
                     <field name="state"/>
                 </tree>
             </field>
@@ -242,18 +274,29 @@
                     <filter string="Sono coinvolto" name="coinvolto"
                             domain="['|',('referente_id','=',uid),('assegnatario_id','=',uid)]"
                             help="Sono responsabile o assegnatario"/>
-                    <filter string="Sono assegnatario" name="assegnatario" domain="[('assegnatario_id','=',uid)]"/>
-                    <filter string="Sono referente" name="referente" domain="[('referente_id','=',uid)]"/>
-                    <filter string="Bozza" name="draft" domain="[('state','=','draft')]"/>
-                    <filter string="Pending" name="pending" domain="[('state','=','assegnato')]"/>
-                    <filter string="Lavorazione" name="lavorazione" domain="[('state','=','lavorazione')]"/>
-                    <filter string="Concluse" name="concluse" domain="[('state','=','concluso')]"/>
-                    <filter string="Archiviate" name="archiviate" domain="[('state','=','chiuso')]"/>
+                    <filter string="Sono assegnatario" name="assegnatario"
+                            domain="[('assegnatario_id','=',uid)]"/>
+                    <filter string="Sono referente" name="referente"
+                            domain="[('referente_id','=',uid)]"/>
+                    <filter string="Bozza" name="draft"
+                            domain="[('state','=','draft')]"/>
+                    <filter string="Pending" name="pending"
+                            domain="[('state','=','assegnato')]"/>
+                    <filter string="Lavorazione" name="lavorazione"
+                            domain="[('state','=','lavorazione')]"/>
+                    <filter string="Concluse" name="concluse"
+                            domain="[('state','=','concluso')]"/>
+                    <filter string="Archiviate" name="archiviate"
+                            domain="[('state','=','chiuso')]"/>
                     <group expand="0" string="Group By..." colspan="16">
-                        <filter string="Stato" domain="[]" context="{'group_by':'state'}"/>
-                        <filter string="Categoria" domain="[]" context="{'group_by':'categoria'}"/>
-                        <filter string="Referente" domain="[]" context="{'group_by':'referente_id'}"/>
-                        <filter string="Assegnatario" domain="[]" context="{'group_by':'assegnatario_id'}"/>
+                        <filter string="Stato" domain="[]"
+                                context="{'group_by':'state'}"/>
+                        <filter string="Categoria" domain="[]"
+                                context="{'group_by':'categoria'}"/>
+                        <filter string="Referente" domain="[]"
+                                context="{'group_by':'referente_id'}"/>
+                        <filter string="Assegnatario" domain="[]"
+                                context="{'group_by':'assegnatario_id'}"/>
                     </group>
                     <field name="name"/>
                     <field name="referente_id"/>
@@ -278,21 +321,30 @@
                     <filter string="Sono coinvolto" name="coinvolto"
                             domain="['|',('referente_id','=',uid),('assegnatario_id','=',uid)]"
                             help="Sono responsabile o assegnatario"/>
-                    <filter string="Sono assegnatario" name="assegnatario" domain="[('assegnatario_id','=',uid)]"/>
-                    <filter string="Sono referente" name="referente" domain="[('referente_id','=',uid)]"/>
+                    <filter string="Sono assegnatario" name="assegnatario"
+                            domain="[('assegnatario_id','=',uid)]"/>
+                    <filter string="Sono referente" name="referente"
+                            domain="[('referente_id','=',uid)]"/>
                     <newline/>
                     <group expand="1" string="Filtra per scadenza">
-                    <filter string="Scadute" name="scadute" domain="[('data_scadenza','&lt;=',context_today().strftime('%%Y-%%m-%%d'))]"/>
-                    <filter string="In scadenza: 2 giorni" name="scadenza_2"
-                            domain="[('data_scadenza','&lt;=',(context_today() + datetime.timedelta(2)).strftime('%%Y-%%m-%%d')),('data_scadenza','&gt;=',context_today().strftime('%%Y-%%m-%%d'))]"/>
-                    <filter string="In scadenza: 5 giorni" name="scadenza_5"
-                            domain="[('data_scadenza','&lt;=',(context_today() + datetime.timedelta(5)).strftime('%%Y-%%m-%%d')),('data_scadenza','&gt;=',(context_today() + datetime.timedelta(2)).strftime('%%Y-%%m-%%d')))]"/>
+                        <filter string="Scadute" name="scadute"
+                                domain="[('data_scadenza','&lt;=',context_today().strftime('%%Y-%%m-%%d'))]"/>
+                        <filter string="In scadenza: 2 giorni"
+                                name="scadenza_2"
+                                domain="[('data_scadenza','&lt;=',(context_today() + datetime.timedelta(2)).strftime('%%Y-%%m-%%d')),('data_scadenza','&gt;=',context_today().strftime('%%Y-%%m-%%d'))]"/>
+                        <filter string="In scadenza: 5 giorni"
+                                name="scadenza_5"
+                                domain="[('data_scadenza','&lt;=',(context_today() + datetime.timedelta(5)).strftime('%%Y-%%m-%%d')),('data_scadenza','&gt;=',(context_today() + datetime.timedelta(2)).strftime('%%Y-%%m-%%d')))]"/>
                     </group>
                     <group expand="0" string="Group By..." colspan="16">
-                        <filter string="Stato" domain="[]" context="{'group_by':'state'}"/>
-                        <filter string="Categoria" domain="[]" context="{'group_by':'categoria'}"/>
-                        <filter string="Referente" domain="[]" context="{'group_by':'referente_id'}"/>
-                        <filter string="Assegnatario" domain="[]" context="{'group_by':'assegnatario_id'}"/>
+                        <filter string="Stato" domain="[]"
+                                context="{'group_by':'state'}"/>
+                        <filter string="Categoria" domain="[]"
+                                context="{'group_by':'categoria'}"/>
+                        <filter string="Referente" domain="[]"
+                                context="{'group_by':'referente_id'}"/>
+                        <filter string="Assegnatario" domain="[]"
+                                context="{'group_by':'assegnatario_id'}"/>
                     </group>
                     <field name="name"/>
                     <field name="referente_id"/>
@@ -333,7 +385,8 @@
                                         </b>
                                     </div>
                                     <div>
-                                        <field name="priorita" widget="priority"/>
+                                        <field name="priorita"
+                                               widget="priority"/>
                                         <br/>
                                         <field name="categoria"/>
                                         <br/>
@@ -364,10 +417,12 @@
             <field name="name">Analisi Attività</field>
             <field name="model">attivita.attivita</field>
             <field name="arch" type="xml">
-                <graph string="Analisi Attività" type="bar" orientation="horizontal">
+                <graph string="Analisi Attività" type="bar"
+                       orientation="horizontal">
                     <field name="referente_id"/>
                     <field name="avanzamento" operator="avg"/>
-                    <field name="assegnatario_id" group="True" groups="base.group_multi_salesteams"/>
+                    <field name="assegnatario_id" group="True"
+                           groups="base.group_multi_salesteams"/>
                 </graph>
             </field>
         </record>
@@ -379,74 +434,99 @@
             <field name="view_mode">tree,form,graph</field>
         </record>
 
-        <record model='ir.actions.act_window' id='attivita_attivita_pending_action'>
+        <record model='ir.actions.act_window'
+                id='attivita_attivita_pending_action'>
             <field name="name">Attività Assegnate da me</field>
             <field name="res_model">attivita.attivita</field>
             <field name="view_type">form</field>
             <field name="view_mode">kanban,tree,form,calendar</field>
-            <field name="domain">[('state','=','assegnato'),('referente_id','=',uid)]</field>
+            <field name="domain">
+                [('state','=','assegnato'),('referente_id','=',uid)]
+            </field>
         </record>
 
-        <record model='ir.actions.act_window' id='attivita_attivita_assegnate_action'>
+        <record model='ir.actions.act_window'
+                id='attivita_attivita_assegnate_action'>
             <field name="name">Attività Assegnate a me</field>
             <field name="res_model">attivita.attivita</field>
             <field name="view_type">form</field>
             <field name="view_mode">kanban,tree,form,calendar</field>
-            <field name="domain">[('state','=','assegnato'),('assegnatario_id','=',uid)]</field>
+            <field name="domain">
+                [('state','=','assegnato'),('assegnatario_id','=',uid)]
+            </field>
         </record>
 
 
-        <record model='ir.actions.act_window' id='attivita_attivita_lavorazione_action'>
+        <record model='ir.actions.act_window'
+                id='attivita_attivita_lavorazione_action'>
             <field name="name">Attività in lavorazione</field>
             <field name="res_model">attivita.attivita</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form,calendar</field>
-            <field name="domain">[('state','=','lavorazione'),('assegnatario_id','=',uid)]</field>
+            <field name="domain">
+                [('state','=','lavorazione'),('assegnatario_id','=',uid)]
+            </field>
         </record>
 
-        <record model='ir.actions.act_window' id='attivita_attivita_concluse_action'>
+        <record model='ir.actions.act_window'
+                id='attivita_attivita_concluse_action'>
             <field name="name">Attività Concluse</field>
             <field name="res_model">attivita.attivita</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="domain">[('state','=','concluso'),('referente_id','=',uid)]</field>
+            <field name="domain">
+                [('state','=','concluso'),('referente_id','=',uid)]
+            </field>
         </record>
 
-        <record model='ir.actions.act_window' id='attivita_attivita_archiviate_action'>
+        <record model='ir.actions.act_window'
+                id='attivita_attivita_archiviate_action'>
             <field name="name">Attività Archiviate</field>
             <field name="res_model">attivita.attivita</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="domain">[('state','=','chiuso'),('referente_id','=',uid)]</field>
+            <field name="domain">
+                [('state','=','chiuso'),('referente_id','=',uid)]
+            </field>
         </record>
 
-        <record model='ir.actions.act_window' id='attivita_attivita_scadenza_action'>
+        <record model='ir.actions.act_window'
+                id='attivita_attivita_scadenza_action'>
             <field name="name">Attività in scadenza</field>
             <field name="res_model">attivita.attivita</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="domain">[('state','not in',['concluso','chiuso','annullato'])]</field>
-            <field name="search_view_id" ref="attivita_attivita_scadenza_search"/>
+            <field name="domain">[('state','not
+                in',['concluso','chiuso','annullato'])]
+            </field>
+            <field name="search_view_id"
+                   ref="attivita_attivita_scadenza_search"/>
         </record>
 
 
-        <menuitem name="Attività" id="menu_attivita" parent="menu_root_attivita" sequence="1"/>
-        <menuitem name="Tutte" id="menu_tutte_attivita" parent="menu_attivita" sequence="1"
+        <menuitem name="Attività" id="menu_attivita"
+                  parent="menu_root_attivita" sequence="1"/>
+        <menuitem name="Tutte" id="menu_tutte_attivita" parent="menu_attivita"
+                  sequence="1"
                   action="attivita_attivita_action"/>
-        <menuitem name="Assegnate da me" id="menu_attivita_pending" parent="menu_attivita" sequence="2"
+        <menuitem name="Assegnate da me" id="menu_attivita_pending"
+                  parent="menu_attivita" sequence="2"
                   action="attivita_attivita_pending_action"/>
-        <menuitem name="Assegnate a me" id="menu_attivita_assegnate" parent="menu_attivita" sequence="3"
+        <menuitem name="Assegnate a me" id="menu_attivita_assegnate"
+                  parent="menu_attivita" sequence="3"
                   action="attivita_attivita_assegnate_action"/>
-        <menuitem name="In Esecuzione" id="menu_attivita_lavorazione" parent="menu_attivita" sequence="5"
+        <menuitem name="In Esecuzione" id="menu_attivita_lavorazione"
+                  parent="menu_attivita" sequence="5"
                   action="attivita_attivita_lavorazione_action"/>
-        <menuitem name="Concluse" id="menu_attivita_concluse" parent="menu_attivita" sequence="6"
+        <menuitem name="Concluse" id="menu_attivita_concluse"
+                  parent="menu_attivita" sequence="6"
                   action="attivita_attivita_concluse_action"/>
-        <menuitem name="Archiviate" id="menu_attivita_archiviate" parent="menu_attivita" sequence="7"
+        <menuitem name="Archiviate" id="menu_attivita_archiviate"
+                  parent="menu_attivita" sequence="7"
                   action="attivita_attivita_archiviate_action"/>
-        <menuitem name="Scadenza" id="menu_attivita_scadenza" parent="menu_attivita" sequence="8"
+        <menuitem name="Scadenza" id="menu_attivita_scadenza"
+                  parent="menu_attivita" sequence="8"
                   action="attivita_attivita_scadenza_action"/>
-
-
 
 
         <record model='ir.ui.view' id='attivita_aggiornamento_form'>
@@ -455,7 +535,8 @@
             <field name="arch" type="xml">
                 <form string="Aggiornamento" version="7.0">
                     <header>
-                        <button name="segna_letto" string="Segna Letto" type="object" states="draft"
+                        <button name="segna_letto" string="Segna Letto"
+                                type="object" states="draft"
                                 class="oe_highlight" icon="gtk-go-forward"/>
                         <field name="state" widget="statusbar"/>
                     </header>
@@ -469,7 +550,8 @@
 
                         <group>
                             <group>
-                                <separator string="Soggetti Coinvolti" colspan="4"/>
+                                <separator string="Soggetti Coinvolti"
+                                           colspan="4"/>
                                 <newline/>
                                 <field name="autore_id"/>
                                 <field name="referente_id"/>
@@ -499,7 +581,8 @@
                     <field name="data_creazione"/>
                     <field name="data_lettura"/>
                     <field name="state"/>
-                    <button name="segna_letto" string="Segna Letto" type="object" states="draft" class="oe_highlight"
+                    <button name="segna_letto" string="Segna Letto"
+                            type="object" states="draft" class="oe_highlight"
                             icon="gtk-go-forward"/>
 
                 </tree>
@@ -514,14 +597,21 @@
                     <filter string="Sono coinvolto" name="coinvolto"
                             domain="['|',('referente_id','=',uid),('autore_id','=',uid)]"
                             help="Sono referente o autore"/>
-                    <filter string="Sono autore" name="assegnatario" domain="[('autore_id','=',uid)]"/>
-                    <filter string="Sono referente" name="referente" domain="[('referente_id','=',uid)]"/>
-                    <filter string="Da Leggere" name="draft" domain="[('state','=','draft')]"/>
-                    <filter string="Letto" name="pending" domain="[('state','=','letto')]"/>
+                    <filter string="Sono autore" name="assegnatario"
+                            domain="[('autore_id','=',uid)]"/>
+                    <filter string="Sono referente" name="referente"
+                            domain="[('referente_id','=',uid)]"/>
+                    <filter string="Da Leggere" name="draft"
+                            domain="[('state','=','draft')]"/>
+                    <filter string="Letto" name="pending"
+                            domain="[('state','=','letto')]"/>
                     <group expand="0" string="Group By..." colspan="16">
-                        <filter string="Stato" domain="[]" context="{'group_by':'state'}"/>
-                        <filter string="Autore" domain="[]" context="{'group_by':'autore_id'}"/>
-                        <filter string="Referente" domain="[]" context="{'group_by':'referente_id'}"/>
+                        <filter string="Stato" domain="[]"
+                                context="{'group_by':'state'}"/>
+                        <filter string="Autore" domain="[]"
+                                context="{'group_by':'autore_id'}"/>
+                        <filter string="Referente" domain="[]"
+                                context="{'group_by':'referente_id'}"/>
                     </group>
                     <field name="name"/>
                     <field name="referente_id"/>
@@ -532,25 +622,32 @@
             </field>
         </record>
 
-        <record model='ir.actions.act_window' id='attivita_aggiornamento_action'>
+        <record model='ir.actions.act_window'
+                id='attivita_aggiornamento_action'>
             <field name="name">Aggiornamenti</field>
             <field name="res_model">attivita.aggiornamento</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
 
-        <record model='ir.actions.act_window' id='attivita_aggiornamento_todo_action'>
+        <record model='ir.actions.act_window'
+                id='attivita_aggiornamento_todo_action'>
             <field name="name">Aggiornamenti da leggere</field>
             <field name="res_model">attivita.aggiornamento</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="domain">[('state','=','draft'),('referente_id','=',uid)]</field>
+            <field name="domain">
+                [('state','=','draft'),('referente_id','=',uid)]
+            </field>
         </record>
 
-        <menuitem name="Aggiornamenti" id="menu_root_aggiornamenti" parent="menu_root_attivita" sequence="2"/>
-        <menuitem name="Tutti" id="menu_aggiornamenti" parent="menu_root_aggiornamenti"
+        <menuitem name="Aggiornamenti" id="menu_root_aggiornamenti"
+                  parent="menu_root_attivita" sequence="2"/>
+        <menuitem name="Tutti" id="menu_aggiornamenti"
+                  parent="menu_root_aggiornamenti"
                   action="attivita_aggiornamento_action" sequence="1"/>
-        <menuitem name="Da Leggere" id="menu_aggiornamenti_todo" parent="menu_root_aggiornamenti"
+        <menuitem name="Da Leggere" id="menu_aggiornamenti_todo"
+                  parent="menu_root_aggiornamenti"
                   action="attivita_aggiornamento_todo_action" sequence="2"/>
 
 
@@ -562,7 +659,8 @@
                     <field name="name"/>
                     <field name="referente_id"/>
                     <field name="assegnatario_id"/>
-                    <field name="tempo_realizzazione" avg="Media Realizzazioney"/>
+                    <field name="tempo_realizzazione"
+                           avg="Media Realizzazioney"/>
                     <field name="tempo_ritardo" avg="Media Ritardo"/>
                     <field name="state"/>
                 </tree>
@@ -590,7 +688,8 @@
             <field name="arch" type="xml">
                 <search string="Attività">
                     <group expand="0" string="Group By..." colspan="16">
-                        <filter string="Assegnatario" domain="[]" context="{'group_by':'assegnatario_id'}"/>
+                        <filter string="Assegnatario" domain="[]"
+                                context="{'group_by':'assegnatario_id'}"/>
                     </group>
                     <field name="name"/>
                     <field name="referente_id"/>
@@ -605,7 +704,8 @@
             </field>
         </record>
 
-        <record id="action_view_attivita_performance_tree" model="ir.actions.act_window">
+        <record id="action_view_attivita_performance_tree"
+                model="ir.actions.act_window">
             <field name="name">Attivita Performance</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">attivita.attivita</field>
@@ -614,15 +714,19 @@
             <field name="view_id" ref="attivita_performance_tree"/>
         </record>
 
-        <record model="ir.actions.act_window.view" id="action_view_attivita_performance_graph">
+        <record model="ir.actions.act_window.view"
+                id="action_view_attivita_performance_graph">
             <field name="sequence" eval="1"/>
             <field name="view_mode">graph</field>
             <field name="view_id" ref="view_attivita_performance_graph"/>
             <field name="search_view_id" ref="attivita_performance_search"/>
-            <field name="act_window_id" ref="action_view_attivita_performance_tree"/>
+            <field name="act_window_id"
+                   ref="action_view_attivita_performance_tree"/>
         </record>
 
-        <menuitem name="Performance" action="action_view_attivita_performance_tree" id="menu_attivita_performance_graph"
+        <menuitem name="Performance"
+                  action="action_view_attivita_performance_tree"
+                  id="menu_attivita_performance_graph"
                   sequence="9"
                   parent="attivita.menu_attivita"/>
     </data>

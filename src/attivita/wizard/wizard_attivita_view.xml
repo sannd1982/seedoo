@@ -7,20 +7,25 @@
             <field name="arch" type="xml">
                 <form string="Attività" version="7.0">
                     <sheet>
-                    	<group>
-		                    <field name="name" />
-			                <field name="case" invisible="1" />
-	                    </group>
+                        <group>
+                            <field name="name"/>
+                            <field name="case" invisible="1"/>
+                        </group>
                     </sheet>
                     <footer>
-                        <button name="annulla" string="Annulla Attività" 
-                        	type="object" class="oe_highlight" attrs="{'invisible': [('case','!=','annulla')]}"/>
-                        <button name="rifiuta" string="Rifiuta Assegnazione" 
-                        	type="object" class="oe_highlight" attrs="{'invisible': [('case','!=','rifiuto')]}"/>
-                        <button name="integrazione" string="Richiedi Integrazione" 
-                        	type="object" class="oe_highlight" attrs="{'invisible': [('case','!=','integrazione')]}"/>
+                        <button name="annulla" string="Annulla Attività"
+                                type="object" class="oe_highlight"
+                                attrs="{'invisible': [('case','!=','annulla')]}"/>
+                        <button name="rifiuta" string="Rifiuta Assegnazione"
+                                type="object" class="oe_highlight"
+                                attrs="{'invisible': [('case','!=','rifiuto')]}"/>
+                        <button name="integrazione"
+                                string="Richiedi Integrazione"
+                                type="object" class="oe_highlight"
+                                attrs="{'invisible': [('case','!=','integrazione')]}"/>
                         or
-                        <button string="Cancel" class="oe_link" special="cancel"/>
+                        <button string="Cancel" class="oe_link"
+                                special="cancel"/>
                     </footer>
                 </form>
             </field>

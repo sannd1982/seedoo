@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- This file is part of Seedoo.  The COPYRIGHT file at the top level of
+this module contains the full copyright notices and license terms. -->
+
 <openerp>
     <data>
 
@@ -10,10 +13,13 @@
 
         <!-- Main Menu -->
 
-        <menuitem name="Gestione Documentale" id="menu_root_gedoc" sequence="10" groups="group_gedoc_user"/>
-        <menuitem name="Gestione Documentale" parent="menu_root_gedoc" id="main_menu_gedoc" sequence="10"
+        <menuitem name="Gestione Documentale" id="menu_root_gedoc"
+                  sequence="10" groups="group_gedoc_user"/>
+        <menuitem name="Gestione Documentale" parent="menu_root_gedoc"
+                  id="main_menu_gedoc" sequence="10"
                   groups="group_gedoc_user"/>
-        <menuitem name="Configurazioni" parent="menu_root_gedoc" id="gedoc_configuration" sequence="30"
+        <menuitem name="Configurazioni" parent="menu_root_gedoc"
+                  id="gedoc_configuration" sequence="30"
                   groups="group_gedoc_manager"/>
 
         <!-- Classification -->
@@ -38,7 +44,8 @@
                                 <field name="assigne" nolabel="1" colspan="4"/>
                             </page>
                             <page string="Fascicoli">
-                                <field name="dossier_ids" nolabel="1" colspan="4"/>
+                                <field name="dossier_ids" nolabel="1"
+                                       colspan="4"/>
                             </page>
                         </notebook>
                     </sheet>
@@ -73,7 +80,8 @@
             </field>
         </record>
 
-        <record model='ir.actions.act_window' id='protocollo_classification_act'>
+        <record model='ir.actions.act_window'
+                id='protocollo_classification_act'>
             <field name="name">Titolario</field>
             <field name="res_model">protocollo.classification</field>
             <field name="view_type">form</field>
@@ -88,8 +96,10 @@
             </field>
         </record>
 
-        <menuitem action="protocollo_classification_act" parent="gedoc_configuration"
-                  id="protocollo_classification_menu" groups="group_gedoc_manager" sequence="10"/>
+        <menuitem action="protocollo_classification_act"
+                  parent="gedoc_configuration"
+                  id="protocollo_classification_menu"
+                  groups="group_gedoc_manager" sequence="10"/>
 
         <!-- Dossier -->
 
@@ -99,9 +109,14 @@
             <field name="arch" type="xml">
                 <form string="Fascicolo" version="7.0">
                     <header>
-                        <button name="open" states="draft" string="Apri Fascicolo" class="oe_highlight_positive"/>
-                        <button name="close" states="open" string="Chiudi Fascicolo" class="oe_highlight_warning"/>
-                        <field name="state" widget="statusbar" statusbar_visible="draft,open,closed"
+                        <button name="open" states="draft"
+                                string="Apri Fascicolo"
+                                class="oe_highlight_positive"/>
+                        <button name="close" states="open"
+                                string="Chiudi Fascicolo"
+                                class="oe_highlight_warning"/>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="draft,open,closed"
                                statusbar_colors='{"open":"blue","closed":"green"}'/>
                     </header>
                     <sheet>
@@ -115,7 +130,8 @@
                                 <field name="dossier_typology"/>
                                 <field name="date_close"/>
                                 <field name="classification_id"
-                                       on_change="on_change_dossier_type_classification(dossier_type, classification_id, parent_id)" colspan="4"/>
+                                       on_change="on_change_dossier_type_classification(dossier_type, classification_id, parent_id)"
+                                       colspan="4"/>
                             </group>
                         </div>
                         <group col="8" string="Informazioni Generali">
@@ -137,7 +153,8 @@
                         </group>
                         <notebook>
                             <page string="Sottofascicoli">
-                                <field name="child_ids" attrs="{'invisible':[('dossier_type','=','inserto')]}"/>
+                                <field name="child_ids"
+                                       attrs="{'invisible':[('dossier_type','=','inserto')]}"/>
                             </page>
                             <page string="Documenti">
                                 <group col="4">
@@ -147,7 +164,8 @@
                                 </group>
                             </page>
                             <page string="Attori Coinvolti">
-                                <group col="4" attrs="{'invisible':[('dossier_typology','!=','procedimento')]}">
+                                <group col="4"
+                                       attrs="{'invisible':[('dossier_typology','!=','procedimento')]}">
                                     <field name="participant_partner_ids"/>
                                 </group>
                             </page>
@@ -163,7 +181,8 @@
                                     </group>
                                 </group>
                             </page>
-                            <page string="Posizione Fisica Fascicolo" attrs="{'invisible':[('paperless','=',True)]}">
+                            <page string="Posizione Fisica Fascicolo"
+                                  attrs="{'invisible':[('paperless','=',True)]}">
                                 <group col="4">
                                     <field name="address"/>
                                     <field name="building"/>
@@ -184,8 +203,8 @@
         <record model='ir.ui.view' id='protocollo_dossier_tree'>
             <field name="name">protocollo.dossier.tree</field>
             <field name="model">protocollo.dossier</field>
-			<field name="field_parent">child_ids</field>            
-			<field name="arch" type="xml">
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
                 <tree string="Fascicolo" version="7.0"
                       colors="blue:state=='open';green:state=='closed';grey:state=='draft'">
                     <field name="name"/>
@@ -237,7 +256,8 @@
             </field>
         </record>
 
-        <menuitem action="protocollo_dossier_act" parent="main_menu_gedoc" id="protocollo_dossier_menu"
+        <menuitem action="protocollo_dossier_act" parent="main_menu_gedoc"
+                  id="protocollo_dossier_menu"
                   groups="group_gedoc_user" sequence="20"/>
 
         <record model='ir.actions.act_window' id='protocollo_my_dossier_act'>
@@ -256,7 +276,9 @@
             </field>
         </record>
 
-        <menuitem action="protocollo_my_dossier_act" parent="protocollo_dossier_menu" id="protocollo_my_dossier_menu"
+        <menuitem action="protocollo_my_dossier_act"
+                  parent="protocollo_dossier_menu"
+                  id="protocollo_my_dossier_menu"
                   groups="group_gedoc_user" sequence="10"/>
 
         <record model='ir.actions.act_window' id='protocollo_comp_dossier_act'>
@@ -264,7 +286,9 @@
             <field name="res_model">protocollo.dossier</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="domain">['|', ('office_comp_ids.collaborator_ids.name','in',[uid]), ('user_comp_ids', 'in', uid)]
+            <field name="domain">['|',
+                ('office_comp_ids.collaborator_ids.name','in',[uid]),
+                ('user_comp_ids', 'in', uid)]
             </field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
@@ -276,15 +300,19 @@
             </field>
         </record>
 
-        <menuitem action="protocollo_comp_dossier_act" parent="protocollo_dossier_menu"
-                  id="protocollo_comp_dossier_menu" groups="group_gedoc_user" sequence="10"/>
+        <menuitem action="protocollo_comp_dossier_act"
+                  parent="protocollo_dossier_menu"
+                  id="protocollo_comp_dossier_menu" groups="group_gedoc_user"
+                  sequence="10"/>
 
         <record model='ir.actions.act_window' id='protocollo_view_dossier_act'>
             <field name="name">Per Conoscenza</field>
             <field name="res_model">protocollo.dossier</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="domain">['|', ('office_view_ids.collaborator_ids.name','in',[uid]), ('user_view_ids', 'in', uid)]
+            <field name="domain">['|',
+                ('office_view_ids.collaborator_ids.name','in',[uid]),
+                ('user_view_ids', 'in', uid)]
             </field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
@@ -296,8 +324,10 @@
             </field>
         </record>
 
-        <menuitem action="protocollo_view_dossier_act" parent="protocollo_dossier_menu"
-                  id="protocollo_view_dossier_menu" groups="group_gedoc_user" sequence="10"/>
+        <menuitem action="protocollo_view_dossier_act"
+                  parent="protocollo_dossier_menu"
+                  id="protocollo_view_dossier_menu" groups="group_gedoc_user"
+                  sequence="10"/>
 
         <!-- Dossier to Documents -->
 
@@ -310,7 +340,8 @@
 
         <!-- Dossier By Classification -->
 
-        <record model="ir.actions.act_window" id="action_dossier_classification_tree">
+        <record model="ir.actions.act_window"
+                id="action_dossier_classification_tree">
             <field name="type">ir.actions.act_window</field>
             <field name="name">Fascicoli da Titolario</field>
             <field name="res_model">protocollo.classification</field>
@@ -323,41 +354,46 @@
                 action="action_dossier_classification_tree"
                 id="menu_dossier_classification_tree"
                 parent="main_menu_gedoc" sequence="30"/>
- 	
-	<record model="ir.actions.act_window" id="action_struttura_fascicoli">
-        <field name="name">Struttura Fascicoli</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">protocollo.dossier</field>
-        <field name="view_type">tree</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain" eval="[('parent_id','=', False)]"></field>
-    </record>
 
-    <record model="ir.actions.act_window" id="action_open_dossier">
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">protocollo.dossier</field>
-        <field name="name">Fascicolo</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-        <field name="domain">[('id','in',[active_id])]</field>
-    </record>
+        <record model="ir.actions.act_window" id="action_struttura_fascicoli">
+            <field name="name">Struttura Fascicoli</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">protocollo.dossier</field>
+            <field name="view_type">tree</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain" eval="[('parent_id','=', False)]"></field>
+        </record>
 
-    <record model="ir.values" id="ir_action_employee_department">
-        <field name="key2" eval="'tree_but_open'"/>
-        <field name="model" eval="'protocollo.dossier'"/>
-        <field name="name">Struttura Fascicoli</field>
-        <field name="value" eval="'ir.actions.act_window,%d'%action_open_dossier"/>
-    </record>
+        <record model="ir.actions.act_window" id="action_open_dossier">
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">protocollo.dossier</field>
+            <field name="name">Fascicolo</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('id','in',[active_id])]</field>
+        </record>
 
-    <menuitem name="Naviga Fascicoli" id="menu_struttura_fascicoli" parent="protocollo_dossier_menu" action="action_struttura_fascicoli" sequence="5"/>
+        <record model="ir.values" id="ir_action_employee_department">
+            <field name="key2" eval="'tree_but_open'"/>
+            <field name="model" eval="'protocollo.dossier'"/>
+            <field name="name">Struttura Fascicoli</field>
+            <field name="value"
+                   eval="'ir.actions.act_window,%d'%action_open_dossier"/>
+        </record>
+
+        <menuitem name="Naviga Fascicoli" id="menu_struttura_fascicoli"
+                  parent="protocollo_dossier_menu"
+                  action="action_struttura_fascicoli" sequence="5"/>
 
 
-        <record model="ir.actions.act_window" id="action_dossier_classification_form">
+        <record model="ir.actions.act_window"
+                id="action_dossier_classification_form">
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">protocollo.dossier</field>
             <field name="name">Titolario</field>
             <field name="view_type">form</field>
-            <field name="domain">[('classification_id','child_of',active_id)]</field>
+            <field name="domain">[('classification_id','child_of',active_id)]
+            </field>
             <field name="context">{'classification_id':active_id}</field>
         </record>
 
@@ -365,13 +401,14 @@
             <field name="key2" eval="'tree_but_open'"/>
             <field name="model" eval="'protocollo.classification'"/>
             <field name="name">Naviga Fascicoli</field>
-            <field name="value" eval="'ir.actions.act_window,%d'%action_dossier_classification_form"/>
+            <field name="value"
+                   eval="'ir.actions.act_window,%d'%action_dossier_classification_form"/>
         </record>
 
         <!-- Documents -->
 
         <!-- Document Model Type -->
-		
+
         <record model='ir.ui.view' id='gedoc_model_type_form'>
             <field name="name">gedoc.model.type.form</field>
             <field name="model">gedoc.model.type</field>
@@ -425,7 +462,8 @@
             </field>
         </record>
 
-        <menuitem action="gedoc_model_type_act" parent="gedoc_configuration" id="gedoc_model_type_menu"
+        <menuitem action="gedoc_model_type_act" parent="gedoc_configuration"
+                  id="gedoc_model_type_menu"
                   groups="group_gedoc_manager" sequence="15"/>
 
         <!-- Document Type -->
@@ -482,11 +520,13 @@
             </field>
         </record>
 
-        <menuitem action="gedoc_document_type_act" parent="gedoc_configuration" id="gedoc_document_type_menu"
+        <menuitem action="gedoc_document_type_act" parent="gedoc_configuration"
+                  id="gedoc_document_type_menu"
                   groups="group_gedoc_manager" sequence="20"/>
 
 
-        <menuitem name="Documenti" parent="menu_root_gedoc" id="gedoc_document_menu" groups="group_gedoc_user"
+        <menuitem name="Documenti" parent="menu_root_gedoc"
+                  id="gedoc_document_menu" groups="group_gedoc_user"
                   sequence="20"/>
 
         <!-- Administrative Document -->
@@ -498,7 +538,8 @@
                 <form string="Documento" version="7.0">
                     <header>
                         <div>
-                            <button name="%(gedoc_upload_doc_wizard_action)d" type='action' string='Carica Documento'
+                            <button name="%(gedoc_upload_doc_wizard_action)d"
+                                    type='action' string='Carica Documento'
                                     attrs="{'invisible': [('main_doc_id','!=',False)]}"
                                     groups="seedoo_gedoc.group_gedoc_user"/>
                         </div>
@@ -583,7 +624,8 @@
             </field>
         </record>
 
-        <menuitem action="gedoc_document_act" parent="gedoc_document_menu" id="gedoc_admin_document_menu"
+        <menuitem action="gedoc_document_act" parent="gedoc_document_menu"
+                  id="gedoc_admin_document_menu"
                   groups="group_gedoc_user" sequence="30"/>
 
         <!-- Search Documents -->
@@ -608,26 +650,32 @@
                     <field name="partner_id"/>
                     <label for="user_id"/>
                     <field name="user_id"/>
-                    <label for="office_id" attr="{'invisible': [('name', '=', 'gedoc.document')]}"/>
-                    <field name="office_id" attr="{'invisible': [('name', '=', 'gedoc.document')]}"/>
-                    <separator string="Inserisci parti del contenuto del documento"/>
+                    <label for="office_id"
+                           attr="{'invisible': [('name', '=', 'gedoc.document')]}"/>
+                    <field name="office_id"
+                           attr="{'invisible': [('name', '=', 'gedoc.document')]}"/>
+                    <separator
+                            string="Inserisci parti del contenuto del documento"/>
                     <group>
                         <field name="index_content" nolabel="1"/>
                     </group>
-                    <separator string="Inserisci intervallo di date del documento"/>
+                    <separator
+                            string="Inserisci intervallo di date del documento"/>
                     <group>
                         <field name="date_close_start"/>
                         <field name="date_close_end"/>
                     </group>
                     <footer>
-                        <button string="Cerca" name="search_action" type="object" class="oe_highlight"/>
+                        <button string="Cerca" name="search_action"
+                                type="object" class="oe_highlight"/>
                     </footer>
                 </form>
             </field>
         </record>
 
 
-        <record id="gedoc_document_search_action" model="ir.actions.act_window">
+        <record id="gedoc_document_search_action"
+                model="ir.actions.act_window">
             <field name="name">Ricerca Documenti</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">gedoc.document.search</field>
@@ -638,7 +686,8 @@
             <field name="view_id" ref="gedoc_document_search_form"/>
         </record>
 
-        <menuitem action="gedoc_document_search_action" parent="gedoc_document_menu" id="gedoc_search_document_menu"
+        <menuitem action="gedoc_document_search_action"
+                  parent="gedoc_document_menu" id="gedoc_search_document_menu"
                   groups="group_gedoc_user" sequence="40"/>
 
     </data>

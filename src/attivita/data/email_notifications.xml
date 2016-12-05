@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- This file is part of Seedoo.  The COPYRIGHT file at the top level of
+this module contains the full copyright notices and license terms. -->
+
 <openerp>
     <data>
         <!-- Fatto -->
@@ -94,7 +97,6 @@
             <field name="model_id"
                    ref="attivita.model_attivita_aggiornamento"/>
         </record>
-
 
     </data>
 </openerp>

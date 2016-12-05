@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- This file is part of Seedoo.  The COPYRIGHT file at the top level of
+this module contains the full copyright notices and license terms. -->
+
 <openerp>
     <data noupdate="0">
         <record id="res_groups_attivita_manager" model="res.groups">
@@ -53,5 +56,6 @@
                 ['|',('referente_id','=',[user.id]),('autore_id','=',[user.id])]
             </field>
         </record>
+
     </data>
 </openerp>

@@ -23,7 +23,6 @@ this module contains the full copyright notices and license terms. -->
         <menuitem name="Rubrica" id="seedoo_protocollo.menu_root_rubrica" sequence="50"/>
         <menuitem name="Gestione Documentale" id="seedoo_gedoc.menu_root_gedoc" sequence="60"/>
         <menuitem name="Protocollo" id="seedoo_protocollo.menu_root_protocollo" sequence="70" />
-        <menuitem name="Attività" id="attivita.menu_root_attivita" sequence="80"/>
         <menuitem name="Reporting" id="base.menu_reporting" sequence="90"/>
         
     </data>

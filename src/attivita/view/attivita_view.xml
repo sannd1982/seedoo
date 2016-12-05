@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
-        <menuitem name="Attività" id="menu_root_attivita" sequence="110"/>
+        <menuitem name="Attività" id="menu_root_attivita" sequence="80"/>
 
         <record model='ir.ui.view' id='attivita_categoria_form'>
             <field name="name">attivita.categoria.form</field>

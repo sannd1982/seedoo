@@ -896,6 +896,7 @@ this module contains the full copyright notices and license terms. -->
             <field name="name">protocollo.journal.form</field>
             <field name="model">protocollo.journal</field>
             <field name="arch" type="xml">
+                <form string="Registro Giornaliero">
                 <header>
                     <field name="state" widget="statusbar"/>
                 </header>
@@ -907,6 +908,7 @@ this module contains the full copyright notices and license terms. -->
                         <field name="protocol_ids" colspan="4" nolabel="1"/>
                     </group>
                 </sheet>
+                </form>
             </field>
         </record>
 

@@ -12,13 +12,14 @@ import os
 import glob
 from openerp import netsvc
 import threading
+from openerp.modules.module import get_module_resource
 from openerp.osv.orm import except_orm
 
 
 class TestGedocBase(test_common.SingleTransactionCase):
 
     def getDocFile(self, docname):
-        path = addons.get_module_resource(
+        path = get_module_resource(
             'seedoo_gedoc',
             'tests', 'data', docname)
         with open(path) as test_data:
@@ -32,7 +33,7 @@ class TestGedocBase(test_common.SingleTransactionCase):
         filename: the name of new file
         srcfile: the file which we want have a copy
         """
-        path = addons.get_module_resource('seedoo_gedoc',
+        path = get_module_resource('seedoo_gedoc',
                                           'tests', 'data', srcfile)
         currDir = os.path.dirname(path)
         new_file = '%s/%s.pdf' % (currDir, filename)
@@ -44,7 +45,7 @@ class TestGedocBase(test_common.SingleTransactionCase):
                 return path, out.read()
 
     def delCopyOfFiles(self, srcfile):
-        path = addons.get_module_resource(
+        path = get_module_resource(
             'seedoo_gedoc',
             'tests', 'data', srcfile)
         currDir = os.path.dirname(path)

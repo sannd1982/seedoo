@@ -2,7 +2,6 @@
 # This file is part of Seedoo.  The COPYRIGHT file at the top level of
 # this module contains the full copyright notices and license terms.
 
-
 from openerp.osv import orm
 from openerp.osv import fields, osv
 import logging
@@ -25,14 +24,8 @@ class gedoc_document(osv.Model):
         ('protocol', 'Da protocollare'),
     ]
     _columns = {
-        # 'typology': fields.many2one(
-        #     'protocollo.typology', 'Tipologia', required=True,
-        #                             help="Tipologia invio/ricevimento: Raccomandata, Fax, PEC, etc. si possono inserire nuove tipologie dal menu Tipologie."),
-        # 'sender_receiver_ids': fields.one2many(
-        #     'protocollo.sender_receiver', 'gedoc_id', 'Destinatari'),
-        # 'note_protocollazione': fields.text('Note Protocollazione', required=True),
-
-        'state': fields.selection(STATE_SELECTION, 'Stato', readonly=True, help="Lo stato del documento.", select=True)
+        'state': fields.selection(STATE_SELECTION, 'Stato', readonly=True,
+                                  help="Lo stato del documento.", select=True)
     }
 
     _defaults = {
@@ -64,29 +57,37 @@ class gedoc_document(osv.Model):
                 'mimetype': gedoc.main_doc_id.file_type,
                 'datas': gedoc.main_doc_id.datas
             }
-            prot_id = self.pool.get("protocollo.protocollo").create(cr, uid, protocollo_vals, context=None)
+            prot_id = self.pool.get("protocollo.protocollo").create(cr, uid,
+                                                                    protocollo_vals,
+                                                                    context=None)
 
             # crea attività
-            prot = self.pool.get('protocollo.protocollo').browse(cr, uid, prot_id)
+            prot = self.pool.get('protocollo.protocollo').browse(cr, uid,
+                                                                 prot_id)
             user_value = self.pool.get('res.users').browse(cr, uid, uid)
 
             # tempo_esecuzione_attivita = TempoEsecuzioneAttivita.RICHIESTA_PROTOCOLLAZIONE
             now = datetime.datetime.now()
             categoria_obj = self.pool.get('attivita.categoria')
-            category_ids = categoria_obj.search(cr, uid, [('name', '=', 'Richiesta Protocollazione Documento')])
+            category_ids = categoria_obj.search(cr, uid, [
+                ('name', '=', 'Richiesta Protocollazione Documento')])
             if len(category_ids) == 1:
                 category = categoria_obj.browse(cr, uid, category_ids[0])
                 tempo_esecuzione_attivita = category.tempo_standard
-            data_scadenza = now + datetime.timedelta(days=tempo_esecuzione_attivita)
+            data_scadenza = now + datetime.timedelta(
+                days=tempo_esecuzione_attivita)
 
-            users_manager = self.pool.get('res.users').get_users_from_group(cr, uid, 'Manager protocollo')
+            users_manager = self.pool.get('res.users').get_users_from_group(cr,
+                                                                            uid,
+                                                                            'Manager protocollo')
             # remove superuser_id, da aggiungere il controllo delle eccezzioni
             list_ids = list(users_manager.ids)
             list_ids.remove(SUPERUSER_ID)
             assegnatario_id = list_ids[0]
 
             activity_vals = {
-                'name': "Richiesta protocollazione protocollo num %s da %s " % (prot.name, user_value.login),
+                'name': "Richiesta protocollazione protocollo num %s da %s " % (
+                    prot.name, user_value.login),
                 'descrizione': gedoc.subject,
                 'priorita': '3',
                 'referente_id': prot.user_id.id,
@@ -98,7 +99,8 @@ class gedoc_document(osv.Model):
                 'categoria': category.id,
                 'protocollo_id': prot.id
             }
-            self.pool.get("attivita.attivita").create(cr, uid, activity_vals, context=None)
+            self.pool.get("attivita.attivita").create(cr, uid, activity_vals,
+                                                      context=None)
 
             self.write(cr, uid, [gedoc.id], {'state': 'protocol'})
         return True

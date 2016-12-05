@@ -1,6 +1,7 @@
 <?xml version="1.0" ?>
 <!-- This file is part of Seedoo.  The COPYRIGHT file at the top level of
 this module contains the full copyright notices and license terms. -->
+
 <openerp>
     <data>
 
@@ -32,7 +33,7 @@ this module contains the full copyright notices and license terms. -->
 
         <record model="hr.employee" id="hr_protocollo_user">
             <field name="name">Protocollo user</field>
-            <field name="user_id"  ref="protocollo_user" />
+            <field name="user_id" ref="protocollo_user"/>
         </record>
 
         <record model="res.users" id="protocollo_manager">
@@ -49,7 +50,7 @@ this module contains the full copyright notices and license terms. -->
         </record>
         <record model="hr.employee" id="hr_protocollo_manager">
             <field name="name">Protocollo manager</field>
-            <field name="user_id"  ref="protocollo_manager" />
+            <field name="user_id" ref="protocollo_manager"/>
         </record>
 
         <record model="res.users" id="protocollo_reserved_manager">
@@ -65,23 +66,24 @@ this module contains the full copyright notices and license terms. -->
         </record>
         <record model="hr.employee" id="hr_protocollo_reserved_manager">
             <field name="name">Protocollo reserved manager</field>
-            <field name="user_id"  ref="protocollo_reserved_manager" />
+            <field name="user_id" ref="protocollo_reserved_manager"/>
         </record>
 
         <record model="hr.department" id="generic_dept">
             <field name="name">Generic Protocollo Dept</field>
-            <field name="manager_id"  ref="hr_protocollo_manager" />
-            <field name="parent_id"  ref="protocollo_dept_root" />
+            <field name="manager_id" ref="hr_protocollo_manager"/>
+            <field name="parent_id" ref="protocollo_dept_root"/>
             <field name="assignable">True</field>
         </record>
-        
-         <record model="hr.department.collaborator" id="generic_dept_coll1">
-            <field name="name"  ref="protocollo_user" />
-            <field name="department_id" ref="generic_dept"/>
-            <field name="to_notify" eval="True" />
-        </record>       
 
-        <record model="fetchmail.server" id="l10n_it_pec_messages.imap_pec_server">
+        <record model="hr.department.collaborator" id="generic_dept_coll1">
+            <field name="name" ref="protocollo_user"/>
+            <field name="department_id" ref="generic_dept"/>
+            <field name="to_notify" eval="True"/>
+        </record>
+
+        <record model="fetchmail.server"
+                id="l10n_it_pec_messages.imap_pec_server">
             <field name="user_ids" eval="[
                 (6, 0,
                     [
@@ -93,7 +95,8 @@ this module contains the full copyright notices and license terms. -->
         </record>
 
 
-        <record model="ir.mail_server" id="l10n_it_pec_messages.smtp_pec_server">
+        <record model="ir.mail_server"
+                id="l10n_it_pec_messages.smtp_pec_server">
             <field name="smtp_user">test@local.pec.it</field>
         </record>
 
@@ -117,11 +120,14 @@ this module contains the full copyright notices and license terms. -->
             <field name="key">ir_attachment.location</field>
             <field name="value">file:///tmp</field>
         </record>
-        
+
         <record model="protocollo.journal" id="prev_journal">
-            <field name="name" eval="(DateTime.today() - timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')" />
-            <field name="date" eval="(DateTime.today() - timedelta(days=1)).strftime('%Y-%m-%d')" />
+            <field name="name"
+                   eval="(DateTime.today() - timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name="date"
+                   eval="(DateTime.today() - timedelta(days=1)).strftime('%Y-%m-%d')"/>
             <field name="state">closed</field>
-        </record>   
+        </record>
+        
     </data>
 </openerp>

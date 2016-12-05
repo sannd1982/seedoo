@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- This file is part of Seedoo.  The COPYRIGHT file at the top level of
 this module contains the full copyright notices and license terms. -->
+
 <openerp>
     <data>
         <!-- wizard action on protocollo.protocollo -->
@@ -40,7 +41,8 @@ this module contains the full copyright notices and license terms. -->
                                         <tree>
                                             <field name="type"/>
                                             <field name="partner_id"/>
-                                            <field name="name" string="Nome Cognome/Ragione Sociale"/>
+                                            <field name="name"
+                                                   string="Nome Cognome/Ragione Sociale"/>
                                             <field name="street"/>
                                             <field name="zip"/>
                                             <field name="city"/>
@@ -57,7 +59,8 @@ this module contains the full copyright notices and license terms. -->
                                                 </group>
                                                 <group col="4">
                                                     <group col="4" colspan="2">
-                                                        <field name="name" colspan="4"/>
+                                                        <field name="name"
+                                                               colspan="4"/>
                                                     </group>
                                                     <group col="4" colspan="2">
                                                     </group>
@@ -65,7 +68,9 @@ this module contains the full copyright notices and license terms. -->
                                             </div>
                                             <div>
                                                 <group col="4">
-                                                    <separator string="Info di Recapito" colspan="4"/>
+                                                    <separator
+                                                            string="Info di Recapito"
+                                                            colspan="4"/>
                                                     <field name="street"/>
                                                     <field name="zip"/>
                                                     <field name="city"/>
@@ -90,7 +95,8 @@ this module contains the full copyright notices and license terms. -->
                                     <newline/>
                                     <group>
                                         <label for="classification"/>
-                                        <field name="classification" nolabel="1" widget="m2o_tree"
+                                        <field name="classification"
+                                               nolabel="1" widget="m2o_tree"
                                                options="{'limit': 10, 'create': false, 'create_edit': false}"/>
                                     </group>
                                 </group>
@@ -105,9 +111,11 @@ this module contains the full copyright notices and license terms. -->
 
                     </sheet>
                     <footer>
-                        <button string="Ok" name="action_save" type="object" class="oe_highlight"/>
+                        <button string="Ok" name="action_save" type="object"
+                                class="oe_highlight"/>
                         o
-                        <button string="Abbandona" class="oe_link" special="cancel"/>
+                        <button string="Abbandona" class="oe_link"
+                                special="cancel"/>
                     </footer>
                 </form>
             </field>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- This file is part of Seedoo.  The COPYRIGHT file at the top level of
 this module contains the full copyright notices and license terms. -->
+
 <openerp>
     <data>
         <record model='ir.ui.view' id='protocollo_pec_form'>
@@ -21,19 +22,20 @@ this module contains the full copyright notices and license terms. -->
                     </header>
                     <sheet>
                         <div class="gedoc_header">
-                        <group col="4">
-                            <newline/>
-                            <field name="email_from"/>
-                            <field name="date"/>
-                            <field name="author_id"/>
-                        </group>
+                            <group col="4">
+                                <newline/>
+                                <field name="email_from"/>
+                                <field name="date"/>
+                                <field name="author_id"/>
+                            </group>
                         </div>
                         <group col="4">
                             <newline/>
                             <field name="subject" colspan="4"/>
                             <field name="body" colspan="4"/>
                             <separator string="Allegati" colspan="4"/>
-                            <field name="attachment_ids" colspan="4" nolabel="1"/>
+                            <field name="attachment_ids" colspan="4"
+                                   nolabel="1"/>
                         </group>
                     </sheet>
 
@@ -47,9 +49,9 @@ this module contains the full copyright notices and license terms. -->
             <field name="priority">100</field>
             <field name="arch" type="xml">
                 <tree string="Pec da Protocollare">
-                    <field name="email_from" />
-                    <field name="date" />
-                    <field name="subject" />
+                    <field name="email_from"/>
+                    <field name="date"/>
+                    <field name="subject"/>
                 </tree>
             </field>
         </record>
@@ -61,34 +63,41 @@ this module contains the full copyright notices and license terms. -->
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="domain">[('server_id.pec','=',True),
-                  ('pec_type','=','posta-certificata'),
-                  ('server_id.user_ids','in',uid),('pec_state','=','new')]</field>
+                ('pec_type','=','posta-certificata'),
+                ('server_id.user_ids','in',uid),('pec_state','=','new')]
+            </field>
             <field name="context">{
                 'pec_messages': True,
-            }</field>
+                }
+            </field>
             <field name="help" type="html">
-              <p class="oe_view_nocontent_create">
-                Premi qui per creare un nuovo record
-              </p><p>
-                Ricordati di inserire tutti i campi in celeste!
-              </p>
+                <p class="oe_view_nocontent_create">
+                    Premi qui per creare un nuovo record
+                </p>
+                <p>
+                    Ricordati di inserire tutti i campi in celeste!
+                </p>
             </field>
         </record>
 
-        <record model="ir.actions.act_window.view" id="protocollo_pec_act_tree">
+        <record model="ir.actions.act_window.view"
+                id="protocollo_pec_act_tree">
             <field name="sequence" eval="1"/>
             <field name="view_mode">tree</field>
             <field name="view_id" ref="protocollo_pec_tree"/>
             <field name="act_window_id" ref="protocollo_pec_act"/>
         </record>
-        <record model="ir.actions.act_window.view" id="protocollo_pec_act_form">
+        <record model="ir.actions.act_window.view"
+                id="protocollo_pec_act_form">
             <field name="sequence" eval="1"/>
             <field name="view_mode">form</field>
             <field name="view_id" ref="protocollo_pec_form"/>
             <field name="act_window_id" ref="protocollo_pec_act"/>
         </record>
 
-        <menuitem action="protocollo_pec_act" parent="protocollo_protocollo_main" id="protocollo_pec_menu" groups="group_protocollo_user,group_protocollo_manager"/>
+        <menuitem action="protocollo_pec_act"
+                  parent="protocollo_protocollo_main" id="protocollo_pec_menu"
+                  groups="group_protocollo_user,group_protocollo_manager"/>
 
 
     </data>

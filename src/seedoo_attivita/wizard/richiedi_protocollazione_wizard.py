@@ -171,7 +171,8 @@ class document_request_sender_receiver_wizard(osv.TransientModel):
                 
         # crea l'istanza protocollo
             protocollo_vals = {
-                'subject': wizard.note_protocollazione,
+                'subject': gedoc.subject,
+                'notes': wizard.note_protocollazione,
                 'sender_receivers': [(6, 0, sender_receiver)],
                 'typology': wizard.typology.id,
                 'type': 'out',

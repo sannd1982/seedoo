@@ -59,7 +59,7 @@ class wizard(osv.TransientModel):
             historical['user_id'] = wizard.user_id.id
             historical['agent_id'] = wizard.agent_id.id
             historical[
-                'description'] = wizard.name + 'Autorizzato da: ' + wizard.agent_id.name
+                'description'] = wizard.name + ' - ' + 'Autorizzato da: ' + wizard.agent_id.name
             historical['type'] = 'cancel'
             history_id = historical_obj.create(cr, uid, historical)
             vals = {}

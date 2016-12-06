@@ -5,15 +5,15 @@
 from openerp import addons, exceptions
 from openerp import netsvc
 from openerp.osv.orm import except_orm
-from openerp.addons.seedoo_protocollo.tests.test_protocollo_base \
-    import TestProtocolloBase
+# from openerp.addons.seedoo_protocollo.tests.test_protocollo_base import TestProtocolloBase
+from seedoo_protocollo.tests.test_protocollo_base import TestProtocolloBase
 
 
 class TestWizardProtocolloOut(TestProtocolloBase):
-
     """
         SMTP Server MockObj
     """
+
     def _mock_smtp_gateway(self, *args, **kwargs):
         return args[2]['Message-Id']
 
@@ -21,13 +21,13 @@ class TestWizardProtocolloOut(TestProtocolloBase):
         self.wf_service.trg_validate(
             self.uid, 'protocollo.protocollo',
             self._prot_id, 'register', self.cr
-            )
+        )
 
     def wkf_send_prot(self):
         self.wf_service.trg_validate(
             self.uid, 'protocollo.protocollo',
             self._prot_id, 'sent', self.cr
-            )
+        )
 
     def receiveAcceptancePec(self):
         cr = self.cr
@@ -39,7 +39,7 @@ class TestWizardProtocolloOut(TestProtocolloBase):
             'fetchmail_cron_running': True,
             'server_type': u'imap',
             'fetchmail_server_id': 1,
-            }
+        }
         self.thread_model.message_process(
             cr, 1, None, msg, save_original=False, strip_attachments=False,
             context=context)
@@ -54,7 +54,7 @@ class TestWizardProtocolloOut(TestProtocolloBase):
             'fetchmail_cron_running': True,
             'server_type': u'imap',
             'fetchmail_server_id': 1,
-            }
+        }
         self.thread_model.message_process(
             cr, 1, None, msg, save_original=False, strip_attachments=False,
             context=context)
@@ -172,8 +172,16 @@ class TestWizardProtocolloOut(TestProtocolloBase):
         wizard_id = self.modifyWizard.create(
             cr, uid, vals, context=context
         )
-        wizard_obj = self.modifyWizard.browse(cr, uid, wizard_id)
-        self.assertRaises(except_orm, wizard_obj.action_save, context=context)
+
+        try:
+            self.modifyWizard.action_save(cr, uid, [wizard_id],
+                                          context=context)
+            self.assertTrue(False,
+                            "Il metodo di spedizione PEC non puo essere inserito in questa fase.")
+        except except_orm as e:
+            self.assertEqual(e.value,
+                             "Il metodo di spedizione PEC non puo' essere inserito in questa fase.",
+                             e)
 
     def test_2_prot_cancel(self):
         """
@@ -200,4 +208,4 @@ class TestWizardProtocolloOut(TestProtocolloBase):
         self.assertEqual(prot_obj.history_ids[2].type,
                          'cancel')
         self.assertEqual(prot_obj.history_ids[2].description,
-                         'Errore del Protocollatore 3')
+                         'Errore del Protocollatore 3 - Autorizzato da: Protocollo manager')

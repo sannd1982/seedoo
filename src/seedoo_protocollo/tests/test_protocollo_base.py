@@ -5,7 +5,7 @@
 import base64
 import tempfile
 import openerp.tests.common as test_common
-from openerp import addons
+# from openerp import addons
 import shutil
 import os
 import glob
@@ -13,6 +13,10 @@ from openerp import netsvc
 import hashlib
 import threading
 from openerp.osv.orm import except_orm
+import openerp.modules as addons
+
+# from openerp.modules.module import get_module_resource
+
 
 '''
 ATTENZIONE:
@@ -30,7 +34,6 @@ nel file demo/data.xml
 
 
 class TestProtocolloBase(test_common.SingleTransactionCase):
-
     def getPecFile(self, msgname):
         path = addons.get_module_resource('seedoo_protocollo',
                                           'tests', 'data', msgname)
@@ -44,6 +47,7 @@ class TestProtocolloBase(test_common.SingleTransactionCase):
     filename: the name of new file
     srcfile: the file which we want have a copy
     '''
+
     def getCopyOfFile(self, filename, srcfile):
         path = addons.get_module_resource('seedoo_protocollo',
                                           'tests', 'data', srcfile)
@@ -90,10 +94,21 @@ class TestProtocolloBase(test_common.SingleTransactionCase):
 
     def setUp(self):
         super(TestProtocolloBase, self).setUp()
+        # Set ir.config_parameter for env Test
+        self.config_parameter = self.registry('ir.config_parameter')
+
+        config_parameter_id = self.config_parameter.search(
+            self.cr, self.uid, [('key', '=', 'itext.location')])
+
+        self.config_parameter.write(self.cr, self.uid, config_parameter_id,
+                                    {'value': '/opt/signature'})
+        
+        
 
         # Usefull stuffs
         self.company = self.getDemoObject('base', 'main_company')
-        self.company.write({'ammi_code': 'test_ammi_code_proto', 'ident_code': 'test_proto'})
+        self.company.write(
+            {'ammi_code': 'test_ammi_code_proto', 'ident_code': 'test_proto'})
         self.uid = self.getIdDemoObj('', 'protocollo_manager')
         self.admin = 1
         self.modelattachs = self.registry('ir.attachment')

@@ -2,12 +2,13 @@
 # This file is part of Seedoo.  The COPYRIGHT file at the top level of
 # this module contains the full copyright notices and license terms.
 
-from openerp import addons, SUPERUSER_ID
+from openerp import SUPERUSER_ID
+import openerp.modules as addons
+
 from openerp import netsvc
 from openerp.osv import fields
 from openerp.osv.orm import except_orm
-from openerp.addons.seedoo_protocollo.tests.test_protocollo_base \
-    import TestProtocolloBase
+from seedoo_protocollo.tests.test_protocollo_base import TestProtocolloBase
 from openerp.tools.translate import _
 
 from openerp.osv import orm
@@ -18,7 +19,6 @@ from openerp import tools
 
 
 class TestProtocolloIn(TestProtocolloBase):
-
     def receivePec(self):
         cr = self.cr
         msg = self.getPecFile('message1')
@@ -29,7 +29,7 @@ class TestProtocolloIn(TestProtocolloBase):
             'fetchmail_cron_running': True,
             'server_type': u'imap',
             'fetchmail_server_id': 1,
-            }
+        }
         self.thread_model.message_process(
             cr, 1, None, msg, save_original=False, strip_attachments=False,
             context=context)
@@ -50,13 +50,13 @@ class TestProtocolloIn(TestProtocolloBase):
         protocolloObj = pooler.get("protocollo.protocollo")
         sequence_obj = pooler.get('ir.sequence')
         last_id = protocolloObj.search(cr, uid,
-                              [('state', 'in',
-                                ('registered', 'notified', 'sent',
-                                 'waiting', 'error', 'canceled'))
-                               ],
-                              limit=1,
-                              order='registration_date desc'
-                              )
+                                       [('state', 'in',
+                                         ('registered', 'notified', 'sent',
+                                          'waiting', 'error', 'canceled'))
+                                        ],
+                                       limit=1,
+                                       order='registration_date desc'
+                                       )
         if last_id:
             now = datetime.datetime.now()
             last = protocolloObj.browse(cr, uid, last_id[0])
@@ -93,7 +93,7 @@ class TestProtocolloIn(TestProtocolloBase):
             for enum in er.emergency_ids:
                 if not enum.protocol_id:
                     num = enum.name
-                    pooler.get('protocollo.emergency.registry.line').\
+                    pooler.get('protocollo.emergency.registry.line'). \
                         write(cr, uid, [enum.id], {'protocol_id': prot.id})
                     break
             reg_available = [e.id for e in er.emergency_ids
@@ -122,10 +122,12 @@ class TestProtocolloIn(TestProtocolloBase):
         Testing receive pdf File and protocol it
         with signature as typology_rac
         """
+
         cr, uid = self.cr, self.uid
         partner_id = self.getIdDemoObj('base', 'main_partner')
         racc_id = self.getIdDemoObj('', 'protocollo_typology_rac')
-        com_varie_id = self.getIdDemoObj('seedoo_gedoc', 'protocollo_classification_6')
+        com_varie_id = self.getIdDemoObj('seedoo_gedoc',
+                                         'protocollo_classification_6')
         send_rec_id = self.modelProtSendRec.create(
             cr, uid,
             {
@@ -166,7 +168,7 @@ class TestProtocolloIn(TestProtocolloBase):
         self.assertTrue(prot_obj.xml_signature)
         path = addons.get_module_resource('seedoo_protocollo',
                                           'data', "segnatura.dtd")
-        dtdPath = os.path.dirname(path)+ "/segnatura.dtd"
+        dtdPath = os.path.dirname(path) + "/segnatura.dtd"
         dtdfile = open(dtdPath, 'r')
         dtd = etree.DTD(dtdfile)
         signature_xml = etree.XML(prot_obj.xml_signature)
@@ -218,7 +220,7 @@ class TestProtocolloIn(TestProtocolloBase):
         # (at least an office or a user) then the protocol state
         # is set to notified
         self.modelProtocollo.write(
-            cr, uid, prot_id,
+            cr, SUPERUSER_ID, prot_id,
             {
                 'assigne': [(6, 0, [generic_dept_id])],
             }
@@ -246,7 +248,8 @@ class TestProtocolloIn(TestProtocolloBase):
     def test_4_delete_prot_pdf_in(self):
         cr, uid = self.cr, self.uid
         racc_id = self.getIdDemoObj('', 'protocollo_typology_rac')
-        com_varie_id = self.getIdDemoObj('seedoo_gedoc', 'protocollo_classification_6')
+        com_varie_id = self.getIdDemoObj('seedoo_gedoc',
+                                         'protocollo_classification_6')
         send_rec_id = self.modelProtSendRec.search(
             cr, uid, [('name', '=', 'test_partner')])[0]
         prot_id = self.modelProtocollo.create(
@@ -312,9 +315,9 @@ class TestProtocolloIn(TestProtocolloBase):
             self.wf_service.trg_validate(
                 uid, 'protocollo.protocollo',
                 prot_id, 'register', cr
-                )
-        # questo test diretto dell'azione register del protocollo non
-        # compromette i test successivi in quanto e' l'ultimo del modulo
+            )
+            # questo test diretto dell'azione register del protocollo non
+            # compromette i test successivi in quanto e' l'ultimo del modulo
 
     def test_6_document_search(self):
         """
@@ -325,7 +328,7 @@ class TestProtocolloIn(TestProtocolloBase):
             'lang': 'en_US',
             'tz': False,
             'uid': uid,
-            }
+        }
         classification_id = self.getIdDemoObj(
             'seedoo_gedoc', 'protocollo_classification_8')
         res = self.modeldossier.on_change_dossier_type_classification(
@@ -342,7 +345,7 @@ class TestProtocolloIn(TestProtocolloBase):
                 'classification_id': classification_id,
                 'user_id': uid,
                 'paperless': True
-             },
+            },
             context=context
         )
         dossier = self.modeldossier.browse(
@@ -367,7 +370,7 @@ class TestProtocolloIn(TestProtocolloBase):
             {
                 'name': 'protocollo.protocollo',
                 'dossier_id': dossier_id
-             },
+            },
             context=context
         )
         res = self.modeldocsearch.search_action(
@@ -382,7 +385,7 @@ class TestProtocolloIn(TestProtocolloBase):
             doc_search_id,
             {
                 'classification_id': classification_id
-             },
+            },
             context=context
         )
         res = self.modeldocsearch.search_action(
@@ -399,7 +402,7 @@ class TestProtocolloIn(TestProtocolloBase):
             doc_search_id,
             {
                 'classification_id': classification2_id
-             },
+            },
             context=context
         )
         res = self.modeldocsearch.search_action(

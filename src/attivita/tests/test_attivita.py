@@ -26,7 +26,7 @@ class TestAttivita(TransactionCase):
         self.res_dep_model = self.registry('hr.department')
         self.res_emp_model = self.registry('hr.employee')
         self.ir_module_model = self.registry('ir.module.module')
-        self.brains_conf_model = self.registry('brains.configuration')
+        # self.brains_conf_model = self.registry('brains.configuration')
 
         self.monitor_group_name = 'Monitoraggio Attivita'
         self.ref_group_name = 'Referente Attivita'
@@ -39,8 +39,8 @@ class TestAttivita(TransactionCase):
 
     def _visibility_selection(self):
         return [('totale', 4),
-                ('gerarchico', 2),
-                ('orizzontale', 3)]
+                ('gerarchico', 6),
+                ('orizzontale', 6)]
 
     def _get_state_definition(self, cr, uid, state, context=None):
         return dict(self._type_selection(cr, uid))[state]
@@ -208,16 +208,10 @@ class TestAttivita(TransactionCase):
                 ('name', '=ilike', self._get_state_definition(cr, uid, s))])
             self.assertTrue(bool(ids))
 
-        attivita_rifiouto_module_installed = self.ir_module_model.search(cr,
-                                                                         uid, [
-                                                                             (
-                                                                                 'name',
-                                                                                 '=',
-                                                                                 'attivita_rifiuto'),
-                                                                             (
-                                                                                 'state',
-                                                                                 '=',
-                                                                                 'installed')])
+        attivita_rifiouto_module_installed = self.ir_module_model.search(
+            cr, uid,
+            [('name', '=', 'attivita_rifiuto'), ('state', '=', 'installed')])
+        
         if attivita_rifiouto_module_installed:
             activity_vals = {
                 'state': 'rifiutato',
@@ -276,8 +270,8 @@ class TestAttivita(TransactionCase):
 
         for i in ['totale', 'gerarchico', 'orizzontale']:
 
-            self.brains_conf_model.write(cr, uid, 1,
-                                         vals={'tipologia_assegnamento': i})
+            # self.brains_conf_model.write(cr, uid, 1,
+            #                              vals={'tipologia_assegnamento': i})
             ids = self.res_users_model.search(cr, admin1_id,
                                               [('is_visible', '=', True)])
             n = self._get_visibility_users(cr, uid, i)
@@ -285,7 +279,7 @@ class TestAttivita(TransactionCase):
                 n = n + existing_usr_on_system_num
 
             self.assertEquals(len(ids), n,
-                              "User with vvisiility type configuration [%s] must see %s users" % (
+                              "User with visiility type configuration [%s] must see %s users" % (
                                   i, n))
 
     def _create_emp(self, cr, uid, department_id, name):

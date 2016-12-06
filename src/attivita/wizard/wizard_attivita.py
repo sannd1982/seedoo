@@ -35,25 +35,25 @@ class wizard_attivita(osv.osv_memory):
             attivita_obj.write(cr, uid, attivita_id, {'state': 'rifiutato',
                                                       'motivazione_rifiuto': this.name})
             # Gestione della notifica
-            configuration_obj = self.pool.get('brains.configuration')
-            configuration_ids = self.pool.get('brains.configuration').search(
-                cr, uid, [])
-            if len(configuration_ids) == 1:
-                configuration = configuration_obj.browse(cr, uid,
-                                                         configuration_ids[0])
-            if configuration.module_attivita_notifiche and configuration.notifica_referente_rifiuto:
-                template_model_data = self.pool.get('ir.model.data'). \
-                    search(cr, uid, [('name', '=',
-                                      'template_email_notifica_referente_rifiuto')])
-                if len(template_model_data):
-                    template_id = self.pool.get('ir.model.data').browse(cr,
-                                                                        uid,
-                                                                        template_model_data[
-                                                                            0])
-                    self.pool.get('email.template').generate_email(cr, uid,
-                                                                   template_id.res_id,
-                                                                   attivita_id,
-                                                                   context)
+            # configuration_obj = self.pool.get('brains.configuration')
+            # configuration_ids = self.pool.get('brains.configuration').search(
+            #     cr, uid, [])
+            # if len(configuration_ids) == 1:
+            #     configuration = configuration_obj.browse(cr, uid,
+            #                                              configuration_ids[0])
+            # if configuration.module_attivita_notifiche and configuration.notifica_referente_rifiuto:
+            template_model_data = self.pool.get('ir.model.data'). \
+                search(cr, uid, [('name', '=',
+                                  'template_email_notifica_referente_rifiuto')])
+            if len(template_model_data):
+                template_id = self.pool.get('ir.model.data').browse(cr,
+                                                                    uid,
+                                                                    template_model_data[
+                                                                        0])
+                self.pool.get('email.template').generate_email(cr, uid,
+                                                               template_id.res_id,
+                                                               attivita_id,
+                                                               context)
 
     def integrazione(self, cr, uid, ids, context=None):
         if context is None:

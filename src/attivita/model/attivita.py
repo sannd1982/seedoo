@@ -241,43 +241,30 @@ class attivita_attivita(osv.Model):
                 data['assegnatario_id'] = uid
                 data['data_presa_carico'] = time.strftime("%Y-%m-%d")
                 data['richiesta_integrazione'] = False
-                template_model_data = self.pool.get('ir.model.data').search(cr,
-                                                                            uid,
-                                                                            [(
-                                                                                'name',
-                                                                                '=',
-                                                                                'template_email_notifica_referente_presa_carico')])
+                template_model_data = self.pool.get('ir.model.data').search(
+                    cr, uid,
+                    [('name', '=',
+                      'template_email_notifica_referente_presa_carico')])
                 if len(template_model_data):
                     if isinstance(ids, list):
                         ids = ids[0]
-                    template_id = self.pool.get('ir.model.data').browse(cr,
-                                                                        uid,
-                                                                        template_model_data[
-                                                                            0])
-                    self.pool.get('email.template').generate_email(cr, uid,
-                                                                   template_id.res_id,
-                                                                   ids,
-                                                                   context)
+                    template_id = self.pool.get('ir.model.data').browse(
+                        cr, uid, template_model_data[0])
+                    self.pool.get('email.template').generate_email(
+                        cr, uid, template_id.res_id, ids, context)
             elif data['state'] == 'concluso':
                 data['data_conclusione'] = time.strftime("%Y-%m-%d")
                 data['avanzamento'] = 100
-                template_model_data = self.pool.get('ir.model.data').search(cr,
-                                                                            uid,
-                                                                            [(
-                                                                                'name',
-                                                                                '=',
-                                                                                'template_email_notifica_referente_chiusura')])
+                template_model_data = self.pool.get('ir.model.data').search(
+                    cr, uid, [('name', '=',
+                               'template_email_notifica_referente_chiusura')])
                 if len(template_model_data):
                     if isinstance(ids, list):
                         ids = ids[0]
-                    template_id = self.pool.get('ir.model.data').browse(cr,
-                                                                        uid,
-                                                                        template_model_data[
-                                                                            0])
-                    self.pool.get('email.template').generate_email(cr, uid,
-                                                                   template_id.res_id,
-                                                                   ids,
-                                                                   context)
+                    template_id = self.pool.get('ir.model.data').browse(
+                        cr, uid, template_model_data[0])
+                    self.pool.get('email.template').generate_email(
+                        cr, uid, template_id.res_id, ids, context)
         res_id = super(attivita_attivita, self).write(cr, uid, ids, data,
                                                       context=context)
         storico_obj = self.pool.get('attivita.storico')

@@ -5,7 +5,7 @@
 import base64
 import tempfile
 import openerp.tests.common as test_common
-from openerp import addons
+import openerp.modules as addons
 import shutil
 import os
 import glob

@@ -2,12 +2,11 @@
 # This file is part of Seedoo.  The COPYRIGHT file at the top level of
 # this module contains the full copyright notices and license terms.
 
-from openerp import addons
 from openerp import netsvc
 import datetime
 from openerp.osv.orm import except_orm
-from openerp.addons.seedoo_protocollo_zip.tests.test_protocollo_zip_base \
-    import TestProtocolloZipBase
+from seedoo_protocollo_zip.tests.test_protocollo_zip_base import \
+    TestProtocolloZipBase
 
 
 class TestProtocolloZip(TestProtocolloZipBase):
@@ -20,6 +19,7 @@ class TestProtocolloZip(TestProtocolloZipBase):
         cr, uid = self.cr, self.uid
         partner_id = self.getIdDemoObj('base', 'main_partner')
         racc_id = self.getIdDemoObj('', 'protocollo_typology_rac')
+        # todo protocollo_classification_6 non esistente
         com_varie_id = self.getIdDemoObj('', 'protocollo_classification_6')
         send_rec_id = self.modelProtSendRec.create(
             cr, uid,

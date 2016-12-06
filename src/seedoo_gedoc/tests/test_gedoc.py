@@ -7,12 +7,11 @@ import openerp.netsvc
 import datetime
 from openerp.osv import fields
 from openerp.osv.orm import except_orm
-from openerp.addons.seedoo_gedoc.tests.test_gedoc_base \
-    import TestGedocBase
+# from openerp.addons.seedoo_gedoc.tests.test_gedoc_base import TestGedocBase
+from seedoo_gedoc.tests.test_gedoc_base import TestGedocBase
 
 
 class TestGedoc(TestGedocBase):
-
     def test_0_document(self):
         """
         Testing creation of a document and visibility
@@ -22,7 +21,7 @@ class TestGedoc(TestGedocBase):
             'lang': 'en_US',
             'tz': False,
             'uid': uid,
-            }
+        }
         doc_contract_id = self.modeldoc.create(
             cr, uid,
             {
@@ -31,7 +30,7 @@ class TestGedoc(TestGedocBase):
                     '', 'gedoc_document_type_contract'),
                 'subject': 'Contract',
                 'data_doc': fields.datetime.now(),
-             },
+            },
             context=context
         )
         doc_contract = self.modeldoc.browse(
@@ -62,15 +61,15 @@ class TestGedoc(TestGedocBase):
         self.modeldoc.write(
             cr, uid, doc_contract_id,
             {
-             'office_comp_ids': [
-                     (4, self.getIdDemoObj(
-                      '', 'generic_dept2'))
-                 ],
-             'office_view_ids': [
-                     (4, self.getIdDemoObj(
-                      '', 'generic_dept3'))
-                 ],
-             },
+                'office_comp_ids': [
+                    (4, self.getIdDemoObj(
+                        '', 'generic_dept2'))
+                ],
+                'office_view_ids': [
+                    (4, self.getIdDemoObj(
+                        '', 'generic_dept3'))
+                ],
+            },
             context=context
         )
         context['uid'] = user_modifier
@@ -101,7 +100,7 @@ class TestGedoc(TestGedocBase):
                 'datas_fname': 'testcontract.pdf',
                 'datas': self.getCopyOfFile(
                     'testcontract.pdf', 'contract.pdf')[1],
-             },
+            },
             context=context
         )
         self.uploaddocwizard.action_save(
@@ -122,7 +121,7 @@ class TestGedoc(TestGedocBase):
             'lang': 'en_US',
             'tz': False,
             'uid': uid,
-            }
+        }
         classification_id = self.getIdDemoObj(
             '', 'protocollo_classification_8')
         res = self.modeldossier.on_change_dossier_type_classification(
@@ -138,7 +137,7 @@ class TestGedoc(TestGedocBase):
                 'description': 'test dossier',
                 'classification_id': classification_id,
                 'paperless': True
-             },
+            },
             context=context
         )
         dossier = self.modeldossier.browse(
@@ -172,15 +171,15 @@ class TestGedoc(TestGedocBase):
         self.modeldossier.write(
             cr, uid, dossier_id,
             {
-             'office_comp_ids': [
-                     (4, self.getIdDemoObj(
-                      '', 'generic_dept2'))
-                 ],
-             'office_view_ids': [
-                     (4, self.getIdDemoObj(
-                      '', 'generic_dept3'))
-                 ],
-             },
+                'office_comp_ids': [
+                    (4, self.getIdDemoObj(
+                        '', 'generic_dept2'))
+                ],
+                'office_view_ids': [
+                    (4, self.getIdDemoObj(
+                        '', 'generic_dept3'))
+                ],
+            },
             context=context
         )
         context['uid'] = user_modifier
@@ -213,7 +212,7 @@ class TestGedoc(TestGedocBase):
                     '', 'gedoc_document_type_contract'),
                 'subject': 'Contract',
                 'data_doc': fields.datetime.now(),
-             },
+            },
             context=context
         )
         self.modeldossier.write(
@@ -222,13 +221,13 @@ class TestGedoc(TestGedocBase):
             dossier_id,
             {'document_ids': [(4, doc_contract2_id)]},
             context=context
-            )
+        )
         dossier.refresh()
         self.assertTrue(dossier.state, 'open')
 
         self.uid = user_reader
         context['uid'] = user_reader
-        #self.assertRaises(except_orm, self.dossier_write)
+        # self.assertRaises(except_orm, self.dossier_write)
 
     def test_2_search_doc(self):
         """
@@ -239,7 +238,7 @@ class TestGedoc(TestGedocBase):
             'lang': 'en_US',
             'tz': False,
             'uid': uid,
-            }
+        }
         # Create Doc
         doc_contract3_id = self.modeldoc.create(
             cr, uid,
@@ -249,7 +248,7 @@ class TestGedoc(TestGedocBase):
                     '', 'gedoc_document_type_contract'),
                 'subject': 'Contract 3',
                 'data_doc': fields.datetime.now(),
-             },
+            },
             context=context
         )
         doc_contract = self.modeldoc.browse(
@@ -263,7 +262,7 @@ class TestGedoc(TestGedocBase):
                 'datas_fname': 'testcontract2.pdf',
                 'datas': self.getCopyOfFile(
                     'testcontract2.pdf', 'contract.pdf')[1],
-             },
+            },
             context=context
         )
         self.uploaddocwizard.action_save(
@@ -288,7 +287,7 @@ class TestGedoc(TestGedocBase):
                 'classification_id': classification_id,
                 'document_ids': [(4, doc_contract3_id)],
                 'paperless': True
-             },
+            },
             context=context
         )
         dossier = self.modeldossier.browse(
@@ -302,7 +301,7 @@ class TestGedoc(TestGedocBase):
             {
                 'name': 'gedoc.document',
                 'dossier_id': dossier2_id
-             },
+            },
             context=context
         )
         res = self.modeldocsearch.search_action(
@@ -317,7 +316,7 @@ class TestGedoc(TestGedocBase):
             doc_search_id,
             {
                 'index_content': 'new contract'
-             },
+            },
             context=context
         )
         res = self.modeldocsearch.search_action(
@@ -333,7 +332,7 @@ class TestGedoc(TestGedocBase):
             {
                 'dossier_id': 0,
                 'index_content': 'dossier'
-             },
+            },
             context=context
         )
         res = self.modeldocsearch.search_action(
@@ -349,7 +348,7 @@ class TestGedoc(TestGedocBase):
             {
                 'subject': 'contract 3',
                 'index_content': 'new contract'
-             },
+            },
             context=context
         )
         res = self.modeldocsearch.search_action(

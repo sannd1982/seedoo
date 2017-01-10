@@ -342,13 +342,7 @@ class SegnaturaXML:
 
     def createMittente(self, senderReceiver):
         mittente = etree.Element("Mittente")
-
         # TODO creare una discriminante per le pubbliche amministrazioni
-        # amministrazione = self.createAmministrazione(senderReceiver)
-        # aOO = self.createAOO()
-        # mittente.append(amministrazione)
-        # mittente.append(aOO)
-
         privato = self.createPrivatoFromSenderReceiver(senderReceiver)
         mittente.append(privato)
 
@@ -603,7 +597,6 @@ class SegnaturaXML:
         else:
             denominazione = self.createDenominazione(name)
 
-        # identificativo = self.createIdentificativo()
         indirizzoPostale = self.createIndirizzoPostaleFromCompany(company)
         indirizzoTelematico = self.createIndirizzoTelematicoFromCompany(
             company)
@@ -611,7 +604,6 @@ class SegnaturaXML:
         fax = etree.Element("Fax")
 
         unitaOrganizzativa.append(denominazione)
-        # unitaOrganizzativa.append(identificativo)
         unitaOrganizzativa.append(indirizzoPostale)
         unitaOrganizzativa.append(indirizzoTelematico)
         unitaOrganizzativa.append(telefono)

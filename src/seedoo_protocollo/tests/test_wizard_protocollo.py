@@ -6,7 +6,7 @@ from openerp import addons, exceptions
 from openerp import netsvc
 from openerp.osv.orm import except_orm
 # from openerp.addons.seedoo_protocollo.tests.test_protocollo_base import TestProtocolloBase
-from seedoo_protocollo.tests.test_protocollo_base import TestProtocolloBase
+from test_protocollo_base import TestProtocolloBase
 
 
 class TestWizardProtocolloOut(TestProtocolloBase):

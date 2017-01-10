@@ -88,24 +88,3 @@ class wizard(osv.TransientModel):
             return {'type': 'ir.actions.act_window_close'}
         else:
             raise osv.except_osv(_("Warning! - create.activity.wizard"), _("Errore nei campi!!."))
-
-
-
-
-            # class res_users(osv.Model):
-            #     _name = 'res.users'
-            #     _inherit = ['res.users']
-            #     _description = 'User'
-            # 
-            #     def _is_visible(self, cr, uid, ids, name, arg, context={}):
-            #         res = {}.fromkeys(ids, '0')
-            #         return res
-            # 
-            #     def _is_visible_search(self, cr, uid, obj, names, arg, context=None):
-            #         return [('id', '>', 0)]
-            # 
-            #     _columns = {
-            #         'is_visible': fields.function(_is_visible, fnct_search=_is_visible_search, type="boolean", method=True,
-            #                                       string='Assegnatario'),
-            # 
-            #     }

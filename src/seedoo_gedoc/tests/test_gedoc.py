@@ -8,7 +8,7 @@ import datetime
 from openerp.osv import fields
 from openerp.osv.orm import except_orm
 # from openerp.addons.seedoo_gedoc.tests.test_gedoc_base import TestGedocBase
-from seedoo_gedoc.tests.test_gedoc_base import TestGedocBase
+from test_gedoc_base import TestGedocBase
 
 
 class TestGedoc(TestGedocBase):
@@ -227,7 +227,6 @@ class TestGedoc(TestGedocBase):
 
         self.uid = user_reader
         context['uid'] = user_reader
-        # self.assertRaises(except_orm, self.dossier_write)
 
     def test_2_search_doc(self):
         """

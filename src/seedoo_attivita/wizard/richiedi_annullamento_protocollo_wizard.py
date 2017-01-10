@@ -38,7 +38,6 @@ class wizard(osv.TransientModel):
         prot = protocollo_obj.browse(cr, uid, protocollo_id)
         return prot.user_id
 
-    # _defaults = {'assegnatario': lambda obj, cr, uid, ctx=None: uid,}
     _defaults = {
         'assegnatario': get_default_assegnatario,
     }

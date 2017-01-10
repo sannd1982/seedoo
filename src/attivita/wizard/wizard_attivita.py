@@ -34,14 +34,6 @@ class wizard_attivita(osv.osv_memory):
         for this in self.browse(cr, uid, ids, context=context):
             attivita_obj.write(cr, uid, attivita_id, {'state': 'rifiutato',
                                                       'motivazione_rifiuto': this.name})
-            # Gestione della notifica
-            # configuration_obj = self.pool.get('brains.configuration')
-            # configuration_ids = self.pool.get('brains.configuration').search(
-            #     cr, uid, [])
-            # if len(configuration_ids) == 1:
-            #     configuration = configuration_obj.browse(cr, uid,
-            #                                              configuration_ids[0])
-            # if configuration.module_attivita_notifiche and configuration.notifica_referente_rifiuto:
             template_model_data = self.pool.get('ir.model.data'). \
                 search(cr, uid, [('name', '=',
                                   'template_email_notifica_referente_rifiuto')])

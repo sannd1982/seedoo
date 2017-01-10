@@ -72,10 +72,6 @@ class document_request_sender_receiver_wizard(osv.TransientModel):
         'type': 'individual',
     }
 
-    # def create(self, cr, uid, vals, context=None):
-    #     sender_receiver = super(protocollo_sender_receiver_wizard, self).create(cr, uid, vals, context=context)
-    #     return sender_receiver
-
     def on_change_partner(self, cr, uid, ids, partner_id, context=None):
         values = {}
         if partner_id:
@@ -129,14 +125,6 @@ class document_request_sender_receiver_wizard(osv.TransientModel):
                                       select=True)
         }
 
-        # def view_init(self, cr, uid, fields_list, context=None):
-        #     if 'active_id' in context.keys():
-        #         gedoc_obj = self.pool.get('gedoc.document')
-        #         gedoc = gedoc_obj.browse(cr, uid, context['active_id'])
-        #         if len(gedoc.main_doc_id.ids) == 0:
-        #             raise osv.except_osv(_("Warning!"), _("Inserire un allegato !!."))
-        #             return False
-
         def action_request(self, cr, uid, ids, context=None):
             wizard = self.browse(cr, uid, ids[0], context=context)
             sender_receiver_obj = self.pool.get('protocollo.sender_receiver')
@@ -163,8 +151,6 @@ class document_request_sender_receiver_wizard(osv.TransientModel):
                     'mobile': send_rec.mobile,
                 }
                 sender_receiver.append(sender_receiver_obj.create(cr, uid, srvals))
-            # vals['sender_receivers'] = [[6, 0, sender_receiver]]
-
             if 'active_id' in context.keys():
                 gedoc_obj = self.pool.get('gedoc.document')
                 gedoc = gedoc_obj.browse(cr, uid, context['active_id'])
@@ -186,7 +172,6 @@ class document_request_sender_receiver_wizard(osv.TransientModel):
         # crea attività
             prot = self.pool.get('protocollo.protocollo').browse(cr, uid, prot_id)
             user_value = self.pool.get('res.users').browse(cr, uid, uid)
-            # tempo_esecuzione_attivita = TempoEsecuzioneAttivita.RICHIESTA_PROTOCOLLAZIONE
             now = datetime.datetime.now()
             categoria_obj = self.pool.get('attivita.categoria')
             category_ids = categoria_obj.search(cr, uid, [('name', '=', 'Richiesta Protocollazione Documento')])
@@ -195,7 +180,6 @@ class document_request_sender_receiver_wizard(osv.TransientModel):
                 tempo_esecuzione_attivita = category.tempo_standard
             data_scadenza = now + datetime.timedelta(days=tempo_esecuzione_attivita)
             users_manager = self.pool.get('res.users').get_users_from_group(cr, uid, 'Manager protocollo')
-        # remove superuser_id, da aggiungere il controllo delle eccezzioni
             list_ids = list(users_manager.ids)
             list_ids.remove(SUPERUSER_ID)
             assegnatario_id = list_ids[0]
@@ -220,9 +204,5 @@ class document_request_sender_receiver_wizard(osv.TransientModel):
                     'protocollo_id': prot.id
                 }
                 gedoc_obj.pool.get("attivita.attivita").create(cr, SUPERUSER_ID, activity_vals, context=None)
-            
-            
-        
-
 
             return {'type': 'ir.actions.act_window_close'}

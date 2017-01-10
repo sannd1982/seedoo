@@ -115,8 +115,6 @@ class attivita_attivita(osv.Model):
                 res[attivita.id] = delta.days > 0 and delta.days or 0
             else:
                 res[attivita.id] = 0
-        # for id in ids:
-        #    res[id] = res.get(id)
         return res
 
     def _tempo_ritardo_calc(self, cr, uid, ids, name, arg, context=None):
@@ -131,16 +129,11 @@ class attivita_attivita(osv.Model):
                 res[attivita.id] = delta.days > 0 and delta.days or 0
             else:
                 res[attivita.id] = 0
-        # for id in ids:
-        #    res[id] = res.get(id)
         return res
 
     @api.model
     def state_groups(self, present_ids, domain, **kwargs):
         folded = {key: (key in self.FOLDED_STATES) for key, _ in self.STATES}
-        # Need to copy self.STATES list before returning it,
-        # because odoo modifies the list it gets,
-        # emptying it in the process. Bad odoo!
         return self.STATES[:], folded
 
     _columns = {
@@ -213,12 +206,6 @@ class attivita_attivita(osv.Model):
                                  remaining_groupbys, aggregated_fields,
                                  count_field, read_group_result,
                                  read_group_order=None, context=None):
-        """
-        The method seems to support grouping using m2o fields only,
-        while we want to group by a simple status field.
-        Hence the code below - it replaces simple status values
-        with (value, name) tuples.
-        """
         if groupby == 'state':
             STATES_DICT = dict(self.STATES)
             for result in read_group_result:
@@ -229,11 +216,6 @@ class attivita_attivita(osv.Model):
             cr, uid, domain, groupby, remaining_groupbys, aggregated_fields,
             count_field, read_group_result, read_group_order, context
         )
-
-    #    def create(self, cr, uid, data, context=None):    
-    #        if (not data.has_key('referente_id') or not data['referente_id']) and data.has_key('assegnatario_id'):
-    #            data['referente_id'] = data['assegnatario_id']
-    #        return super(attivita_attivita, self).create(cr, uid, data, context=context)
 
     def write(self, cr, uid, ids, data, context=None):
         if data.has_key('state'):

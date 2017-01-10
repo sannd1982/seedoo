@@ -41,11 +41,7 @@ class gedoc_document(osv.Model):
         raise osv.except_osv(_("Warning!"), _("Inserire un allegato !!."))
 
     def richiedi_protocollazione(self, cr, uid, ids, context=None):
-        # gedoc = self.browse(cr, uid, ids[0], context)
-
         for gedoc in self.browse(cr, uid, ids[0], context):
-            # prot = gedoc.sender_receiver_ids.protocollo_id
-
             # crea l'istanza protocollo
             protocollo_vals = {
                 'subject': gedoc.note_protocollazione,
@@ -65,8 +61,6 @@ class gedoc_document(osv.Model):
             prot = self.pool.get('protocollo.protocollo').browse(cr, uid,
                                                                  prot_id)
             user_value = self.pool.get('res.users').browse(cr, uid, uid)
-
-            # tempo_esecuzione_attivita = TempoEsecuzioneAttivita.RICHIESTA_PROTOCOLLAZIONE
             now = datetime.datetime.now()
             categoria_obj = self.pool.get('attivita.categoria')
             category_ids = categoria_obj.search(cr, uid, [
@@ -80,7 +74,6 @@ class gedoc_document(osv.Model):
             users_manager = self.pool.get('res.users').get_users_from_group(cr,
                                                                             uid,
                                                                             'Manager protocollo')
-            # remove superuser_id, da aggiungere il controllo delle eccezzioni
             list_ids = list(users_manager.ids)
             list_ids.remove(SUPERUSER_ID)
             assegnatario_id = list_ids[0]
@@ -101,14 +94,9 @@ class gedoc_document(osv.Model):
             }
             self.pool.get("attivita.attivita").create(cr, uid, activity_vals,
                                                       context=None)
-
             self.write(cr, uid, [gedoc.id], {'state': 'protocol'})
         return True
 
 
 class sender_receiver(osv.Model):
     _inherit = 'protocollo.sender_receiver'
-
-    # _columns = {
-    #     'gedoc_id': fields.many2one('gedoc.document', 'Documento'),
-    # }

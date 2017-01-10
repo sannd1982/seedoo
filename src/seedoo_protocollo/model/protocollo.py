@@ -682,7 +682,6 @@ class protocollo_protocollo(orm.Model):
         return self._get_next_number_normal(cr, uid, prot)
 
     def _full_path(self, cr, uid, location, path):
-        # location = 'file:filestore'
         assert location.startswith('file:'), \
             "Unhandled filestore location %s" % location
         location = location[5:]
@@ -707,7 +706,6 @@ class protocollo_protocollo(orm.Model):
             return True
         finally:
             shutil.move(doc_path + '.pdf', doc_path)
-            # os.remove(doc_path + '.pdf')
 
     def _create_attachment_encryped_file(self, cr, uid, prot, path):
         pdf_file = open(path, 'r')
@@ -718,7 +716,6 @@ class protocollo_protocollo(orm.Model):
             'datas_fname': prot.datas_fname + '.signed',
             'res_model': 'protocollo.protocollo',
             'is_protocol': True,
-            # 'reserved': prot.reserved,
             'res_id': prot.id,
         }
         attachment_obj = self.pool.get('ir.attachment')
@@ -779,7 +776,6 @@ class protocollo_protocollo(orm.Model):
         else:
             shutil.move(file_path + '.pdf', file_path)
         # TODO convert in pdfa here
-        # self._convert_pdfa(cr, uid, file_path)
         return sha1OfFile(file_path)
 
     def _create_protocol_attachment(self, cr, uid, prot,

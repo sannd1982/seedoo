@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<BrainsInstallerConfiguration enabled='1'>
-        <host>localhost</host>
-        <port>8069</port>
-        <db_name>brains_odoo8</db_name>
-</BrainsInstallerConfiguration>

@@ -6,7 +6,7 @@ from openerp import exceptions
 import openerp.modules as addons
 from openerp import netsvc
 from openerp.osv.orm import except_orm
-from seedoo_protocollo.tests.test_protocollo_base import TestProtocolloBase
+from test_protocollo_base import TestProtocolloBase
 from lxml import etree
 import os
 from openerp import tools
@@ -366,7 +366,6 @@ class TestProtocolloOut(TestProtocolloBase):
         self.assertEqual(len(prot_obj.pec_notifications_ids), 2)
         # todo vedere meglio la configurazione delle mail 
         # todo verificare prot_obj.state, 'sent'
-        # self.assertEqual(prot_obj.state, 'sent')
 
     def tearDown(self):
         # Remove mocks

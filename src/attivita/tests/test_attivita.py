@@ -10,15 +10,9 @@ from openerp import SUPERUSER_ID
 
 
 class TestAttivita(TransactionCase):
-    """Tests for search on name_search (account.account)
-
-    The name search on account.account is quite complexe, make sure
-    we have all the correct results
-    """
 
     def setUp(self):
         super(TestAttivita, self).setUp()
-        # cr, uid = self.cr, self.uid
         self.attivita_model = self.registry('attivita.attivita')
         self.attivita_storico_model = self.registry('attivita.storico')
         self.res_groups_model = self.registry('res.groups')
@@ -26,8 +20,6 @@ class TestAttivita(TransactionCase):
         self.res_dep_model = self.registry('hr.department')
         self.res_emp_model = self.registry('hr.employee')
         self.ir_module_model = self.registry('ir.module.module')
-        # self.brains_conf_model = self.registry('brains.configuration')
-
         self.monitor_group_name = 'Monitoraggio Attivita'
         self.ref_group_name = 'Referente Attivita'
         self.assignee_group_name = u'Assegnatario Attività'
@@ -55,7 +47,6 @@ class TestAttivita(TransactionCase):
                 ('rifiutato', 'Rifiutato')]
 
     def test_name_search(self):
-        # cr, uid = self.cr, self.uid
         self.assertEqual(5, 5,
                          "name_search 'ilike Tax' should have returned Tax Received account only")
 
@@ -119,7 +110,7 @@ class TestAttivita(TransactionCase):
                 'data_presa_carico': now
             }
 
-            attivita_id = self.attivita_model.create(cr, uid, activity_vals)
+            self.attivita_model.create(cr, uid, activity_vals)
 
         activity_ids = self.attivita_model.search(cr, SUPERUSER_ID, [
             ('assegnatario_id', '=', user_id)])
@@ -162,7 +153,7 @@ class TestAttivita(TransactionCase):
                 'data_presa_carico': now
             }
 
-            attivita_id = self.attivita_model.create(cr, uid, activity_vals)
+            self.attivita_model.create(cr, uid, activity_vals)
 
         activity_ids = self.attivita_model.search(cr, SUPERUSER_ID, [
             ('referente_id', '=', user_id)])
@@ -269,9 +260,6 @@ class TestAttivita(TransactionCase):
         self._create_emp(cr, uid, contabilita_id, 'Contabilita')
 
         for i in ['totale', 'gerarchico', 'orizzontale']:
-
-            # self.brains_conf_model.write(cr, uid, 1,
-            #                              vals={'tipologia_assegnamento': i})
             ids = self.res_users_model.search(cr, admin1_id,
                                               [('is_visible', '=', True)])
             n = self._get_visibility_users(cr, uid, i)

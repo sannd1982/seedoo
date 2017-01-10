@@ -505,14 +505,6 @@ class gedoc_document(osv.Model):
             'Data Caricamento',
             readonly=True,
         ),
-        # TODO: verify if it's possible to relate
-        # the same object with a m2m field
-        # 'related_ids': fields.many2many(
-        # 'gedoc.document',
-        # 'document_relation_rel',
-        # 'document_id', 'related_id',
-        # 'Documenti Correlati',
-        #  ),
         'office_comp_ids': fields.many2many(
             'hr.department',
             'document_office_comp_rel',

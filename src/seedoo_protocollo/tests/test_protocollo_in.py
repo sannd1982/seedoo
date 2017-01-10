@@ -8,7 +8,7 @@ import openerp.modules as addons
 from openerp import netsvc
 from openerp.osv import fields
 from openerp.osv.orm import except_orm
-from seedoo_protocollo.tests.test_protocollo_base import TestProtocolloBase
+from test_protocollo_base import TestProtocolloBase
 from openerp.tools.translate import _
 
 from openerp.osv import orm

@@ -12,4 +12,4 @@ bin/start_odoo -d seedoo_test -u l10n_it_fatturapa_in_notifications --test-enabl
 bin/start_odoo -d seedoo_test -i seedoo_gedoc --stop-after-init
 bin/start_odoo -d seedoo_test -u seedoo_gedoc --test-enable --log-level=test --stop-after-init
 bin/start_odoo -d seedoo_test -i seedoo_protocollo --stop-after-init
-bin/start_odoo -d seedoo_test -u seedoo_protocollo --test-enable --log-level=test --stop-after-init
+bin/start_odoo -d seedoo_test -u seedoo_protocollo --test-enable --log-level=debug --stop-after-init

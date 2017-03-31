@@ -2,6 +2,5 @@
 # This file is part of Seedoo.  The COPYRIGHT file at the top level of
 # this module contains the full copyright notices and license terms.
 
-import attivita
 from . import wizard
 from . import model
